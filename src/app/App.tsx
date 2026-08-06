@@ -15,8 +15,12 @@ import {
   ExternalLink,
   Sun,
   Moon,
+  Wrench,
+  Hammer,
+  AlertCircle,
 } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
+import { RenovationPopup } from "@/app/components/ui/renovation-popup";
 import logoImg from "../public/cropped-LOGO-NEGRO-SIN-LETRAS.png";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
@@ -184,6 +188,7 @@ export default function App() {
   const [selectedTier, setSelectedTier] = useState(1);
   const [customAmount, setCustomAmount] = useState("");
   const [donateStep, setDonateStep] = useState(1);
+  const [showRenovationPopup, setShowRenovationPopup] = useState(true);
   const [isDark, setIsDark] = useState<boolean>(() => {
     try {
       const stored = localStorage.getItem("theme");
@@ -1139,6 +1144,11 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      <RenovationPopup
+        isOpen={showRenovationPopup}
+        onClose={() => setShowRenovationPopup(false)}
+      />
     </div>
   );
 }
