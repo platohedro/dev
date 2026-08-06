@@ -1,0 +1,44 @@
+{
+  "about": {
+    "title": "Conócenos",
+    "subtitle": "Quiénes somos",
+    "mission": {
+      "description": "Promover el desarrollo integral de la comunidad a través del arte comunitario, creando espacios de encuentro y expresión que fortalezcan la identidad cultural y fomenten la participación ciudadana activa."
+    },
+    "vision": {
+      "description": "Ser una organización referente en arte comunitario en Medellín, reconocida por nuestro impacto en la transformación social y nuestro compromiso con la innovación cultural y el fortalecimiento del tejido comunitario."
+    },
+    "location": {
+      "description": "Situados en el corazón de Medellín, en la Comuna 11 (El Poblado), y tenemos espacios de trabajo en diferentes puntos de la ciudad para facilitar el acceso a todas las comunidades."
+    },
+    "history": {
+      "description": "Fundado en el año 2004, hemos trabajado incansablemente durante más de 22 años para transformar la realidad de nuestra ciudad a través de prácticas artísticas comunitarias, colaborando con más de 5.000 participantes a lo largo de nuestra trayectoria."
+    },
+    "team": {
+      "description": "Contamos con un equipo multidisciplinario de profesionales comprometidos con el desarrollo comunitario, incluyendo artistas, educadores, psicólogos, diseñadores y técnicos especializados en medios digitales."
+    },
+    "values": {
+      "description": "La colaboración, la inclusión, la innovación, la transparencia y el respeto por el conocimiento tradicional son los pilares que guían nuestro trabajo diario con las comunidades."
+    }
+  },
+  "spaces": {
+    "mainStudio": {
+      "title": "Estudio Principal",
+      "description": "Nuestro espacio central ubicado en El Poblado, con capacidad para 40 personas simultáneamente."
+    },
+    "digitalLab": {
+      "title": "Laboratorio Digital",
+      "description": "Equipo de computadoras y equipos de grabación profesional disponibles para residentes y participantes."
+    },
+    "residencySpaces": {
+      "title": "Espacios de Residencia",
+      "description": "Cuatro residencias equipadas con estudios de ensayo, grabación y producción."
+    }
+  },
+  "cta": {
+    "title": "Únete a Nuestra Comunidad",
+    "description": "Si estás interesado en colaborar, ser voluntario o participar en nuestros programas, contáctanos. Estamos siempre abiertos a nuevas ideas y colaboraciones que puedan enriquecer nuestro trabajo comunitario.",
+    "volunteer": "Ser Voluntario",
+    "contact": "Contactar"
+  }
+}

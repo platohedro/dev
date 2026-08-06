@@ -1,0 +1,345 @@
+{
+  "nav": {
+    "education": "Education",
+    "residencies": "Residencies",
+    "technology": "Technology",
+    "shop": "Shop / Gallery",
+    "donate": "Support"
+  },
+  "theme": {
+    "light": "Switch to light theme",
+    "dark": "Switch to dark theme"
+  },
+  "menu": {
+    "open": "Open menu",
+    "close": "Close menu"
+  },
+  "hero": {
+    "label": "Cultivating creativity and community since 2004",
+    "title": {
+      "part1": "Good Living,",
+      "part2": "Good Knowing."
+    },
+    "description": "Platohedro is a cultural organization working at the intersection of art, technology, and education to foster social, environmental, and personal transformation. We collaborate with communities to imagine and build new possibilities through collective intelligence, creative experimentation, and practices rooted in the territory.",
+    "cta": {
+      "explore": "Explore programs",
+      "support": "Support the process"
+    },
+    "stats": {
+      "youth": "Children and youth per year (projected)",
+      "mothers": "Participating mothers per year (projected)",
+      "residencies": "Residencies since 2004",
+      "years": "Years of impact in Medellín"
+    }
+  },
+  "testimonials": {
+    "label": "In their words",
+    "quotes": [
+      {
+        "text": "Platohedro gave me the language to say what I always felt. My art now makes sense — for me and for my community.",
+        "author": "Valentina M.",
+        "role": "Participant, Artistic Education, 2023"
+      },
+      {
+        "text": "I arrived thinking I had nothing to say. I left with a zine and a reading at the library. That changed everything.",
+        "author": "Andrés K.",
+        "role": "Participant, Collective Narratives"
+      },
+      {
+        "text": "The residency didn't just give me studio space. It gave me peers who challenge me and mentors who believe in the work.",
+        "author": "Sienna R.",
+        "role": "Visual Arts Residency, Spring 2024"
+      }
+    ]
+  },
+  "programs": {
+    "label": "Education",
+    "title": "What we offer",
+    "carousel": {
+      "prev": "Previous program",
+      "next": "Next program"
+    },
+    "items": [
+      {
+        "id": 1,
+        "title": "Community Artistic Education",
+        "tag": "Kids 8–18",
+        "description": "Weekly workshops in visual arts, sculpture, and mixed media that build creative confidence from the ground up."
+      },
+      {
+        "id": 2,
+        "title": "Digital Media Lab",
+        "tag": "All ages",
+        "description": "Photography, video editing, and digital illustration with professional-grade tools, accessible to everyone."
+      },
+      {
+        "id": 3,
+        "title": "Collective Narratives",
+        "tag": "Youth and adults",
+        "description": "Oral history, zines, and narrative writing that centers voices from the territory and living memory."
+      },
+      {
+        "id": 4,
+        "title": "Music and Sound Production",
+        "tag": "13+ years",
+        "description": "Composition, beat production, and studio recording. From the neighborhood to the stage, with real support."
+      },
+      {
+        "id": 5,
+        "title": "Visual Arts Residencies",
+        "tag": "Artists",
+        "description": "Six-week residencies with studio space, mentorship, and a collective closing exhibition."
+      }
+    ],
+    "viewAll": "View all programs"
+  },
+  "residencies": {
+    "label": "Residencies",
+    "title": {
+      "part1": "Space to create",
+      "part2": "from within."
+    },
+    "viewAll": "View open calls",
+    "featured": {
+      "tag": "Open call",
+      "subtitle": "Main Residency · 6 weeks",
+      "title": "Visual Arts and Media Residency",
+      "description": "Six weeks of creative immersion with your own studio space, weekly mentorship, access to all labs, and a collective closing exhibition open to the community.",
+      "stats": [
+        { "value": "6", "label": "Weeks duration" },
+        { "value": "4", "label": "Artists per cohort" },
+        { "value": "Free", "label": "Lab access" },
+        { "value": "2004", "label": "First residency" }
+      ],
+      "apply": "Apply now"
+    },
+    "types": [
+      {
+        "title": "Research Residency",
+        "tag": "3 weeks",
+        "description": "For researchers, theorists, and curators working at the intersection of art, territory, and knowledge."
+      },
+      {
+        "title": "Sound Residency",
+        "tag": "4 weeks",
+        "description": "Production, composition, and sound experimentation in the recording studio. For musicians, podcasters, and audio artists."
+      },
+      {
+        "title": "Community Residency",
+        "tag": "8 weeks",
+        "description": "Co-creation process with neighborhood communities. Situated art, collective memory, and transformation from the territory."
+      }
+    ],
+    "learnMore": "Learn more"
+  },
+  "technology": {
+    "label": "Technology",
+    "title": {
+      "part1": "Creative tools",
+      "part2": "for everyone."
+    },
+    "description": "Access to creative technology cannot depend on economic income. Our digital labs and media studios are open to the entire community, freely and at no cost, under principles of Good Knowing.",
+    "initiatives": [
+      {
+        "title": "Digital Access Lab",
+        "description": "Free access to computers, Wi-Fi, and digital literacy workshops for community members."
+      },
+      {
+        "title": "Film and Podcast Studio",
+        "description": "Professional-grade recording equipment available for residents and program participants."
+      },
+      {
+        "title": "Art, AI & Free Knowledge",
+        "description": "Monthly sessions to critically explore emerging technologies from artistic practices and Good Knowing."
+      }
+    ],
+    "reserve": "Reserve studio time",
+    "stats": {
+      "value": "340+",
+      "label": "Lab sessions / month"
+    }
+  },
+  "shop": {
+    "label": "Shop & Gallery",
+    "title": "Art you can take home",
+    "viewAll": "Full catalog",
+    "items": [
+      { "title": "Untitled No. 7", "artist": "Marcus Webb", "price": "$240.000" },
+      { "title": "Root Systems", "artist": "Amara K.", "price": "$185.000" },
+      { "title": "Eco Chamber", "artist": "Residency Screenprint", "price": "$45.000" },
+      { "title": "Annual Zine 2024", "artist": "Platohedro Collective", "price": "$18.000" }
+    ]
+  },
+  "video": {
+    "label": "Watch us",
+    "title": "Platohedro in motion",
+    "play": "Play video",
+    "videoTitle": "\"Platohedro: A year in the studio\" — Annual film 2024",
+    "duration": "12 min"
+  },
+  "events": {
+    "label": "Coming up",
+    "title": "Events & Calendar",
+    "viewAll": "Full calendar",
+    "items": [
+      {
+        "date": { "month": "AUG", "day": "09" },
+        "title": "Open Studio Night",
+        "location": "Main Gallery, 3rd Floor",
+        "time": "6:00 – 9:00 PM",
+        "tag": "Free"
+      },
+      {
+        "date": { "month": "AUG", "day": "16" },
+        "title": "Opening: Young Artists Exhibition",
+        "location": "Community Room",
+        "time": "5:00 – 8:00 PM",
+        "tag": "Free"
+      },
+      {
+        "date": { "month": "AUG", "day": "24" },
+        "title": "Sound Production Workshop",
+        "location": "Recording Studio B",
+        "time": "2:00 – 5:00 PM",
+        "tag": "Registration"
+      },
+      {
+        "date": { "month": "SEP", "day": "07" },
+        "title": "Conversation with Artist in Residence",
+        "location": "Conference Room, 2nd Floor",
+        "time": "7:00 – 9:00 PM",
+        "tag": "Free"
+      },
+      {
+        "date": { "month": "SEP", "day": "14" },
+        "title": "Annual Community Gathering",
+        "location": "Platohedro Terrace",
+        "time": "7:00 PM",
+        "tag": "Register"
+      }
+    ],
+    "tags": {
+      "free": "Free",
+      "registration": "Registration",
+      "register": "Register"
+    }
+  },
+  "partners": {
+    "label": "Made possible by our partners and funders",
+    "cta": "Interested in becoming a partner?",
+    "contact": "Contact us →"
+  },
+  "donate": {
+    "badge": "SUPPORT — SUSTAIN THE PROCESS",
+    "title": {
+      "part1": "Every contribution sustains",
+      "part2": "real creative lives."
+    },
+    "description": "Your support goes directly to Platohedro's programs, residencies, and labs in Medellín. No intermediaries here — just community.",
+    "steps": [
+      "Choose amount",
+      "Your details",
+      "Payment",
+      "Confirm"
+    ],
+    "tiers": {
+      "label": "CHOOSE A SUPPORT LEVEL (COP)",
+      "items": [
+        { "amount": "$50k", "label": "Seed", "perks": "newsletter, event updates" },
+        { "amount": "$150k", "label": "Root", "perks": "All above + 2 event tickets" },
+        { "amount": "$300k", "label": "Tree", "perks": "All above + annual catalog" },
+        { "amount": "$1M", "label": "Forest", "perks": "All above + studio visit and artist meetup" }
+      ],
+      "custom": "OR ENTER A CUSTOM AMOUNT (COP)",
+      "placeholder": "Other amount"
+    },
+    "form": {
+      "email": "Email address",
+      "name": "Full name",
+      "message": "Message (optional)",
+      "submit": "Continue to payment"
+    },
+    "payment": {
+      "title": "SECURE PAYMENT",
+      "methods": {
+        "card": "Credit/debit card",
+        "transfer": "Bank transfer"
+      },
+      "cardNumber": "Card number",
+      "expiry": "Expiry (MM/YY)",
+      "cvc": "CVC",
+      "submit": "Pay now"
+    }
+  },
+  "footer": {
+    "contact": {
+      "title": "Contact",
+      "address": "Calle 49 #65-38, Medellín, Colombia",
+      "email": "hola@platohedro.org",
+      "phone": "+57 4 123 4567"
+    },
+    "links": {
+      "programs": "Programs",
+      "residencies": "Residencies",
+      "technology": "Technology",
+      "shop": "Shop",
+      "events": "Events",
+      "donate": "Support"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "youtube": "YouTube",
+      "twitter": "Twitter"
+    },
+    "rights": "All rights reserved.",
+    "madeWith": "Made with love by the Platohedro community"
+  },
+  "language": {
+    "label": "Language",
+    "es": "Español",
+    "en": "English"
+  },
+  "about": {
+    "title": "Get to Know Us",
+    "subtitle": "Who We Are",
+    "mission": {
+      "description": "We promote the integral development of the community through community art, creating spaces for encounter and expression that strengthen cultural identity and foster active citizen participation."
+    },
+    "vision": {
+      "description": "To be a reference organization in community art in Medellín, recognized for our impact on social transformation and our commitment to cultural innovation and strengthening of the community fabric."
+    },
+    "location": {
+      "description": "Based in the heart of Medellín, in Commune 11 (El Poblado), and we have workspaces in different parts of the city to facilitate access to all communities."
+    },
+    "history": {
+      "description": "Founded in 2004, we have worked tirelessly for over 22 years to transform the reality of our city through community art practices, collaborating with more than 5,000 participants throughout our trajectory."
+    },
+    "team": {
+      "description": "We have a multidisciplinary team of professionals committed to community development, including artists, educators, psychologists, designers and technicians specialized in digital media."
+    },
+    "values": {
+      "description": "Collaboration, inclusion, innovation, transparency and respect for traditional knowledge are the pillars that guide our daily work with communities."
+    }
+  },
+  "spaces": {
+    "mainStudio": {
+      "title": "Main Studio",
+      "description": "Our central space located in El Poblado, with capacity for 40 people simultaneously."
+    },
+    "digitalLab": {
+      "title": "Digital Lab",
+      "description": "Computers and professional recording equipment available for residents and program participants."
+    },
+    "residencySpaces": {
+      "title": "Residency Spaces",
+      "description": "Four residencies equipped with rehearsal, recording and production studios."
+    }
+  },
+  "cta": {
+    "title": "Join Our Community",
+    "description": "If you're interested in collaborating, volunteering or participating in our programs, contact us. We're always open to new ideas and collaborations that can enrich our community work.",
+    "volunteer": "Become a Volunteer",
+    "contact": "Contact Us"
+  }
+}

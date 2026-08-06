@@ -1,0 +1,303 @@
+{
+  "nav": {
+    "education": "Educación",
+    "residencies": "Residencias",
+    "technology": "Tecnología",
+    "shop": "Tienda / Galería",
+    "donate": "Apoyar"
+  },
+  "theme": {
+    "light": "Cambiar a tema claro",
+    "dark": "Cambiar a tema oscuro"
+  },
+  "menu": {
+    "open": "Abrir menú",
+    "close": "Cerrar menú"
+  },
+  "hero": {
+    "label": "Cultivando creatividad y comunidad desde 2004",
+    "title": {
+      "part1": "Buen Vivir,",
+      "part2": "Buen Conocer."
+    },
+    "description": "Platohedro es una organización cultural que trabaja en la intersección del arte, la tecnología y la educación para fomentar la transformación social, ambiental y personal. Colaboramos con comunidades para imaginar y construir nuevas posibilidades a través de la inteligencia colectiva, la experimentación creativa y las prácticas arraigadas en el territorio.",
+    "cta": {
+      "explore": "Explorar programas",
+      "support": "Apoyar el proceso"
+    },
+    "stats": {
+      "youth": "Niñes y jóvenes al año (proyectado)",
+      "mothers": "Madres participantes al año (proyectado)",
+      "residencies": "Residencias desde 2004",
+      "years": "De impacto en Medellín"
+    }
+  },
+  "testimonials": {
+    "label": "En sus palabras",
+    "quotes": [
+      {
+        "text": "Platohedro me dio el lenguaje para decir lo que siempre sentí. Mi arte ahora tiene sentido — para mí y para mi comunidad.",
+        "author": "Valentina M.",
+        "role": "Participante, Educación Artística, 2023"
+      },
+      {
+        "text": "Llegué pensando que no tenía nada que decir. Me fui con un fanzine y una lectura en la biblioteca. Eso lo cambió todo.",
+        "author": "Andrés K.",
+        "role": "Participante, Narrativas Colectivas"
+      },
+      {
+        "text": "La residencia no solo me dio espacio de estudio. Me dio pares que me desafían y mentores que creen en el trabajo.",
+        "author": "Sienna R.",
+        "role": "Residencia de Artes Visuales, Primavera 2024"
+      }
+    ]
+  },
+  "programs": {
+    "label": "Educación",
+    "title": "Lo que ofrecemos",
+    "carousel": {
+      "prev": "Programa anterior",
+      "next": "Siguiente programa"
+    },
+    "items": [
+      {
+        "id": 1,
+        "title": "Educación Artística Comunitaria",
+        "tag": "Niñes 8–18",
+        "description": "Talleres semanales de artes plásticas, escultura y medios mixtos que construyen confianza creativa desde la raíz."
+      },
+      {
+        "id": 2,
+        "title": "Laboratorio de Medios Digitales",
+        "tag": "Todas las edades",
+        "description": "Fotografía, edición de video e ilustración digital con herramientas de nivel profesional, accesibles para todes."
+      },
+      {
+        "id": 3,
+        "title": "Narrativas Colectivas",
+        "tag": "Jóvenes y adultes",
+        "description": "Historia oral, fanzines y escritura narrativa que centra las voces del territorio y la memoria viva."
+      },
+      {
+        "id": 4,
+        "title": "Música y Producción Sonora",
+        "tag": "13+ años",
+        "description": "Composición, producción de beats y grabación en estudio. Del barrio al escenario, con acompañamiento real."
+      },
+      {
+        "id": 5,
+        "title": "Residencias de Artes Visuales",
+        "tag": "Artistas",
+        "description": "Residencias de seis semanas con espacio de estudio, mentoría y exposición colectiva de cierre."
+      }
+    ],
+    "viewAll": "Ver todos los programas"
+  },
+  "residencies": {
+    "label": "Residencias",
+    "title": {
+      "part1": "Espacio para crear",
+      "part2": "desde adentro."
+    },
+    "viewAll": "Ver convocatorias",
+    "featured": {
+      "tag": "Convocatoria abierta",
+      "subtitle": "Residencia Principal · 6 semanas",
+      "title": "Residencia de Artes Visuales y Medios",
+      "description": "Seis semanas de inmersión creativa con espacio de estudio propio, mentoría semanal, acceso a todos los laboratorios y una exposición colectiva de cierre abierta a la comunidad.",
+      "stats": [
+        { "value": "6", "label": "Semanas de duración" },
+        { "value": "4", "label": "Artistas por cohorte" },
+        { "value": "Libre", "label": "Acceso a laboratorios" },
+        { "value": "2004", "label": "Primera residencia" }
+      ],
+      "apply": "Aplicar ahora"
+    },
+    "types": [
+      {
+        "title": "Residencia de Investigación",
+        "tag": "3 semanas",
+        "description": "Para investigadores, teóricos y curadores que quieren trabajar en el cruce entre arte, territorio y conocimiento."
+      },
+      {
+        "title": "Residencia Sonora",
+        "tag": "4 semanas",
+        "description": "Producción, composición y experimentación sonora en el estudio de grabación. Para músicos, podcasters y artistas de audio."
+      },
+      {
+        "title": "Residencia Comunitaria",
+        "tag": "8 semanas",
+        "description": "Proceso de co-creación con comunidades del barrio. Arte situado, memoria colectiva y transformación desde el territorio."
+      }
+    ],
+    "learnMore": "Saber más"
+  },
+  "technology": {
+    "label": "Tecnología",
+    "title": {
+      "part1": "Herramientas creativas",
+      "part2": "para todas las personas."
+    },
+    "description": "El acceso a la tecnología creativa no puede depender del ingreso económico. Nuestros laboratorios digitales y estudios de medios están abiertos a toda la comunidad, de forma libre y gratuita, bajo principios de Buen Conocer.",
+    "initiatives": [
+      {
+        "title": "Laboratorio de Acceso Digital",
+        "description": "Acceso libre a computadores, Wi-Fi y talleres de alfabetización digital para integrantes de la comunidad."
+      },
+      {
+        "title": "Estudio de Cine y Podcast",
+        "description": "Equipos de grabación de nivel profesional disponibles para residentes y participantes de programas."
+      },
+      {
+        "title": "Arte, IA y Conocimiento Libre",
+        "description": "Sesiones mensuales para explorar críticamente las tecnologías emergentes desde prácticas artísticas y el Buen Conocer."
+      }
+    ],
+    "reserve": "Reservar tiempo en estudio",
+    "stats": {
+      "value": "340+",
+      "label": "Sesiones en lab / mes"
+    }
+  },
+  "shop": {
+    "label": "Tienda y Galería",
+    "title": "Arte que puedes llevar contigo",
+    "viewAll": "Catálogo completo",
+    "items": [
+      { "title": "Sin título No. 7", "artist": "Marcus Webb", "price": "$240.000" },
+      { "title": "Sistemas Raíz", "artist": "Amara K.", "price": "$185.000" },
+      { "title": "Cámara Eco", "artist": "Serigrafía Residencia", "price": "$45.000" },
+      { "title": "Fanzine Anual 2024", "artist": "Colectivo Platohedro", "price": "$18.000" }
+    ]
+  },
+  "video": {
+    "label": "Míranos",
+    "title": "Platohedro en movimiento",
+    "play": "Ver video",
+    "videoTitle": "\"Platohedro: Un año en el estudio\" — Película anual 2024",
+    "duration": "12 min"
+  },
+  "events": {
+    "label": "Próximamente",
+    "title": "Eventos y Calendario",
+    "viewAll": "Calendario completo",
+    "items": [
+      {
+        "date": { "month": "AGO", "day": "09" },
+        "title": "Noche de Estudio Abierto",
+        "location": "Galería Principal, 3er Piso",
+        "time": "6:00 – 9:00 PM",
+        "tag": "Libre"
+      },
+      {
+        "date": { "month": "AGO", "day": "16" },
+        "title": "Apertura: Exposición de Jóvenes Artistas",
+        "location": "Sala Comunal",
+        "time": "5:00 – 8:00 PM",
+        "tag": "Libre"
+      },
+      {
+        "date": { "month": "AGO", "day": "24" },
+        "title": "Taller de Producción Sonora",
+        "location": "Estudio de Grabación B",
+        "time": "2:00 – 5:00 PM",
+        "tag": "Inscripción"
+      },
+      {
+        "date": { "month": "SEP", "day": "07" },
+        "title": "Conversación con Artista en Residencia",
+        "location": "Sala de Conferencias, 2do Piso",
+        "time": "7:00 – 9:00 PM",
+        "tag": "Libre"
+      },
+      {
+        "date": { "month": "SEP", "day": "14" },
+        "title": "Encuentro Anual de Comunidad",
+        "location": "Terraza Platohedro",
+        "time": "7:00 PM",
+        "tag": "Registro"
+      }
+    ],
+    "tags": {
+      "free": "Libre",
+      "registration": "Inscripción",
+      "register": "Registro"
+    }
+  },
+  "partners": {
+    "label": "Posible gracias a nuestros aliados y financiadores",
+    "cta": "¿Interesado en ser aliado?",
+    "contact": "Escríbenos →"
+  },
+  "donate": {
+    "badge": "APOYAR — SOSTÉN EL PROCESO",
+    "title": {
+      "part1": "Cada aporte sostiene",
+      "part2": "vidas creativas reales."
+    },
+    "description": "Tu apoyo va directamente a los programas, residencias y laboratorios de Platohedro en Medellín. Aquí no hay intermediarios — solo comunidad.",
+    "steps": [
+      "Elegir monto",
+      "Tus datos",
+      "Pago",
+      "Confirmar"
+    ],
+    "tiers": {
+      "label": "ELIGE UN NIVEL DE APOYO (COP)",
+      "items": [
+        { "amount": "$50k", "label": "Semilla", "perks": "boletín, actualizaciones de eventos" },
+        { "amount": "$150k", "label": "Raíz", "perks": "Todo lo anterior + 2 entradas a eventos" },
+        { "amount": "$300k", "label": "Árbol", "perks": "Todo lo anterior + catálogo anual" },
+        { "amount": "$1M", "label": "Bosque", "perks": "Todo lo anterior + visita al estudio y encuentro con artistas" }
+      ],
+      "custom": "O INGRESA UN MONTO PERSONALIZADO (COP)",
+      "placeholder": "Otro monto"
+    },
+    "form": {
+      "email": "Correo electrónico",
+      "name": "Nombre completo",
+      "message": "Mensaje (opcional)",
+      "submit": "Continuar al pago"
+    },
+    "payment": {
+      "title": "PAGO SEGURO",
+      "methods": {
+        "card": "Tarjeta de crédito/débito",
+        "transfer": "Transferencia bancaria"
+      },
+      "cardNumber": "Número de tarjeta",
+      "expiry": "Expiración (MM/AA)",
+      "cvc": "CVC",
+      "submit": "Pagar ahora"
+    }
+  },
+  "footer": {
+    "contact": {
+      "title": "Contacto",
+      "address": "Calle 49 #65-38, Medellín, Colombia",
+      "email": "hola@platohedro.org",
+      "phone": "+57 4 123 4567"
+    },
+    "links": {
+      "programs": "Programas",
+      "residencies": "Residencias",
+      "technology": "Tecnología",
+      "shop": "Tienda",
+      "events": "Eventos",
+      "donate": "Apoyar"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "youtube": "YouTube",
+      "twitter": "Twitter"
+    },
+    "rights": "Todos los derechos reservados.",
+    "madeWith": "Hecho con cariño por la comunidad Platohedro"
+  },
+  "language": {
+    "label": "Idioma",
+    "es": "Español",
+    "en": "English"
+  }
+}

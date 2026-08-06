@@ -18,9 +18,12 @@ import {
   Wrench,
   Hammer,
   AlertCircle,
+  Globe,
 } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { RenovationPopup } from "@/app/components/ui/renovation-popup";
+import { LanguageSwitcher } from "@/app/components/LanguageSwitcher";
+import { AboutPage } from "@/app/components/AboutPage";
 import logoImg from "../public/cropped-LOGO-NEGRO-SIN-LETRAS.png";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
@@ -251,6 +254,7 @@ export default function App() {
               ["Residencias", "#residencies"],
               ["Tecnología", "#technology"],
               ["Tienda / Galería", "#shop"],
+              ["Acerca de", "#about"],
             ].map(([label, href]) => (
               <a
                 key={label}
@@ -282,6 +286,11 @@ export default function App() {
             {isDark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
 
+          {/* Language switcher */}
+          <div className="hidden lg:flex items-center">
+            <LanguageSwitcher />
+          </div>
+
           {/* Mobile menu toggle */}
           <div className="flex items-center">
             <button
@@ -302,6 +311,7 @@ export default function App() {
               ["Residencias", "#residencies"],
               ["Tecnología", "#technology"],
               ["Tienda / Galería", "#shop"],
+              ["Acerca de", "#about"],
             ].map(([label, href]) => (
               <a
                 key={label}
@@ -323,6 +333,12 @@ export default function App() {
         )}
       </header>
 
+      {/* ══════════════════════════════════════════════════════
+          ABOUT PAGE
+      ══════════════════════════════════════════════════════ */}
+      <section id="about">
+        <AboutPage />
+      </section>
 
       {/* ══════════════════════════════════════════════════════
           HERO / MISSION STATEMENT

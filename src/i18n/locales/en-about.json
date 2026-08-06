@@ -1,0 +1,44 @@
+{
+  "about": {
+    "title": "Get to Know Us",
+    "subtitle": "Who We Are",
+    "mission": {
+      "description": "We promote the integral development of the community through community art, creating spaces for encounter and expression that strengthen cultural identity and foster active citizen participation."
+    },
+    "vision": {
+      "description": "To be a reference organization in community art in Medellín, recognized for our impact on social transformation and our commitment to cultural innovation and strengthening of the community fabric."
+    },
+    "location": {
+      "description": "Based in the heart of Medellín, in Commune 11 (El Poblado), and we have workspaces in different parts of the city to facilitate access to all communities."
+    },
+    "history": {
+      "description": "Founded in 2004, we have worked tirelessly for over 22 years to transform the reality of our city through community art practices, collaborating with more than 5,000 participants throughout our trajectory."
+    },
+    "team": {
+      "description": "We have a multidisciplinary team of professionals committed to community development, including artists, educators, psychologists, designers and technicians specialized in digital media."
+    },
+    "values": {
+      "description": "Collaboration, inclusion, innovation, transparency and respect for traditional knowledge are the pillars that guide our daily work with communities."
+    }
+  },
+  "spaces": {
+    "mainStudio": {
+      "title": "Main Studio",
+      "description": "Our central space located in El Poblado, with capacity for 40 people simultaneously."
+    },
+    "digitalLab": {
+      "title": "Digital Lab",
+      "description": "Computers and professional recording equipment available for residents and program participants."
+    },
+    "residencySpaces": {
+      "title": "Residency Spaces",
+      "description": "Four residencies equipped with rehearsal, recording and production studios."
+    }
+  },
+  "cta": {
+    "title": "Join Our Community",
+    "description": "If you're interested in collaborating, volunteering or participating in our programs, contact us. We're always open to new ideas and collaborations that can enrich our community work.",
+    "volunteer": "Become a Volunteer",
+    "contact": "Contact Us"
+  }
+}
