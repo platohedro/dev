@@ -1,9 +1,16 @@
 {
+  "language": {
+    "label": "Select language",
+    "es": "Español",
+    "en": "English"
+  },
   "nav": {
     "education": "Education",
     "residencies": "Residencies",
     "technology": "Technology",
+    "events": "Events",
     "shop": "Shop / Gallery",
+    "about": "About",
     "donate": "Support"
   },
   "theme": {
@@ -253,6 +260,44 @@
       "custom": "OR ENTER A CUSTOM AMOUNT (COP)",
       "placeholder": "Other amount"
     },
+    "frequency": {
+      "label": "FREQUENCY",
+      "options": ["One time", "Monthly", "Annual"]
+    },
+    "impact": {
+      "title": "What your support makes possible",
+      "items": [
+        "$50k covers supplies for one child for a month",
+        "$150k funds a workshop session for 8 young people",
+        "$300k sustains a week of an art residency",
+        "$1M sponsors a full residency scholarship"
+      ]
+    },
+    "howTo": {
+      "title": "How to donate →"
+    },
+    "instructions": [
+      "Fill in your information",
+      "Choose a payment method",
+      "Review your amount",
+      "Confirm"
+    ],
+    "otherWays": {
+      "title": "Other ways to support",
+      "transfer": {
+        "title": "Bank transfer:",
+        "description": "send your contribution to our institutional account."
+      },
+      "inKind": {
+        "title": "In-kind donations:",
+        "description": "materials and equipment for workshops and labs."
+      },
+      "volunteer": {
+        "title": "Volunteering:",
+        "description": "join our processes with time, support or professional services."
+      }
+    },
+    "securePaymentNote": "🔒 Secure payment · Platohedro, Medellín, Colombia",
     "form": {
       "email": "Email address",
       "name": "Full name",
@@ -284,7 +329,18 @@
       "technology": "Technology",
       "shop": "Shop",
       "events": "Events",
-      "donate": "Support"
+      "donate": "Support",
+      "education": "Education",
+      "lab": "Lab",
+      "narratives": "Narratives",
+      "music": "Music",
+      "organization": "Organization",
+      "about": "About",
+      "artAndThought": "Art & Thought",
+      "press": "Press",
+      "contactUs": "Contact us",
+      "volunteer": "Volunteer",
+      "newsletter": "Newsletter"
     },
     "social": {
       "instagram": "Instagram",
@@ -293,7 +349,12 @@
       "twitter": "Twitter"
     },
     "rights": "All rights reserved.",
-    "madeWith": "Made with love by the Platohedro community"
+    "madeWith": "Made with love by the Platohedro community",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "accessibility": "Accessibility",
+    "organizationDescription": "Cultural organization\nMedellín, Colombia\nFounded in 2004",
+    "copyright": "© {{year}} Platohedro. Medellín, Colombia."
   },
   "language": {
     "label": "Language",

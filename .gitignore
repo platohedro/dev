@@ -1,0 +1,13 @@
+# Notas operativas locales: no versionar ni publicar.
+DONACIONES_PASARELAS.local.md
+.next/
+out/
+dist/
+index.html
+*.tsbuildinfo
+node_modules
+package-lock.json
+yarn.lock
+.vercel/
+.env*
+!.env.example

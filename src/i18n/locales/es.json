@@ -1,9 +1,16 @@
 {
+  "language": {
+    "label": "Seleccionar idioma",
+    "es": "Español",
+    "en": "English"
+  },
   "nav": {
     "education": "Educación",
     "residencies": "Residencias",
     "technology": "Tecnología",
+    "events": "Agenda",
     "shop": "Tienda / Galería",
+    "about": "Acerca",
     "donate": "Apoyar"
   },
   "theme": {
@@ -253,6 +260,44 @@
       "custom": "O INGRESA UN MONTO PERSONALIZADO (COP)",
       "placeholder": "Otro monto"
     },
+    "frequency": {
+      "label": "FRECUENCIA",
+      "options": ["Una vez", "Mensual", "Anual"]
+    },
+    "impact": {
+      "title": "¿Qué hace posible tu aporte?",
+      "items": [
+        "$50k cubre materiales para un niñe durante un mes",
+        "$150k financia una sesión de taller para 8 jóvenes",
+        "$300k sostiene una semana de residencia artística",
+        "$1M patrocina una beca de residencia completa"
+      ]
+    },
+    "howTo": {
+      "title": "Cómo donar →"
+    },
+    "instructions": [
+      "Completar tu información",
+      "Elegir método de pago",
+      "Revisar el monto",
+      "Confirmar"
+    ],
+    "otherWays": {
+      "title": "Otras formas de apoyar",
+      "transfer": {
+        "title": "Transferencia bancaria:",
+        "description": "envía tu aporte a nuestra cuenta institucional."
+      },
+      "inKind": {
+        "title": "Donaciones en especie:",
+        "description": "materiales y equipos para talleres y laboratorios."
+      },
+      "volunteer": {
+        "title": "Voluntariado:",
+        "description": "únete a nuestros procesos con tiempo, apoyo o servicios profesionales."
+      }
+    },
+    "securePaymentNote": "🔒 Pago seguro · Platohedro, Medellín, Colombia",
     "form": {
       "email": "Correo electrónico",
       "name": "Nombre completo",
@@ -284,7 +329,18 @@
       "technology": "Tecnología",
       "shop": "Tienda",
       "events": "Eventos",
-      "donate": "Apoyar"
+      "donate": "Apoyar",
+      "education": "Educación",
+      "lab": "Laboratorio",
+      "narratives": "Narrativas",
+      "music": "Música",
+      "organization": "Organización",
+      "about": "Acerca",
+      "artAndThought": "Arte y pensamiento",
+      "press": "Prensa",
+      "contactUs": "Contáctanos",
+      "volunteer": "Voluntariado",
+      "newsletter": "Boletín"
     },
     "social": {
       "instagram": "Instagram",
@@ -293,7 +349,12 @@
       "twitter": "Twitter"
     },
     "rights": "Todos los derechos reservados.",
-    "madeWith": "Hecho con cariño por la comunidad Platohedro"
+    "madeWith": "Hecho con cariño por la comunidad Platohedro",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "accessibility": "Accesibilidad",
+    "organizationDescription": "Organización cultural\nMedellín, Colombia\nFundada en 2004",
+    "copyright": "© {{year}} Platohedro. Medellín, Colombia."
   },
   "language": {
     "label": "Idioma",

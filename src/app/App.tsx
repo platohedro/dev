@@ -1,8 +1,9 @@
+"use client";
+
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ArrowUpRight,
-  Menu,
-  X,
   ChevronLeft,
   ChevronRight,
   Play,
@@ -13,8 +14,6 @@ import {
   Users,
   CheckCircle,
   ExternalLink,
-  Sun,
-  Moon,
   Wrench,
   Hammer,
   AlertCircle,
@@ -22,108 +21,102 @@ import {
 } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { RenovationPopup } from "@/app/components/ui/renovation-popup";
-import { LanguageSwitcher } from "@/app/components/LanguageSwitcher";
 import { AboutPage } from "@/app/components/AboutPage";
-import logoImg from "../public/cropped-LOGO-NEGRO-SIN-LETRAS.png";
+import { SiteHeader } from "@/app/components/SiteHeader";
+import type { PublicEvent } from "@/lib/events";
+
+const lightLogo = "/logos/ph_blanco.png";
+const donationAmounts = [50_000, 150_000, 300_000, 1_000_000];
+
+const parseHash = (hash: string): { page: "home" | "about"; section: string } => {
+  const cleaned = hash.replace(/^#/, "");
+  if (cleaned === "about" || cleaned === "/about" || cleaned.startsWith("/about")) {
+    return { page: "about", section: "" };
+  }
+
+  if (cleaned.startsWith("/")) {
+    return { page: "home", section: cleaned.slice(1) };
+  }
+
+  return { page: "home", section: cleaned };
+};
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
 const programs = [
   {
     id: 1,
-    title: "Educación Artística Comunitaria",
-    tag: "Niñes 8–18",
-    desc: "Talleres semanales de artes plásticas, escultura y medios mixtos que construyen confianza creativa desde la raíz.",
+    titleKey: "programs.items.0.title",
+    tagKey: "programs.items.0.tag",
+    descKey: "programs.items.0.description",
     image: "https://images.unsplash.com/photo-1588072432836-e10032774350?w=700&h=500&fit=crop&auto=format",
     color: "#d4f500",
   },
   {
     id: 2,
-    title: "Laboratorio de Medios Digitales",
-    tag: "Todas las edades",
-    desc: "Fotografía, edición de video e ilustración digital con herramientas de nivel profesional, accesibles para todes.",
+    titleKey: "programs.items.1.title",
+    tagKey: "programs.items.1.tag",
+    descKey: "programs.items.1.description",
     image: "https://images.unsplash.com/photo-1603344797033-f0f4f587ab60?w=700&h=500&fit=crop&auto=format",
     color: "#ff3366",
   },
   {
     id: 3,
-    title: "Narrativas Colectivas",
-    tag: "Jóvenes y adultes",
-    desc: "Historia oral, fanzines y escritura narrativa que centra las voces del territorio y la memoria viva.",
+    titleKey: "programs.items.2.title",
+    tagKey: "programs.items.2.tag",
+    descKey: "programs.items.2.description",
     image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=700&h=500&fit=crop&auto=format",
     color: "#a78bfa",
   },
   {
     id: 4,
-    title: "Música y Producción Sonora",
-    tag: "13+ años",
-    desc: "Composición, producción de beats y grabación en estudio. Del barrio al escenario, con acompañamiento real.",
+    titleKey: "programs.items.3.title",
+    tagKey: "programs.items.3.tag",
+    descKey: "programs.items.3.description",
     image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=700&h=500&fit=crop&auto=format",
     color: "#fb923c",
   },
   {
     id: 5,
-    title: "Residencias de Artes Visuales",
-    tag: "Artistas",
-    desc: "Residencias de seis semanas con espacio de estudio, mentoría y exposición colectiva de cierre.",
+    titleKey: "programs.items.4.title",
+    tagKey: "programs.items.4.tag",
+    descKey: "programs.items.4.description",
     image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=700&h=500&fit=crop&auto=format",
     color: "#34d399",
   },
 ];
 
-const quotes = [
-  {
-    text: "Platohedro me dio el lenguaje para decir lo que siempre sentí. Mi arte ahora tiene sentido — para mí y para mi comunidad.",
-    author: "Valentina M.",
-    role: "Participante, Educación Artística, 2023",
-  },
-  {
-    text: "Llegué pensando que no tenía nada que decir. Me fui con un fanzine y una lectura en la biblioteca. Eso lo cambió todo.",
-    author: "Andrés K.",
-    role: "Participante, Narrativas Colectivas",
-  },
-  {
-    text: "La residencia no solo me dio espacio de estudio. Me dio pares que me desafían y mentores que creen en el trabajo.",
-    author: "Sienna R.",
-    role: "Residencia de Artes Visuales, Primavera 2024",
-  },
+const quoteKeys = [
+  "testimonials.quotes.0",
+  "testimonials.quotes.1",
+  "testimonials.quotes.2",
 ];
 
 const events = [
   {
     date: { month: "AGO", day: "09" },
-    title: "Noche de Estudio Abierto",
-    location: "Galería Principal, 3er Piso",
-    time: "6:00 – 9:00 PM",
-    tag: "Libre",
+    key: "events.items.0",
+    tagKey: "events.tags.free",
   },
   {
     date: { month: "AGO", day: "16" },
-    title: "Apertura: Exposición de Jóvenes Artistas",
-    location: "Sala Comunal",
-    time: "5:00 – 8:00 PM",
-    tag: "Libre",
+    key: "events.items.1",
+    tagKey: "events.tags.free",
   },
   {
     date: { month: "AGO", day: "24" },
-    title: "Taller de Producción Sonora",
-    location: "Estudio de Grabación B",
-    time: "2:00 – 5:00 PM",
-    tag: "Inscripción",
+    key: "events.items.2",
+    tagKey: "events.tags.registration",
   },
   {
     date: { month: "SEP", day: "07" },
-    title: "Conversación con Artista en Residencia",
-    location: "Sala de Conferencias, 2do Piso",
-    time: "7:00 – 9:00 PM",
-    tag: "Libre",
+    key: "events.items.3",
+    tagKey: "events.tags.free",
   },
   {
     date: { month: "SEP", day: "14" },
-    title: "Encuentro Anual de Comunidad",
-    location: "Terraza Platohedro",
-    time: "7:00 PM",
-    tag: "Registro",
+    key: "events.items.4",
+    tagKey: "events.tags.register",
   },
 ];
 
@@ -175,46 +168,113 @@ const techInitiatives = [
   },
 ];
 
-const donorTiers = [
-  { amount: "$50k", label: "Semilla", perks: "boletín, actualizaciones de eventos" },
-  { amount: "$150k", label: "Raíz", perks: "Todo lo anterior + 2 entradas a eventos" },
-  { amount: "$300k", label: "Árbol", perks: "Todo lo anterior + catálogo anual" },
-  { amount: "$1M", label: "Bosque", perks: "Todo lo anterior + visita al estudio y encuentro con artistas" },
+const residencyTypeAssets = [
+  {
+    color: "#0051A2",
+    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&h=600&fit=crop&auto=format",
+  },
+  {
+    color: "#FF46A2",
+    image: "https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=1400&h=800&fit=crop&auto=format",
+  },
+  {
+    color: "#99CC33",
+    image: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&h=800&fit=crop&auto=format",
+  },
 ];
 
 // ─── COMPONENT ───────────────────────────────────────────────────────────────
 
-export default function App() {
-  const [navOpen, setNavOpen] = useState(false);
+export default function App({ initialPage = "home" }: { initialPage?: "home" | "about" }) {
+  const { t } = useTranslation();
+  const [route, setRoute] = useState<{ page: "home" | "about"; section: string }>(() => {
+    if (initialPage === "about") {
+      return { page: "about", section: "" };
+    }
+    if (typeof window === "undefined") {
+      return { page: "home", section: "" };
+    }
+    return parseHash(window.location.hash);
+  });
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [selectedTier, setSelectedTier] = useState(1);
   const [customAmount, setCustomAmount] = useState("");
   const [donateStep, setDonateStep] = useState(1);
+  const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
+  const [donationError, setDonationError] = useState("");
   const [showRenovationPopup, setShowRenovationPopup] = useState(true);
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    try {
-      const stored = localStorage.getItem("theme");
-      if (stored) return stored === "dark";
-      return typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    } catch (e) {
-      return true;
-    }
-  });
+  const [publishedEvents, setPublishedEvents] = useState<PublicEvent[]>([]);
+  const [publishedProducts, setPublishedProducts] = useState<Array<{ id: string; slug: string; name: string; image_url: string | null; price_cop: number }>>([]);
+
+  const quotes = t("testimonials.quotes", { returnObjects: true }) as Array<{ text: string; author: string; role: string }>;
+  const programsData = programs.map((prog) => ({
+    ...prog,
+    title: t(prog.titleKey),
+    tag: t(prog.tagKey),
+    desc: t(prog.descKey),
+  }));
+  const residencyFeatured = t("residencies.featured", { returnObjects: true }) as {
+    tag: string;
+    subtitle: string;
+    title: string;
+    description: string;
+    stats: Array<{ value: string; label: string }>;
+    apply: string;
+  };
+  const residencyTypes = t("residencies.types", { returnObjects: true }) as Array<{ title: string; tag: string; description: string; color: string; image: string }>;
+  const techInitiativesData = techInitiatives.map((item, index) => ({
+    ...item,
+    title: t(`technology.initiatives.${index}.title`),
+    description: t(`technology.initiatives.${index}.description`),
+  }));
+  const donateSteps = t("donate.steps", { returnObjects: true }) as string[];
+  const donateTiersData = t("donate.tiers.items", { returnObjects: true }) as Array<{ amount: string; label: string; perks: string }>;
+  const donateBadge = t("donate.badge");
+  const donateTitlePart1 = t("donate.title.part1");
+  const donateTitlePart2 = t("donate.title.part2");
+  const donateDescription = t("donate.description");
+  const donateCustom = t("donate.tiers.custom");
+  const donatePlaceholder = t("donate.tiers.placeholder");
+  const donateButton = t("donate.form.submit");
+  const donateTierLabel = t("donate.tiers.label");
+  const donateFrequencyLabel = t("donate.frequency.label");
+  const donateFrequencyOptions = t("donate.frequency.options", { returnObjects: true }) as string[];
+  const donateImpactTitle = t("donate.impact.title");
+  const donateImpactItems = t("donate.impact.items", { returnObjects: true }) as string[];
+  const donateHowToTitle = t("donate.howTo.title");
+  const donateInstructions = t("donate.instructions", { returnObjects: true }) as string[];
+  const donateSecurePaymentNote = t("donate.securePaymentNote");
+  const footerContact = t("footer.contact", { returnObjects: true }) as { title: string; address: string; email: string; phone: string };
+  const footerLinks = t("footer.links", { returnObjects: true }) as {
+    programs: string;
+    residencies: string;
+    technology: string;
+    shop: string;
+    events: string;
+    donate: string;
+  };
+  const footerSocial = t("footer.social", { returnObjects: true }) as { instagram: string; facebook: string; youtube: string; twitter: string };
+  const footerOrganizationDescription = t("footer.organizationDescription");
+  const footerCopyright = t("footer.copyright", { year: new Date().getFullYear() });
 
   useEffect(() => {
-    try {
-      if (isDark) {
-        document.documentElement.classList.add("dark");
-        localStorage.setItem("theme", "dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-        localStorage.setItem("theme", "light");
-      }
-    } catch (e) {
-      // ignore
-    }
-  }, [isDark]);
+    if (initialPage === "about") return;
+    const updateRoute = () => setRoute(parseHash(window.location.hash));
+    window.addEventListener("hashchange", updateRoute);
+    return () => window.removeEventListener("hashchange", updateRoute);
+  }, [initialPage]);
+
+  useEffect(() => {
+    fetch("/api/events")
+      .then((response) => response.ok ? response.json() : { events: [] })
+      .then(({ events: nextEvents }) => setPublishedEvents(Array.isArray(nextEvents) ? nextEvents : []))
+      .catch(() => setPublishedEvents([]));
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/products").then((response) => response.ok ? response.json() : { products: [] }).then(({ products }) => setPublishedProducts(Array.isArray(products) ? products : [])).catch(() => setPublishedProducts([]));
+  }, []);
 
   const prevProgram = () => setCarouselIndex((i) => (i === 0 ? programs.length - 1 : i - 1));
   const nextProgram = () => setCarouselIndex((i) => (i === programs.length - 1 ? 0 : i + 1));
@@ -222,128 +282,64 @@ export default function App() {
   const prevQuote = () => setQuoteIndex((i) => (i === 0 ? quotes.length - 1 : i - 1));
   const nextQuote = () => setQuoteIndex((i) => (i === quotes.length - 1 ? 0 : i + 1));
 
+  const startWompiCheckout = async () => {
+    const amount = selectedTier >= 0 ? donationAmounts[selectedTier] ?? 0 : Number(customAmount);
+    if (!Number.isSafeInteger(amount) || amount < 1_000) {
+      setDonationError("Ingresa un aporte válido de al menos $1.000 COP.");
+      return;
+    }
+
+    setDonationError("");
+    setIsCreatingCheckout(true);
+
+    try {
+      const response = await fetch("/api/wompi/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount }),
+      });
+      const data = await response.json() as { error?: string; checkoutUrl?: string; fields?: Record<string, string> };
+      if (!response.ok || !data.checkoutUrl || !data.fields) {
+        throw new Error(data.error || "No fue posible iniciar el pago con Wompi.");
+      }
+
+      const form = document.createElement("form");
+      form.method = "GET";
+      form.action = data.checkoutUrl;
+      Object.entries(data.fields).forEach(([name, value]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+      });
+      document.body.appendChild(form);
+      form.submit();
+    } catch (error) {
+      setDonationError(error instanceof Error ? error.message : "No fue posible iniciar el pago con Wompi.");
+      setIsCreatingCheckout(false);
+    }
+  };
+
   return (
     <div
       className="min-h-screen bg-background text-foreground overflow-x-hidden"
       style={{ fontFamily: "'Instrument Sans', sans-serif" }}
     >
 
-      {/* ══════════════════════════════════════════════════════
-          HEADER / NAVIGATION BAR
-      ══════════════════════════════════════════════════════ */}
-      <header className="sticky top-0 z-50 bg-[#0051A2]/95 backdrop-blur border-b border-white/20">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 overflow-hidden bg-[#7dcfca] flex items-center justify-center p-1">
-              <ImageWithFallback
-                src={logoImg}
-                alt="Platohedro logo — geometric lattice of connected diamonds"
-                className="w-full h-full object-contain logo-img"
-              />
-            </div>
-            <span className="text-base font-bold tracking-widest uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
-              Platohedro
-            </span>
-          </a>
-
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {[
-              ["Educación", "#programs"],
-              ["Residencias", "#residencies"],
-              ["Tecnología", "#technology"],
-              ["Tienda / Galería", "#shop"],
-              ["Acerca de", "#about"],
-            ].map(([label, href]) => (
-              <a
-                key={label}
-                href={href}
-                className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 whitespace-nowrap"
-              >
-                {label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Donate CTA */}
-          <div className="hidden lg:flex items-center gap-3">
-            <a
-              href="#donate"
-              className="group flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-bold hover:bg-foreground transition-colors duration-200"
-            >
-              <Heart size={14} className="group-hover:scale-110 transition-transform" />
-              Apoyar
-            </a>
-          </div>
-
-          {/* Theme toggle (between Apoyar and menu) */}
-          <button
-            aria-label={isDark ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
-            onClick={() => setIsDark(!isDark)}
-            className="p-2 rounded-md bg-transparent hover:bg-white/10 text-current mr-2"
-          >
-            {isDark ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-
-          {/* Language switcher */}
-          <div className="hidden lg:flex items-center">
-            <LanguageSwitcher />
-          </div>
-
-          {/* Mobile menu toggle */}
-          <div className="flex items-center">
-            <button
-              className="lg:hidden text-white"
-              onClick={() => setNavOpen(!navOpen)}
-              aria-label="Abrir menú"
-            >
-              {navOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile menu */}
-        {navOpen && (
-          <div className="lg:hidden bg-[#003d7a] border-t border-white/20 px-6 py-6 space-y-4">
-            {[
-              ["Educación", "#programs"],
-              ["Residencias", "#residencies"],
-              ["Tecnología", "#technology"],
-              ["Tienda / Galería", "#shop"],
-              ["Acerca de", "#about"],
-            ].map(([label, href]) => (
-              <a
-                key={label}
-                href={href}
-                className="block text-sm text-muted-foreground hover:text-foreground py-1"
-                onClick={() => setNavOpen(false)}
-              >
-                {label}
-              </a>
-            ))}
-            <a
-              href="#donate"
-              className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground text-sm font-bold w-fit"
-              onClick={() => setNavOpen(false)}
-            >
-              <Heart size={14} /> Apoyar
-            </a>
-          </div>
-        )}
-      </header>
+      <SiteHeader />
 
       {/* ══════════════════════════════════════════════════════
-          ABOUT PAGE
+          MAIN PAGE CONTENT
       ══════════════════════════════════════════════════════ */}
-      <section id="about">
+      {route.page === "about" ? (
         <AboutPage />
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
-          HERO / MISSION STATEMENT
-      ══════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden">
+      ) : (
+        <>
+          {/* ══════════════════════════════════════════════════════
+              HERO / MISSION STATEMENT
+          ══════════════════════════════════════════════════════ */}
+          <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-secondary">
           <img
             src="https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=1400&h=800&fit=crop&auto=format"
@@ -359,7 +355,7 @@ export default function App() {
             <div className="flex items-center gap-3 mb-8">
               <div className="h-px w-10 bg-accent" />
               <span className="text-xs text-accent tracking-[0.3em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
-                Cultivando creatividad y comunidad desde 2004
+                {t("hero.label")}
               </span>
             </div>
 
@@ -368,12 +364,12 @@ export default function App() {
               className="text-[clamp(2.5rem,6vw,6rem)] leading-[0.95] font-bold mb-8"
               style={{ fontFamily: "'DM Serif Display', serif" }}
             >
-              <span className="italic text-primary">Buen Vivir,</span><br />
-              Buen Conocer.
+              <span className="italic text-primary">{t("hero.title.part1")}</span><br />
+              {t("hero.title.part2")}
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mb-10">
-              Platohedro es una organización cultural que trabaja en la intersección del arte, la tecnología y la educación para fomentar la transformación social, ambiental y personal. Colaboramos con comunidades para imaginar y construir nuevas posibilidades a través de la inteligencia colectiva, la experimentación creativa y las prácticas arraigadas en el territorio.
+              {t("hero.description")}
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -381,13 +377,13 @@ export default function App() {
                 href="#programs"
                 className="group flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold hover:bg-foreground transition-colors duration-200 text-sm"
               >
-                Explorar programas <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                {t("hero.cta.explore")} <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
               <a
                 href="#donate"
                 className="flex items-center gap-2 px-6 py-3 border border-border text-foreground font-semibold hover:border-primary hover:text-primary transition-colors duration-200 text-sm"
               >
-                <Heart size={16} /> Apoyar el proceso
+                <Heart size={16} /> {t("hero.cta.support")}
               </a>
             </div>
           </div>
@@ -395,10 +391,10 @@ export default function App() {
           {/* Quick stats */}
           <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border">
             {[
-              ["432", "Niñes y jóvenes al año (proyectado)"],
-              ["79", "Madres participantes al año (proyectado)"],
-              ["287", "Residencias desde 2004"],
-              ["22 años", "De impacto en Medellín"],
+              ["432", t("hero.stats.youth")],
+              ["79", t("hero.stats.mothers")],
+              ["287", t("hero.stats.residencies")],
+              ["22 años", t("hero.stats.years")],
             ].map(([num, label]) => (
               <div key={label} className="bg-background/80 backdrop-blur-sm px-6 py-5">
                 <div
@@ -423,7 +419,7 @@ export default function App() {
       <section className="border-y border-white/20 py-20 px-6 md:px-10" style={{ backgroundColor: "#FF46A2" }}>
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-xs text-white/70 tracking-widest uppercase block mb-10" style={{ fontFamily: "'DM Mono', monospace" }}>
-            En sus palabras
+            {t("testimonials.label")}
           </span>
 
           <div className="relative min-h-[160px] flex flex-col items-center justify-center">
@@ -477,10 +473,10 @@ export default function App() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <span className="text-xs text-primary tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
-              Educación
+              {t("programs.label")}
             </span>
             <h2 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>
-              Lo que ofrecemos
+              {t("programs.title")}
             </h2>
           </div>
           <div className="flex items-center gap-3">
@@ -498,7 +494,7 @@ export default function App() {
 
         {/* Desktop grid */}
         <div className="hidden md:grid grid-cols-5 gap-4">
-          {programs.map((prog, i) => (
+          {programsData.map((prog, i) => (
             <div
               key={prog.id}
               className="group relative overflow-hidden border border-border transition-all duration-500 cursor-pointer flex flex-col"
@@ -531,7 +527,7 @@ export default function App() {
                 </h3>
                 <p className="text-xs text-muted-foreground leading-relaxed flex-1">{prog.desc}</p>
                 <button className="mt-4 flex items-center gap-1 text-xs font-semibold transition-colors" style={{ color: prog.color }}>
-                  Saber más <ArrowUpRight size={12} />
+                  {t("programs.learnMore")} <ArrowUpRight size={12} />
                 </button>
               </div>
             </div>
@@ -543,25 +539,25 @@ export default function App() {
           <div className="relative overflow-hidden border border-border">
             <div className="relative aspect-[4/3] bg-muted">
               <img
-                src={programs[carouselIndex].image}
-                alt={programs[carouselIndex].title}
+                src={programsData[carouselIndex].image}
+                alt={programsData[carouselIndex].title}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-background/40" />
               <div
                 className="absolute top-4 left-4 px-2 py-0.5 text-xs font-bold"
-                style={{ backgroundColor: programs[carouselIndex].color, color: "#0d0714", fontFamily: "'DM Mono', monospace" }}
+                style={{ backgroundColor: programsData[carouselIndex].color, color: "#0d0714", fontFamily: "'DM Mono', monospace" }}
               >
-                {programs[carouselIndex].tag}
+                {programsData[carouselIndex].tag}
               </div>
             </div>
             <div className="p-6">
               <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: "'DM Serif Display', serif" }}>
-                {programs[carouselIndex].title}
+                {programsData[carouselIndex].title}
               </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{programs[carouselIndex].desc}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed">{programsData[carouselIndex].desc}</p>
               <button className="mt-4 flex items-center gap-1 text-sm font-semibold" style={{ color: programs[carouselIndex].color }}>
-                Saber más <ArrowUpRight size={14} />
+                {t("programs.learnMore")} <ArrowUpRight size={14} />
               </button>
             </div>
           </div>
@@ -594,15 +590,15 @@ export default function App() {
           <div className="flex items-end justify-between mb-12">
             <div>
               <span className="text-xs text-[#0051A2] tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
-                Residencias
+                {t("residencies.label")}
               </span>
               <h2 className="text-4xl md:text-5xl font-bold text-[#0051A2]" style={{ fontFamily: "'DM Serif Display', serif" }}>
-                Espacio para crear<br />
-                <span className="italic text-[#FF46A2]">desde adentro.</span>
+                {t("residencies.title.part1")}<br />
+                <span className="italic text-[#FF46A2]">{t("residencies.title.part2")}</span>
               </h2>
             </div>
-            <a href="#" className="hidden md:flex items-center gap-2 text-sm text-[#0051A2]/70 hover:text-[#0051A2] transition-colors">
-              Ver convocatorias <ArrowUpRight size={14} />
+            <a href="/tienda" className="hidden md:flex items-center gap-2 text-sm text-[#0051A2]/70 hover:text-[#0051A2] transition-colors">
+              {t("residencies.viewAll")} <ArrowUpRight size={14} />
             </a>
           </div>
 
@@ -616,18 +612,18 @@ export default function App() {
               />
               <div className="absolute inset-0 bg-[#0051A2]/20" />
               <div className="absolute top-5 left-5 px-3 py-1 bg-[#FF46A2] text-white text-xs font-bold" style={{ fontFamily: "'DM Mono', monospace" }}>
-                Convocatoria abierta
+                {residencyFeatured.tag}
               </div>
             </div>
             <div className="p-8 md:p-12 flex flex-col justify-center bg-white/90">
               <span className="text-xs text-[#FF46A2] tracking-widest uppercase block mb-4" style={{ fontFamily: "'DM Mono', monospace" }}>
-                Residencia Principal · 6 semanas
+                {residencyFeatured.tag} · {residencyFeatured.subtitle}
               </span>
               <h3 className="text-3xl font-bold mb-4 leading-tight text-[#0051A2]" style={{ fontFamily: "'DM Serif Display', serif" }}>
-                Residencia de Artes Visuales y Medios
+                {residencyFeatured.title}
               </h3>
               <p className="text-[#0051A2]/70 text-sm leading-relaxed mb-6">
-                Seis semanas de inmersión creativa con espacio de estudio propio, mentoría semanal, acceso a todos los laboratorios y una exposición colectiva de cierre abierta a la comunidad.
+                {residencyFeatured.description}
               </p>
               <div className="grid grid-cols-2 gap-4 mb-8">
                 {[["6", "Semanas de duración"], ["4", "Artistas por cohorte"], ["Libre", "Acceso a laboratorios"], ["2004", "Primera residencia"]].map(([val, label]) => (
@@ -638,36 +634,14 @@ export default function App() {
                 ))}
               </div>
               <a href="#" className="group inline-flex items-center gap-2 px-6 py-3 bg-[#0051A2] text-white text-sm font-semibold hover:bg-[#FF46A2] transition-colors w-fit">
-                Aplicar ahora <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                {residencyFeatured.apply} <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             </div>
           </div>
 
           {/* Other residency types */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              {
-                title: "Residencia de Investigación",
-                tag: "3 semanas",
-                desc: "Para investigadores, teóricos y curadores que quieren trabajar en el cruce entre arte, territorio y conocimiento.",
-                color: "#a78bfa",
-                image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&h=400&fit=crop&auto=format",
-              },
-              {
-                title: "Residencia Sonora",
-                tag: "4 semanas",
-                desc: "Producción, composición y experimentación sonora en el estudio de grabación. Para músicos, podcasters y artistas de audio.",
-                color: "#fb923c",
-                image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=400&fit=crop&auto=format",
-              },
-              {
-                title: "Residencia Comunitaria",
-                tag: "8 semanas",
-                desc: "Proceso de co-creación con comunidades del barrio. Arte situado, memoria colectiva y transformación desde el territorio.",
-                color: "#34d399",
-                image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=400&fit=crop&auto=format",
-              },
-            ].map((res) => (
+            {residencyTypes.map((res) => (
               <article key={res.title} className="group cursor-pointer border border-[#0051A2]/20 hover:border-[#0051A2]/50 transition-all bg-white/80 flex flex-col">
                 <div className="overflow-hidden aspect-[16/9] bg-[#003d7a] relative">
                   <img src={res.image} alt={res.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -680,9 +654,9 @@ export default function App() {
                   <h3 className="font-bold mb-2 text-[#0051A2] group-hover:text-[#FF46A2] transition-colors" style={{ fontFamily: "'DM Serif Display', serif" }}>
                     {res.title}
                   </h3>
-                  <p className="text-xs text-[#0051A2]/70 leading-relaxed flex-1">{res.desc}</p>
+                  <p className="text-xs text-[#0051A2]/70 leading-relaxed flex-1">{res.description}</p>
                   <button className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#0051A2] hover:text-[#FF46A2] transition-colors">
-                    Saber más <ArrowUpRight size={12} />
+                    {t("residencies.learnMore")} <ArrowUpRight size={12} />
                   </button>
                 </div>
               </article>
@@ -699,32 +673,31 @@ export default function App() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <span className="text-xs text-white/70 tracking-widest uppercase block mb-4" style={{ fontFamily: "'DM Mono', monospace" }}>
-              Tecnología
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ fontFamily: "'DM Serif Display', serif" }}>
-              Herramientas creativas<br />
-              <span className="italic text-[#0051A2]">para todas las personas.</span>
-            </h2>
-            <p className="text-white/75 leading-relaxed mb-10 max-w-md">
-              El acceso a la tecnología creativa no puede depender del ingreso económico. Nuestros laboratorios digitales y estudios de medios están abiertos a toda la comunidad, de forma libre y gratuita, bajo principios de Buen Conocer.
-            </p>
-
+                  {t("technology.label")}
+                </span>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ fontFamily: "'DM Serif Display', serif" }}>
+                  {t("technology.title.part1")}<br />
+                  <span className="italic text-[#0051A2]">{t("technology.title.part2")}</span>
+                </h2>
+                <p className="text-white/75 leading-relaxed mb-10 max-w-md">
+                  {t("technology.description")}
+                </p>
             <div className="space-y-6">
-              {techInitiatives.map((item) => (
+              {techInitiativesData.map((item) => (
                 <div key={item.title} className="flex gap-5 group cursor-pointer">
-                  <div className="text-2xl shrink-0 w-10">{item.icon}</div>
+                  <div className="text-2xl shrink-0 w-10">{item.icon ?? '🔧'}</div>
                   <div>
                     <h3 className="font-bold mb-1 text-white group-hover:text-[#0051A2] transition-colors" style={{ fontFamily: "'DM Serif Display', serif" }}>
                       {item.title}
                     </h3>
-                    <p className="text-sm text-white/70 leading-relaxed">{item.desc}</p>
+                    <p className="text-sm text-white/70 leading-relaxed">{item.description || item.desc || item.description}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <a href="#" className="mt-10 inline-flex items-center gap-2 px-6 py-3 border border-white text-white text-sm font-semibold hover:bg-white hover:text-[#FF46A2] transition-colors duration-200">
-              Reservar tiempo en estudio <ExternalLink size={14} />
+              {t("technology.reserve")} <ExternalLink size={14} />
             </a>
           </div>
 
@@ -753,37 +726,33 @@ export default function App() {
           <div className="flex items-end justify-between mb-12">
             <div>
               <span className="text-xs text-[#0051A2] tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
-                Tienda y Galería
+                {t("shop.label")}
               </span>
               <h2 className="text-4xl md:text-5xl font-bold text-[#0051A2]" style={{ fontFamily: "'DM Serif Display', serif" }}>
-                Arte que puedes llevar contigo
+                {t("shop.title")}
               </h2>
             </div>
-            <a href="#" className="hidden md:flex items-center gap-2 text-sm text-[#0051A2]/70 hover:text-[#0051A2] transition-colors">
-              Catálogo completo <ArrowUpRight size={14} />
+            <a href="/tienda" className="hidden md:flex items-center gap-2 text-sm text-[#0051A2]/70 hover:text-[#0051A2] transition-colors">
+              {t("shop.viewAll")} <ArrowUpRight size={14} />
             </a>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { title: "Sin título No. 7", artist: "Marcus Webb", price: "$240.000", image: "https://images.unsplash.com/photo-1549887534-1541e9326347?w=500&h=600&fit=crop&auto=format" },
-              { title: "Sistemas Raíz", artist: "Amara K.", price: "$185.000", image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500&h=600&fit=crop&auto=format" },
-              { title: "Cámara Eco", artist: "Serigrafía Residencia", price: "$45.000", image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=500&h=600&fit=crop&auto=format" },
-              { title: "Fanzine Anual 2024", artist: "Colectivo Platohedro", price: "$18.000", image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&h=600&fit=crop&auto=format" },
-            ].map((item) => (
-              <div key={item.title} className="group cursor-pointer">
+            {publishedProducts.map((item) => (
+              <a href={`/tienda/${item.slug}`} key={item.id} className="group cursor-pointer">
                 <div className="overflow-hidden aspect-[5/6] bg-[#003d7a] border border-[#0051A2]/30 mb-3">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  {item.image_url && <img src={item.image_url} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />}
                 </div>
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="text-sm font-semibold text-[#0051A2] group-hover:text-[#FF46A2] transition-colors">{item.title}</div>
-                    <div className="text-xs text-[#0051A2]/60 mt-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>{item.artist}</div>
+                    <div className="text-sm font-semibold text-[#0051A2] group-hover:text-[#FF46A2] transition-colors">{item.name}</div>
+                    <div className="text-xs text-[#0051A2]/60 mt-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>Tienda Platohedro</div>
                   </div>
-                  <div className="text-sm font-bold text-[#FF46A2]" style={{ fontFamily: "'DM Mono', monospace" }}>{item.price}</div>
+                  <div className="text-sm font-bold text-[#FF46A2]" style={{ fontFamily: "'DM Mono', monospace" }}>${Number(item.price_cop).toLocaleString("es-CO")}</div>
                 </div>
-              </div>
+              </a>
             ))}
+            {publishedProducts.length === 0 && <p className="col-span-full text-sm text-[#0051A2]/70">Próximamente habrá productos disponibles.</p>}
           </div>
         </div>
       </section>
@@ -796,10 +765,10 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
             <span className="text-xs text-white/70 tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
-              Míranos
+              {t("video.label")}
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-white" style={{ fontFamily: "'DM Serif Display', serif" }}>
-              Platohedro en movimiento
+              {t("video.title")}
             </h2>
           </div>
 
@@ -818,9 +787,9 @@ export default function App() {
             <div className="absolute bottom-6 left-6 right-6">
               <div className="inline-block bg-background/90 backdrop-blur-sm px-4 py-2">
                 <p className="text-sm font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>
-                  "Platohedro: Un año en el estudio" — Película anual 2024
+                  {t("video.videoTitle")}
                 </p>
-                <p className="text-xs text-muted-foreground mt-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>12 min</p>
+                <p className="text-xs text-muted-foreground mt-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>{t("video.duration")}</p>
               </div>
             </div>
           </div>
@@ -836,26 +805,31 @@ export default function App() {
           <div className="flex items-end justify-between mb-12">
             <div>
               <span className="text-xs text-primary tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
-                Próximamente
+                {t("events.label")}
               </span>
               <h2 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>
-                Eventos y Calendario
+                {t("events.title")}
               </h2>
             </div>
-            <a href="#" className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Calendario completo <ArrowUpRight size={14} />
+            <a href="/eventos" className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+              {t("events.viewAll")} <ArrowUpRight size={14} />
             </a>
           </div>
 
           <div className="divide-y divide-border border-t border-b border-border">
-            {events.map((event) => (
-              <div
-                key={event.title}
-                className="group flex items-center gap-6 py-5 hover:bg-background/30 px-2 -mx-2 transition-colors cursor-pointer"
+            {publishedEvents.map((event) => {
+              const date = new Date(event.starts_at);
+              const month = new Intl.DateTimeFormat("es-CO", { month: "short" }).format(date).replace(".", "").toUpperCase();
+              const day = new Intl.DateTimeFormat("es-CO", { day: "2-digit" }).format(date);
+              const time = new Intl.DateTimeFormat("es-CO", { hour: "numeric", minute: "2-digit" }).format(date);
+              return <a
+                key={event.id}
+                href={`/eventos/${event.slug}`}
+                className="group flex items-center gap-6 py-5 hover:bg-background/30 px-2 -mx-2 transition-colors"
               >
                 <div className="w-16 text-center shrink-0 border border-border group-hover:border-primary/50 transition-colors py-2">
-                  <div className="text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>{event.date.month}</div>
-                  <div className="text-2xl font-bold text-primary leading-tight" style={{ fontFamily: "'DM Serif Display', serif" }}>{event.date.day}</div>
+                  <div className="text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>{month}</div>
+                  <div className="text-2xl font-bold text-primary leading-tight" style={{ fontFamily: "'DM Serif Display', serif" }}>{day}</div>
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="font-bold text-base group-hover:text-primary transition-colors" style={{ fontFamily: "'DM Serif Display', serif" }}>
@@ -863,10 +837,10 @@ export default function App() {
                   </h3>
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
                     <span className="flex items-center gap-1 text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>
-                      <MapPin size={10} /> {event.location}
+                      <MapPin size={10} /> {[event.venue, event.city].filter(Boolean).join(" · ")}
                     </span>
                     <span className="flex items-center gap-1 text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>
-                      <Calendar size={10} /> {event.time}
+                      <Calendar size={10} /> {time}
                     </span>
                   </div>
                 </div>
@@ -875,16 +849,17 @@ export default function App() {
                     className="px-2 py-0.5 text-xs font-bold"
                     style={{
                       fontFamily: "'DM Mono', monospace",
-                      backgroundColor: event.tag === "Libre" ? "rgba(212,245,0,0.15)" : "rgba(255,51,102,0.15)",
-                      color: event.tag === "Libre" ? "#d4f500" : "#ff3366",
+                      backgroundColor: "rgba(212,245,0,0.15)",
+                      color: "#d4f500",
                     }}
                   >
-                    {event.tag}
+                    {event.category || "Evento"}
                   </span>
                   <ArrowUpRight size={16} className="text-muted-foreground group-hover:text-primary transition-colors hidden md:block" />
                 </div>
-              </div>
-            ))}
+              </a>;
+            })}
+            {publishedEvents.length === 0 && <p className="py-8 text-sm text-muted-foreground">No hay eventos próximos publicados.</p>}
           </div>
         </div>
       </section>
@@ -897,7 +872,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-xs text-[#0051A2] tracking-widest uppercase block" style={{ fontFamily: "'DM Mono', monospace" }}>
-              Posible gracias a nuestros aliados y financiadores
+              {t("partners.label")}
             </span>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-[#0051A2]/20 border border-[#0051A2]/20">
@@ -914,7 +889,7 @@ export default function App() {
             ))}
           </div>
           <p className="text-center text-xs text-[#0051A2]/70 mt-6" style={{ fontFamily: "'DM Mono', monospace" }}>
-            ¿Interesado en ser aliado? <a href="#contact" className="text-primary hover:underline">Escríbenos →</a>
+            {t("partners.cta")} <a href="#contact" className="text-primary hover:underline">{t("partners.contact")}</a>
           </p>
         </div>
       </section>
@@ -927,43 +902,38 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-xs font-bold mb-6" style={{ fontFamily: "'DM Mono', monospace" }}>
-              <Heart size={12} /> APOYAR — SOSTÉN EL PROCESO
+              <Heart size={12} /> {donateBadge}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'DM Serif Display', serif" }}>
-              Cada aporte sostiene<br />
-              <span className="italic text-primary">vidas creativas reales.</span>
+              {donateTitlePart1}<br />
+              <span className="italic text-primary">{donateTitlePart2}</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              Tu apoyo va directamente a los programas, residencias y laboratorios de Platohedro en Medellín. Aquí no hay intermediarios — solo comunidad.
+              {donateDescription}
             </p>
           </div>
 
           {/* Flow steps */}
           <div className="flex items-center justify-center gap-2 mb-12">
-            {[
-              [1, "Elegir monto"],
-              [2, "Tus datos"],
-              [3, "Pago"],
-              [4, "Confirmar"],
-            ].map(([step, label], i) => (
-              <div key={step as number} className="flex items-center gap-2">
-                <button onClick={() => setDonateStep(step as number)} className="flex items-center gap-2 group">
+            {donateSteps.map((label, i) => (
+              <div key={label} className="flex items-center gap-2">
+                <button onClick={() => setDonateStep(i + 1)} className="flex items-center gap-2 group">
                   <div
                     className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
                     style={{
-                      backgroundColor: donateStep >= (step as number) ? "#d4f500" : "transparent",
-                      color: donateStep >= (step as number) ? "#0d0714" : "#a08cb8",
-                      border: donateStep >= (step as number) ? "none" : "1px solid #3a2050",
+                      backgroundColor: donateStep >= i + 1 ? "#d4f500" : "transparent",
+                      color: donateStep >= i + 1 ? "#0d0714" : "#a08cb8",
+                      border: donateStep >= i + 1 ? "none" : "1px solid #3a2050",
                       fontFamily: "'DM Mono', monospace",
                     }}
                   >
-                    {donateStep > (step as number) ? <CheckCircle size={14} /> : step}
+                    {donateStep > i + 1 ? <CheckCircle size={14} /> : i + 1}
                   </div>
-                  <span className="text-xs hidden md:block" style={{ fontFamily: "'DM Mono', monospace", color: donateStep >= (step as number) ? "#f0ead8" : "#a08cb8" }}>
+                  <span className="text-xs hidden md:block" style={{ fontFamily: "'DM Mono', monospace", color: donateStep >= i + 1 ? "#f0ead8" : "#a08cb8" }}>
                     {label}
                   </span>
                 </button>
-                {i < 3 && <div className="w-8 md:w-12 h-px bg-border mx-1" />}
+                {i < donateSteps.length - 1 && <div className="w-8 md:w-12 h-px bg-border mx-1" />}
               </div>
             ))}
           </div>
@@ -972,10 +942,10 @@ export default function App() {
             {/* Left: tier picker */}
             <div>
               <h3 className="text-sm font-semibold mb-4 text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>
-                ELIGE UN NIVEL DE APOYO (COP)
+                {donateTierLabel}
               </h3>
               <div className="grid grid-cols-2 gap-3 mb-6">
-                {donorTiers.map((tier, i) => (
+                {donateTiersData.map((tier, i) => (
                   <button
                     key={tier.label}
                     onClick={() => { setSelectedTier(i); setCustomAmount(""); }}
@@ -994,13 +964,13 @@ export default function App() {
 
               <div className="mb-6">
                 <label className="block text-xs text-muted-foreground mb-2" style={{ fontFamily: "'DM Mono', monospace" }}>
-                  O INGRESA UN MONTO PERSONALIZADO (COP)
+                  {donateCustom}
                 </label>
                 <div className="flex items-center border border-border focus-within:border-primary transition-colors">
                   <span className="px-3 text-muted-foreground text-sm" style={{ fontFamily: "'DM Mono', monospace" }}>$</span>
                   <input
                     type="number"
-                    placeholder="Otro monto"
+                    placeholder={donatePlaceholder}
                     value={customAmount}
                     onChange={(e) => { setCustomAmount(e.target.value); setSelectedTier(-1); }}
                     className="flex-1 bg-transparent py-3 pr-4 text-foreground text-sm focus:outline-none placeholder-muted-foreground"
@@ -1010,10 +980,10 @@ export default function App() {
 
               <div className="mb-6">
                 <label className="block text-xs text-muted-foreground mb-2" style={{ fontFamily: "'DM Mono', monospace" }}>
-                  FRECUENCIA
+                  {donateFrequencyLabel}
                 </label>
                 <div className="flex">
-                  {["Una vez", "Mensual", "Anual"].map((freq, i) => (
+                  {donateFrequencyOptions.map((freq, i) => (
                     <button
                       key={freq}
                       className="flex-1 py-2.5 text-xs font-semibold border-y border-r first:border-l transition-colors"
@@ -1031,17 +1001,20 @@ export default function App() {
               </div>
 
               <button
-                onClick={() => setDonateStep(2)}
-                className="group w-full flex items-center justify-between px-6 py-4 bg-primary text-primary-foreground font-bold hover:bg-foreground transition-colors duration-200"
+                onClick={startWompiCheckout}
+                disabled={isCreatingCheckout}
+                className="group w-full flex items-center justify-between px-6 py-4 bg-primary text-primary-foreground font-bold hover:bg-foreground transition-colors duration-200 disabled:cursor-wait disabled:opacity-70"
               >
                 <span className="flex items-center gap-2">
-                  <CreditCard size={16} /> Continuar al pago
+                  <CreditCard size={16} /> {isCreatingCheckout ? "Conectando con Wompi…" : donateButton}
                 </span>
                 <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </button>
 
+              {donationError && <p role="alert" className="mt-3 text-center text-sm text-[#FFB3D6]">{donationError}</p>}
+
               <p className="text-xs text-muted-foreground mt-3 text-center" style={{ fontFamily: "'DM Mono', monospace" }}>
-                🔒 Pago seguro · Platohedro, Medellín, Colombia
+                {donateSecurePaymentNote}
               </p>
             </div>
 
@@ -1049,21 +1022,16 @@ export default function App() {
             <div className="space-y-6">
               <div className="border border-border p-6 bg-background/30">
                 <h3 className="font-bold mb-4" style={{ fontFamily: "'DM Serif Display', serif" }}>
-                  ¿Qué hace posible tu aporte?
+                  {donateImpactTitle}
                 </h3>
                 <div className="space-y-3">
-                  {[
-                    [<Users size={14} />, "$50k cubre materiales para un niñe durante un mes"],
-                    [<CheckCircle size={14} />, "$150k financia una sesión de taller para 8 jóvenes"],
-                    [<Heart size={14} />, "$300k sostiene una semana de residencia artística"],
-                    [<ArrowUpRight size={14} />, "$1M patrocina una beca de residencia completa"],
-                  ].map(([icon, text], i) => (
+                  {donateImpactItems.map((text, i) => (
                     <div
                       key={i}
                       className="flex items-start gap-3 text-sm text-muted-foreground"
                       style={{ opacity: selectedTier >= i || selectedTier === -1 ? 1 : 0.4, transition: "opacity 0.3s" }}
                     >
-                      <span className="text-primary mt-0.5 shrink-0">{icon}</span>
+                      <span className="text-primary mt-0.5 shrink-0">{[<Users size={14} />, <CheckCircle size={14} />, <Heart size={14} />, <ArrowUpRight size={14} />][i]}</span>
                       {text}
                     </div>
                   ))}
@@ -1072,16 +1040,10 @@ export default function App() {
 
               <div className="border border-primary/30 p-6 bg-primary/5">
                 <h3 className="font-bold mb-4 text-primary" style={{ fontFamily: "'DM Serif Display', serif" }}>
-                  Cómo donar →
+                  {donateHowToTitle}
                 </h3>
                 <ol className="space-y-3">
-                  {[
-                    "Elige un nivel de apoyo o ingresa un monto libre arriba.",
-                    "Selecciona la frecuencia: única, mensual o anual.",
-                    "Ingresa tus datos de contacto y pago.",
-                    "Revisa y confirma tu aporte.",
-                    "Recibirás un comprobante por correo en minutos.",
-                  ].map((step, i) => (
+                  {donateInstructions.map((step: string, i: number) => (
                     <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
                       <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center shrink-0 mt-0.5 font-bold" style={{ fontFamily: "'DM Mono', monospace" }}>
                         {i + 1}
@@ -1094,12 +1056,12 @@ export default function App() {
 
               <div className="border border-border p-5 text-sm">
                 <h4 className="font-semibold mb-3 text-xs text-muted-foreground tracking-widest uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
-                  Otras formas de apoyar
+                  {t("donate.otherWays.title")}
                 </h4>
                 <div className="space-y-2 text-muted-foreground">
-                  <p><span className="text-foreground font-medium">Transferencia:</span> Nequi / Bancolombia — contacta a donaciones@platohedro.org</p>
-                  <p><span className="text-foreground font-medium">Especie:</span> Materiales, equipo o tiempo — escríbenos</p>
-                  <p><span className="text-foreground font-medium">Voluntariado:</span> Únete a nuestros procesos comunitarios</p>
+                  <p><span className="text-foreground font-medium">{t("donate.otherWays.transfer.title")}</span> {t("donate.otherWays.transfer.description")}</p>
+                  <p><span className="text-foreground font-medium">{t("donate.otherWays.inKind.title")}</span> {t("donate.otherWays.inKind.description")}</p>
+                  <p><span className="text-foreground font-medium">{t("donate.otherWays.volunteer.title")}</span> {t("donate.otherWays.volunteer.description")}</p>
                 </div>
               </div>
             </div>
@@ -1112,25 +1074,18 @@ export default function App() {
       <footer className="border-t border-white/20 bg-[#002f5e] px-6 md:px-10 py-12">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 bg-[#7dcfca] flex items-center justify-center p-1 overflow-hidden">
-                <ImageWithFallback
-                  src={logoImg}
-                  alt="Platohedro logo"
-                  className="w-full h-full object-contain logo-img"
-                />
-              </div>
-              <span className="font-bold tracking-widest uppercase text-sm" style={{ fontFamily: "'DM Mono', monospace" }}>Platohedro</span>
+            <div className="mb-4 flex items-center">
+              <img src={lightLogo} alt="Platohedro" className="h-16 w-[102px] object-contain" />
             </div>
-            <p className="text-xs text-muted-foreground leading-relaxed" style={{ fontFamily: "'DM Mono', monospace" }}>
-              Organización cultural<br />Medellín, Colombia<br />Fundada en 2004
+            <p className="text-xs text-muted-foreground leading-relaxed" style={{ fontFamily: "'DM Mono', monospace", whiteSpace: "pre-line" }}>
+              {footerOrganizationDescription}
             </p>
           </div>
 
           {[
-            ["Programas", ["Educación Artística", "Lab Digital", "Narrativas", "Música", "Residencias"]],
-            ["Organización", ["Sobre Platohedro", "Arte y Pensamiento", "Tecnología", "Tienda / Galería", "Prensa"]],
-            ["Contacto", ["Escríbenos", "Apoyar", "Voluntariado", "Boletín", "Instagram"]],
+            [t("footer.links.programs"), [t("footer.links.education"), t("footer.links.lab"), t("footer.links.narratives"), t("footer.links.music"), t("footer.links.residencies")]],
+            [t("footer.links.organization"), [t("footer.links.about"), t("footer.links.artAndThought"), t("footer.links.technology"), t("footer.links.shop"), t("footer.links.press")]],
+            [t("footer.contact.title"), [t("footer.links.contactUs"), t("footer.links.donate"), t("footer.links.volunteer"), t("footer.links.newsletter"), t("footer.social.instagram")]],
           ].map(([heading, links]) => (
             <div key={heading as string}>
               <h4 className="text-xs font-bold text-foreground mb-4 tracking-widest uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
@@ -1151,10 +1106,10 @@ export default function App() {
 
         <div className="border-t border-border pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>
-            © 2025 Platohedro. Medellín, Colombia.
+            {footerCopyright}
           </p>
           <div className="flex gap-6 text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>
-            {["Política de privacidad", "Términos de uso", "Accesibilidad"].map((item) => (
+            {[t("footer.privacy"), t("footer.terms"), t("footer.accessibility")].map((item) => (
               <a key={item} href="#" className="hover:text-foreground transition-colors">{item}</a>
             ))}
           </div>
@@ -1165,6 +1120,7 @@ export default function App() {
         isOpen={showRenovationPopup}
         onClose={() => setShowRenovationPopup(false)}
       />
+      </>) }
     </div>
   );
 }

@@ -16,6 +16,8 @@ i18n.use(initReactI18next).init({
       about: enAbout,
     },
   },
+  // El idioma almacenado se aplica en el proveedor cliente después de hidratar.
+  // Así el HTML de servidor y el primer render del navegador siempre coinciden.
   lng: "es",
   fallbackLng: "es",
   interpolation: {

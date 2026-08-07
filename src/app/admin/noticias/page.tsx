@@ -1,0 +1,15 @@
+import Link from "next/link";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { saveNews } from "./actions";
+
+export const dynamic = "force-dynamic";
+export default async function NoticiasAdmin({ searchParams }: { searchParams: Promise<{ editar?: string; mensaje?: string }> }) {
+  const { editar, mensaje } = await searchParams; const supabase = await createSupabaseServerClient();
+  const { data: { user } } = await supabase.auth.getUser(); if (!user) return <main className="p-10">Inicia sesión en <Link href="/admin" className="underline">/admin</Link>.</main>;
+  const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id);
+  if (!roles?.some(({ role }) => role === "super_admin" || role === "news_admin")) return <main className="p-10">No tienes permiso para gestionar noticias.</main>;
+  const { data: history } = await supabase.from("news").select("id,title,is_published,created_at").order("created_at", { ascending: false });
+  const { data: item } = editar ? await supabase.from("news").select("*").eq("id", editar).maybeSingle() : { data: null };
+  return <main className="min-h-screen bg-background p-8 text-foreground md:p-10"><div className="mx-auto max-w-4xl"><Link href="/admin" className="text-sm underline">← Panel</Link><h1 className="mt-4 text-3xl font-bold">{item ? "Editar noticia" : "Nueva noticia"}</h1>{mensaje && <p className="my-4 border border-[#99CC33] p-3">Noticia guardada.</p>}<form action={saveNews} className="mt-6 grid gap-4 border border-border bg-card p-6">{item && <input type="hidden" name="id" value={item.id} />}<Input name="title" label="Título" value={item?.title} /><label>Resumen<textarea name="summary" defaultValue={item?.summary ?? ""} className="mt-1 w-full border p-3" rows={3} /></label><label>Contenido<textarea name="content" defaultValue={item?.content ?? ""} className="mt-1 w-full border p-3" rows={10} /></label><Input name="cover_image_url" label="URL imagen" value={item?.cover_image_url} /><div className="flex gap-3"><button name="publication" value="draft" className="border border-[#0051A2] px-4 py-3 font-bold">Guardar borrador</button><button name="publication" value="published" className="bg-[#0051A2] px-4 py-3 font-bold text-white">Publicar</button></div></form><h2 className="mt-10 text-2xl font-bold">Historial de noticias</h2><div className="mt-4 divide-y border">{history?.map((n) => <div key={n.id} className="flex justify-between p-4"><span>{n.title} · {n.is_published ? "Publicado" : "Borrador"}</span><Link className="underline" href={`/admin/noticias?editar=${n.id}`}>Editar</Link></div>)}</div></div></main>;
+}
+function Input({ name, label, value }: { name: string; label: string; value?: string | null }) { return <label>{label}<input name={name} required={name === "title"} defaultValue={value ?? ""} className="mt-1 w-full border p-3" /></label>; }

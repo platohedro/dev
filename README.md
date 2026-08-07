@@ -1,17 +1,16 @@
 # dev — Proyecto web (Platohedro)
 
-Instancia de desarrollo del sitio web (SPA) construida con React + Vite.
+Instancia de desarrollo del sitio web construida con React + Next.js.
 
 **Archivos clave**
 - [package.json](package.json)
-- [vite.config.ts](vite.config.ts)
 - [postcss.config.mjs](postcss.config.mjs)
 - [.github/workflows/ci.yml](.github/workflows/ci.yml)
 
 ## Resumen técnico
-- Framework: React (SPA)
-- Bundler / dev server: Vite
-- Estilos: Tailwind CSS (configurado vía `@tailwindcss/vite`) + CSS custom
+- Framework: React + Next.js (App Router)
+- Renderizado: server-side rendering para la ruta principal, con componentes interactivos en cliente
+- Estilos: Tailwind CSS (PostCSS) + CSS custom
 - Gestor de paquetes: pnpm (recomendado)
 
 ## Requisitos / Entorno
@@ -33,19 +32,31 @@ pnpm install
 Si prefieres Yarn, elimina `pnpm-lock.yaml` y `node_modules`, activa Corepack para Yarn y ejecuta `yarn install`.
 
 ## Scripts útiles
-- `pnpm dev` — Inicia servidor de desarrollo (vite).
-- `pnpm build` — Compila para producción.
-- `pnpm preview` — Sirve build de producción localmente.
+- `pnpm dev` — Inicia el servidor de desarrollo de Next.js.
+- `pnpm build` — Compila la aplicación para producción.
+- `pnpm start` — Sirve el build de producción.
 - `pnpm audit` — Ejecuta auditoría de seguridad (moderate).
 - `pnpm format` — Formatea código (si Prettier está instalado).
+
+## Ejecución y despliegue (importante)
+
+Este proyecto es una aplicación **Next.js SSR**. No se debe abrir con Live Server,
+Vite ni servir una carpeta `dist/`: esos flujos no hidratan la aplicación actual y
+los botones no responderán.
+
+Para desarrollo abre únicamente la URL que imprime `pnpm dev` (por defecto,
+`http://localhost:3000`). Para producción ejecuta `pnpm build` y `pnpm start`, o
+despliega en una plataforma compatible con Next.js. El repositorio usa solo pnpm;
+no ejecutes `npm install` ni conserves `package-lock.json`.
 
 ## Flujo de build y CI
 - Hay un workflow de CI en [.github/workflows/ci.yml](.github/workflows/ci.yml) que: checkout, instala pnpm, instala dependencias (`pnpm install --frozen-lockfile`), ejecuta `pnpm build` y `pnpm audit`. Recomendado para PRs y pushes a `main`.
 
 ## Configuración destacada
-- `vite.config.ts` incluye un plugin especial `figma-asset-resolver` para importar activos con `figma:asset/<name>`. Mantén los assets en `src/assets`.
-- Alias `@` resuelve a `./src`.
-- PostCSS: `postcss.config.mjs` está vacío porque `@tailwindcss/vite` autoconfigura PostCSS; añade plugins ahí si los necesitas.
+- `src/app/layout.tsx` define el documento, los metadatos y el proveedor de idioma.
+- `src/app/page.tsx` es la ruta principal renderizada en servidor; los handlers seguros se añaden en `src/app/api/*/route.ts`.
+- Alias `@` resuelve a `./src` mediante `tsconfig.json`.
+- PostCSS usa `@tailwindcss/postcss` para compilar los estilos existentes.
 
 ## Dependencias y estado de mantenimiento
 - Muchas dependencias se mantienen actualizadas a parches seguros; algunos paquetes tienen majors disponibles (ej. `recharts`, `react` mayor, `vite` mayor).
@@ -55,9 +66,46 @@ Si prefieres Yarn, elimina `pnpm-lock.yaml` y `node_modules`, activa Corepack pa
 - Se ejecuta `pnpm audit` en CI; resuelve rápidamente alertas de alta severidad.
 - Si utilizas el dev server en entornos accesibles públicamente, limita el acceso y aplica cabeceras CSP apropiadas en producción.
 
+## Donaciones con Wompi
+
+La integración usa Wompi Web Checkout. El botón de donación solicita una firma al servidor en `POST /api/wompi/checkout` y redirige al checkout alojado por Wompi; ninguna clave secreta llega al navegador.
+
+1. Copia `.env.example` como `.env.local` y configura `WOMPI_PUBLIC_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET` y `NEXT_PUBLIC_SITE_URL`.
+2. Prueba primero con las credenciales sandbox de Wompi.
+3. En el panel de Wompi registra la URL HTTPS `https://TU-DOMINIO/api/wompi/webhook` para los eventos del ambiente correspondiente.
+4. Antes de producción, conecta el webhook a una base de datos para conciliar pagos y emitir comprobantes. La ruta actual valida la firma y registra eventos seguros, pero no almacena datos de donantes.
+
+Nunca subas `.env.local` ni secretos de Wompi al repositorio.
+
+## Agenda de eventos con Supabase
+
+- Agenda pública: `/eventos`.
+- Panel del equipo de comunicaciones: `/admin/eventos`.
+- El acceso al panel usa un enlace mágico enviado al correo; no hay contraseñas almacenadas en la aplicación.
+
+Para activarlo, crea un proyecto Supabase, añade `NEXT_PUBLIC_SUPABASE_URL` y
+`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en `.env.local`, y ejecuta
+`supabase/migrations/20260806_events.sql` y
+`supabase/migrations/20260806_event_admin_roles.sql` en el SQL Editor. Luego, después de
+que el comunicador inicie sesión una vez, autoriza su cuenta desde el SQL Editor:
+
+```sql
+insert into public.event_admins (user_id)
+select id from auth.users
+where email = 'comunicaciones@tu-dominio.org';
+```
+
+Las políticas RLS de la migración permiten que cualquier visitante vea solo
+eventos publicados y que únicamente una cuenta de `event_admins` cree, edite,
+publique o elimine eventos. Cambia el correo del ejemplo por el real.
+
+El acceso administrativo está en `/admin`: muestra únicamente los módulos que
+corresponden al rol de la cuenta. La sesión se crea mediante un enlace mágico y
+el callback guarda la cookie de sesión antes de llevar al panel.
+
 ## Recomendaciones para producción y escalabilidad
 - Añadir testing automatizado (unit + e2e) y linting (`eslint + vitest`).
-- Automatizar deploy a staging (Vercel/Netlify) con rewrites para SPA (404 → index.html), cabeceras, y compresión (Brotli/Gzip).
+- Automatizar deploy a staging en un host compatible con Next.js, con variables de entorno y cabeceras de seguridad.
 - Planificar upgrades mayores de paquetes críticos (por ejemplo `recharts@3.x`, `react@19`, `vite@8+`) en una rama de feature y ejecutar pruebas completas.
 
 ## Notas de migración a Yarn

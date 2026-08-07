@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Wrench, Hammer, AlertCircle, X } from "lucide-react";
+import { Wrench, Hammer, AlertCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/app/components/ui/dialog";
 
 interface RenovationPopupProps {
@@ -23,18 +23,11 @@ export function RenovationPopup({ isOpen, onClose }: RenovationPopupProps) {
     onClose?.();
   };
 
+  // Es un aviso: debe permitir interactuar con el resto de la página.
   return (
-    <Dialog open={isVisible} onOpenChange={handleClose}>
+    <Dialog modal={false} open={isVisible} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md p-0 bg-[#0051A2] text-white border-2 border-[#FF46A2] shadow-2xl">
         <div className="relative">
-          <button
-            onClick={handleClose}
-            className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-            aria-label="Cerrar"
-          >
-            <X className="w-5 h-5" />
-          </button>
-
           <div className="p-8 text-center">
             <div className="mb-6">
               <div className="w-20 h-20 mx-auto mb-4 bg-[#99CC33]/20 rounded-full flex items-center justify-center">

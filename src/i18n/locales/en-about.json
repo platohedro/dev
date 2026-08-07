@@ -3,25 +3,32 @@
     "title": "Get to Know Us",
     "subtitle": "Who We Are",
     "mission": {
+      "title": "Mission",
       "description": "We promote the integral development of the community through community art, creating spaces for encounter and expression that strengthen cultural identity and foster active citizen participation."
     },
     "vision": {
+      "title": "Vision",
       "description": "To be a reference organization in community art in Medellín, recognized for our impact on social transformation and our commitment to cultural innovation and strengthening of the community fabric."
     },
     "location": {
+      "title": "Location",
       "description": "Based in the heart of Medellín, in Commune 11 (El Poblado), and we have workspaces in different parts of the city to facilitate access to all communities."
     },
     "history": {
+      "title": "History",
       "description": "Founded in 2004, we have worked tirelessly for over 22 years to transform the reality of our city through community art practices, collaborating with more than 5,000 participants throughout our trajectory."
     },
     "team": {
+      "title": "Team",
       "description": "We have a multidisciplinary team of professionals committed to community development, including artists, educators, psychologists, designers and technicians specialized in digital media."
     },
     "values": {
+      "title": "Values",
       "description": "Collaboration, inclusion, innovation, transparency and respect for traditional knowledge are the pillars that guide our daily work with communities."
     }
   },
   "spaces": {
+    "title": "Our Spaces",
     "mainStudio": {
       "title": "Main Studio",
       "description": "Our central space located in El Poblado, with capacity for 40 people simultaneously."
@@ -35,6 +42,7 @@
       "description": "Four residencies equipped with rehearsal, recording and production studios."
     }
   },
+  "partnersTitle": "Partners & Allies",
   "cta": {
     "title": "Join Our Community",
     "description": "If you're interested in collaborating, volunteering or participating in our programs, contact us. We're always open to new ideas and collaborations that can enrich our community work.",

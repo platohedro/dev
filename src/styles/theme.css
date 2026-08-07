@@ -43,7 +43,8 @@
 }
 
 /* Dark theme (applied when .dark is present on the document element) */
-.dark {
+html.dark,
+html[data-theme="dark"] {
   --font-size: 16px;
   --background: #0051A2;
   --foreground: #ffffff;

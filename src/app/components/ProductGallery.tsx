@@ -1,0 +1,3 @@
+"use client";
+import { useState } from "react";
+export function ProductGallery({ images }: { images: string[] }) { const [active,setActive]=useState(images[0]??""); return <div>{active&&<div className="overflow-hidden border bg-white"><img src={active} alt="" className="h-[32rem] w-full object-contain transition-transform duration-300 hover:scale-150"/></div>}<div className="mt-3 flex gap-3">{images.map((url)=><button key={url} onClick={()=>setActive(url)} className={url===active?"border-2 border-[#FF46A2]":"border"}><img src={url} alt="" className="h-20 w-20 object-cover"/></button>)}</div></div> }
