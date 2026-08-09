@@ -21,6 +21,10 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   const canManageNews = isSuperAdmin || roleNames.has("news_admin");
   const canManageStore = isSuperAdmin || roleNames.has("store_admin");
   const canManageResidencies = isSuperAdmin || roleNames.has("residency_admin");
+  const adminCardClass =
+    "group border border-border bg-card p-7 transition-all duration-200 ease-out hover:border-[#0051A2] hover:bg-[#0051A2]/5 hover:shadow-[0_10px_30px_rgba(0,81,162,0.12)] hover:-translate-y-0.5";
+  const adminCardIconClass = "mb-5 text-[#FF46A2] transition-colors duration-200 group-hover:text-[#0051A2]";
+  const adminCardLinkClass = "mt-6 inline-block font-bold text-[#0051A2] transition-colors duration-200 group-hover:text-[#FF46A2]";
 
   return (
     <main className="min-h-screen bg-background px-6 py-10 text-foreground md:px-10">
@@ -31,10 +35,10 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
         </header>
         {!canManageEvents && !canManageNews && !canManageStore && !canManageResidencies && <p className="border border-[#FF46A2]/40 bg-[#FF46A2]/10 p-5">Tu cuenta inició sesión, pero no tiene permisos administrativos asignados.</p>}
         <div className="grid gap-6 md:grid-cols-2">
-          {canManageEvents && <Link href="/admin/eventos#historial" className="group border border-border bg-card p-7 transition hover:border-[#0051A2]"><CalendarDays className="mb-5 text-[#FF46A2]" size={30} /><h2 className="text-2xl font-bold">Eventos</h2><p className="mt-2 text-sm text-muted-foreground">Crear borradores, publicar y consultar historial.</p><span className="mt-6 inline-block font-bold text-[#0051A2] group-hover:text-[#FF46A2]">Gestionar eventos →</span></Link>}
-          {canManageNews && <Link href="/admin/noticias" className="group border border-border bg-card p-7 transition hover:border-[#0051A2]"><FileText className="mb-5 text-[#FF46A2]" size={30} /><h2 className="text-2xl font-bold">Noticias</h2><p className="mt-2 text-sm text-muted-foreground">Crear borradores, publicar y editar contenido editorial.</p><span className="mt-6 inline-block font-bold text-[#0051A2] group-hover:text-[#FF46A2]">Gestionar noticias →</span></Link>}
-          {canManageStore && <Link href="/admin/tienda" className="group border border-border bg-card p-7 transition hover:border-[#0051A2]"><ShoppingBag className="mb-5 text-[#FF46A2]" size={30}/><h2 className="text-2xl font-bold">Tienda</h2><p className="mt-2 text-sm text-muted-foreground">Productos, inventario, fotos y publicación.</p><span className="mt-6 inline-block font-bold text-[#0051A2]">Gestionar tienda →</span></Link>}
-          {canManageResidencies && <Link href="/admin/residencias" className="group border border-border bg-card p-7 transition hover:border-[#0051A2]"><MapPinned className="mb-5 text-[#FF46A2]" size={30}/><h2 className="text-2xl font-bold">Residencias</h2><p className="mt-2 text-sm text-muted-foreground">Directorio de artistas y mapa de países de origen.</p><span className="mt-6 inline-block font-bold text-[#0051A2]">Gestionar directorio →</span></Link>}
+          {canManageEvents && <Link href="/admin/eventos#historial" className={adminCardClass}><CalendarDays className={adminCardIconClass} size={30} /><h2 className="text-2xl font-bold">Eventos</h2><p className="mt-2 text-sm text-muted-foreground">Crear borradores, publicar y consultar historial.</p><span className={adminCardLinkClass}>Gestionar eventos →</span></Link>}
+          {canManageNews && <Link href="/admin/noticias" className={adminCardClass}><FileText className={adminCardIconClass} size={30} /><h2 className="text-2xl font-bold">Noticias</h2><p className="mt-2 text-sm text-muted-foreground">Crear borradores, publicar y editar contenido editorial.</p><span className={adminCardLinkClass}>Gestionar noticias →</span></Link>}
+          {canManageStore && <Link href="/admin/tienda" className={adminCardClass}><ShoppingBag className={adminCardIconClass} size={30} /><h2 className="text-2xl font-bold">Tienda</h2><p className="mt-2 text-sm text-muted-foreground">Productos, inventario, fotos y publicación.</p><span className={adminCardLinkClass}>Gestionar tienda →</span></Link>}
+          {canManageResidencies && <Link href="/admin/residencias" className={adminCardClass}><MapPinned className={adminCardIconClass} size={30} /><h2 className="text-2xl font-bold">Residencias</h2><p className="mt-2 text-sm text-muted-foreground">Directorio de artistas y mapa de países de origen.</p><span className={adminCardLinkClass}>Gestionar directorio →</span></Link>}
           {isSuperAdmin && <div className="border border-[#99CC33] bg-[#99CC33]/10 p-7"><ShieldCheck className="mb-5 text-[#0051A2]" size={30} /><h2 className="text-2xl font-bold">Superadministración</h2><p className="mt-2 text-sm text-muted-foreground">Tienes acceso a todos los módulos administrativos.</p></div>}
         </div>
       </div>
