@@ -142,7 +142,7 @@ export function AboutPage() {
           <div className="mb-12 max-w-3xl"><p className="mb-3 text-xs uppercase tracking-[0.25em] text-primary">{copy.present}</p><h2 className="text-4xl font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>{copy.history}</h2><p className="mt-4 leading-relaxed text-muted-foreground">{copy.historyLead}</p></div>
           <div className="-mx-6 flex snap-x gap-5 overflow-x-auto px-6 pb-6 md:-mx-10 md:px-10">
             {history.map(([year, title, description, image], index) => <article key={`${year}-${title}`} className="w-72 shrink-0 snap-start overflow-hidden rounded-xl border border-border bg-background shadow-sm">
-              {image ? <img src={image} alt="" className="h-36 w-full object-cover" loading="lazy" /> : <div className="flex h-36 items-center justify-center bg-primary/10 text-primary"><FileText size={36} /></div>}
+              {image ? <img src={image} alt={`${isEnglish ? historyEnglish[index][0] : title}, ${year}`} className="h-36 w-full object-cover" loading="lazy" /> : <div className="flex h-36 items-center justify-center bg-primary/10 text-primary"><FileText size={36} /></div>}
               <div className="p-5"><span className="inline-block rounded-md bg-primary/15 px-2 py-1 text-xs font-bold text-primary">{year}</span><h3 className="mt-3 text-lg font-bold">{isEnglish ? historyEnglish[index][0] : title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{isEnglish ? historyEnglish[index][1] : description}</p></div>
             </article>)}
           </div>

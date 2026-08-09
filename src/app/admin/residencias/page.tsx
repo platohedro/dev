@@ -11,7 +11,7 @@ export default async function AdminResidenciasPage({ searchParams }: { searchPar
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return <Notice text="Inicia sesión desde el panel administrativo." />;
   const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id);
-  const permitted = roles?.some(({ role }) => role === "super_admin" || role === "events_admin");
+  const permitted = roles?.some(({ role }) => role === "super_admin" || role === "residency_admin");
   if (!permitted) return <Notice text="Tu cuenta no tiene permiso para gestionar residencias." />;
   const { data: residents } = await supabase.from("residents").select("*").order("residency_year", { ascending: false }).order("name");
   const { data: item } = editar ? await supabase.from("residents").select("*").eq("id", editar).maybeSingle() : { data: null };

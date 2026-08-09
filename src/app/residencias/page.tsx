@@ -1,7 +1,10 @@
-import { createSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase/server";
+import { createSupabasePublicClient, isSupabasePublicConfigured } from "@/lib/supabase/public";
 import { ResidenciasPageClient } from "./ResidenciasPageClient";
+import type { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+export const metadata: Metadata = { title: "Residencias artísticas | Platohedro", description: "Conoce las residencias artísticas, sus participantes y procesos de intercambio en Platohedro.", alternates: { canonical: "/residencias" } };
+
+export const revalidate = 300;
 
 type Resident = {
   id: string; name: string; nationality: string; country: string;
@@ -10,8 +13,8 @@ type Resident = {
 
 export default async function ResidenciasPage() {
   let residents: Resident[] = [];
-  if (isSupabaseConfigured) {
-    const supabase = await createSupabaseServerClient();
+  if (isSupabasePublicConfigured) {
+    const supabase = createSupabasePublicClient();
     const { data } = await supabase.from("residents").select("id, name, nationality, country, country_lat, country_lng, residency_year, profile_url").eq("is_published", true).order("residency_year", { ascending: false });
     residents = (data ?? []) as Resident[];
   }

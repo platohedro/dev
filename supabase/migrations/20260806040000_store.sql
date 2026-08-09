@@ -7,8 +7,10 @@ create table if not exists public.products (
 );
 alter table public.products enable row level security;
 create or replace function public.is_store_admin() returns boolean language sql stable security definer set search_path=public as $$
-  select public.has_role(array['super_admin'::public.app_role, 'events_admin'::public.app_role])
+  select public.has_role(array['super_admin'::public.app_role, 'store_admin'::public.app_role])
 $$;
+revoke execute on function public.is_store_admin() from public;
+grant execute on function public.is_store_admin() to authenticated;
 drop policy if exists "published products are public" on public.products;
 drop policy if exists "store admins manage products" on public.products;
 create policy "published products are public" on public.products for select to anon, authenticated using (is_published or public.is_store_admin());
@@ -21,4 +23,6 @@ drop policy if exists "store admins upload product images" on storage.objects;
 drop policy if exists "store admins read product images" on storage.objects;
 create policy "store admins upload product images" on storage.objects for insert to authenticated with check (bucket_id = 'product-images' and public.is_store_admin());
 create policy "store admins read product images" on storage.objects for select to authenticated using (bucket_id = 'product-images' and public.is_store_admin());
+create policy "store admins update product images" on storage.objects for update to authenticated using (bucket_id = 'product-images' and public.is_store_admin()) with check (bucket_id = 'product-images' and public.is_store_admin());
+create policy "store admins delete product images" on storage.objects for delete to authenticated using (bucket_id = 'product-images' and public.is_store_admin());
 notify pgrst, 'reload schema';

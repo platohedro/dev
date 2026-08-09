@@ -1,3 +1,34 @@
+## Flujo de ramas y despliegue
+
+Este proyecto usa dos ramas principales:
+
+- `staging`: integración, pruebas y validación en el ambiente de staging.
+- `main`: producción. Solo recibe cambios que ya fueron probados en `staging`.
+
+Reglas obligatorias para los agentes:
+
+1. No trabajar directamente sobre `main` para cambios normales.
+2. Crear o usar `staging` para implementar y probar cambios.
+3. Antes de confirmar cambios, ejecutar las validaciones disponibles:
+   `pnpm typecheck`, `pnpm test:migrations`, `pnpm test:seo` y `pnpm build`.
+4. Revisar `git status`, `git diff --check` y confirmar que no haya secretos antes de hacer commit.
+5. Subir primero a `staging` con `git push origin staging`.
+6. Después de validar staging, pasar a producción con:
+   `git switch main`, `git pull`, `git merge --no-ff staging` y `git push origin main`.
+7. No usar `git push --force`, `git reset --hard` ni borrar ramas sin autorización explícita.
+8. Las migraciones de Supabase deben probarse desde una base limpia antes de llegar a `main`.
+9. Todo cambio estructural debe documentarse en la documentación técnica correspondiente. Si cambia las reglas de trabajo de los agentes, también debe actualizar `AGENTS.md` y este archivo en el mismo cambio.
+
+Flujo esperado:
+
+```text
+Cambios → staging → pruebas → main → producción
+```
+
+La configuración de Netlify asigna deploys de rama y previews a staging, y la rama
+`main` a producción. Las variables de entorno y los proyectos Supabase deben estar
+separados por ambiente.
+
 **Add your own guidelines here**
 <!--
 

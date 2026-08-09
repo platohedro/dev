@@ -2,5 +2,21 @@
   command = "pnpm build"
   publish = ".next"
 
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_VERSION = "11.20.0"
+
+# Las credenciales y NEXT_PUBLIC_SITE_URL se configuran en Netlify UI/API,
+# nunca en este archivo. Cada contexto debe apuntar a un proyecto Supabase
+# distinto: staging o production.
+[context.branch-deploy.environment]
+  NEXT_PUBLIC_APP_ENV = "staging"
+
+[context.deploy-preview.environment]
+  NEXT_PUBLIC_APP_ENV = "staging"
+
+[context.production.environment]
+  NEXT_PUBLIC_APP_ENV = "production"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"

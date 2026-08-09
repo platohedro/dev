@@ -22,8 +22,10 @@ alter table public.residents enable row level security;
 
 create or replace function public.is_residency_admin() returns boolean
 language sql stable security definer set search_path=public as $$
-  select public.has_role(array['super_admin'::public.app_role, 'events_admin'::public.app_role])
+  select public.has_role(array['super_admin'::public.app_role, 'residency_admin'::public.app_role])
 $$;
+revoke execute on function public.is_residency_admin() from public;
+grant execute on function public.is_residency_admin() to authenticated;
 
 drop policy if exists "published residents are public" on public.residents;
 drop policy if exists "residency admins manage residents" on public.residents;
