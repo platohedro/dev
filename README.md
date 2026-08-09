@@ -105,6 +105,10 @@ El acceso administrativo está en `/admin`: muestra únicamente los módulos que
 corresponden al rol de la cuenta. La sesión se crea con Supabase Auth y se conserva
 en una cookie segura administrada por el servidor.
 
+La recuperación de contraseña comienza en `/auth/recuperar-clave`. En Supabase,
+`Authentication > URL Configuration`, agrega como redirect permitido
+`https://platohedro.org/auth/callback` (y `http://localhost:3000/**` para desarrollo).
+
 ## Recomendaciones para producción y escalabilidad
 - Añadir testing automatizado (unit + e2e) y linting (`eslint + vitest`).
 - Automatizar deploy a staging en un host compatible con Next.js, con variables de entorno y cabeceras de seguridad.

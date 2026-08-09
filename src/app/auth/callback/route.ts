@@ -3,8 +3,10 @@ import { createServerClient } from "@supabase/ssr";
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
-  const next = request.nextUrl.searchParams.get("next") ?? "/admin/eventos";
-  const response = NextResponse.redirect(new URL(next.startsWith("/") ? next : "/admin", request.url));
+  const requestedNext = request.nextUrl.searchParams.get("next");
+  const allowedDestinations = new Set(["/admin", "/admin/eventos", "/auth/restablecer-clave"]);
+  const next = requestedNext && allowedDestinations.has(requestedNext) ? requestedNext : "/admin";
+  const response = NextResponse.redirect(new URL(next, request.url));
 
   if (code && process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) {
     const supabase = createServerClient(
