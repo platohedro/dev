@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { InputHTMLAttributes } from "react";
 import { createSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase/server";
-import { createEvent, requestMagicLink, signOut, updateEvent } from "./actions";
+import { createEvent, signInWithPassword, signOut, updateEvent } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -63,7 +63,7 @@ function Field({ label, ...props }: InputHTMLAttributes<HTMLInputElement> & { la
 }
 
 function Login({ mensaje }: { mensaje?: string }) {
-  return <main className="grid min-h-screen place-items-center bg-[#003d7a] p-6 text-white"><form action={requestMagicLink} className="w-full max-w-md space-y-5 border border-white/20 bg-[#0051A2] p-8"><input type="hidden" name="next" value="/admin/eventos" /><h1 className="text-3xl font-bold">Acceso a eventos</h1><p className="text-sm text-white/75">Ingresa tu correo para recibir un enlace seguro.</p>{mensaje === "revisa-tu-correo" && <p className="bg-[#99CC33]/20 p-3 text-sm">Revisa tu correo para continuar.</p>}<Field name="email" label="Correo" type="email" required /><button className="w-full bg-[#99CC33] p-3 font-bold text-[#003d7a]">Enviar enlace</button><Link href="/eventos" className="block text-center text-sm underline">Ver agenda pública</Link></form></main>;
+  return <main className="grid min-h-screen place-items-center bg-[#003d7a] p-6 text-white"><form action={signInWithPassword} className="w-full max-w-md space-y-5 border border-white/20 bg-[#0051A2] p-8"><input type="hidden" name="next" value="/admin/eventos" /><h1 className="text-3xl font-bold">Acceso a eventos</h1><p className="text-sm text-white/75">Ingresa con tu correo y contraseña.</p>{mensaje === "credenciales-invalidas" && <p className="border border-[#FF46A2]/50 bg-[#FF46A2]/20 p-3 text-sm">El correo o la contraseña no son correctos.</p>}<Field name="email" label="Correo" type="email" required /><Field name="password" label="Contraseña" type="password" required /><button className="w-full bg-[#99CC33] p-3 font-bold text-[#003d7a]">Iniciar sesión</button><Link href="/eventos" className="block text-center text-sm underline">Ver agenda pública</Link></form></main>;
 }
 
 function Forbidden({ email }: { email: string }) {

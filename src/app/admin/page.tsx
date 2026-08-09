@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CalendarDays, FileText, ShieldCheck, ShoppingBag, MapPinned } from "lucide-react";
 import { createSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase/server";
-import { requestMagicLink, signOut } from "./eventos/actions";
+import { signInWithPassword, signOut } from "./eventos/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +27,6 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           <div><p className="text-xs font-bold tracking-widest text-[#0051A2] uppercase">Platohedro</p><h1 className="text-4xl font-bold">Panel de administración</h1><p className="mt-2 text-sm text-muted-foreground">Sesión: {user.email}</p></div>
           <form action={signOut}><button className="border border-border px-4 py-2 text-sm font-semibold hover:bg-muted">Cerrar sesión</button></form>
         </header>
-        {mensaje === "revisa-tu-correo" && <p className="mb-5 border border-[#99CC33] bg-[#99CC33]/15 p-4 text-sm">Revisa tu correo para continuar.</p>}
         {!canManageEvents && !canManageNews && <p className="border border-[#FF46A2]/40 bg-[#FF46A2]/10 p-5">Tu cuenta inició sesión, pero no tiene un rol editorial asignado.</p>}
         <div className="grid gap-6 md:grid-cols-2">
           {canManageEvents && <Link href="/admin/eventos#historial" className="group border border-border bg-card p-7 transition hover:border-[#0051A2]"><CalendarDays className="mb-5 text-[#FF46A2]" size={30} /><h2 className="text-2xl font-bold">Eventos</h2><p className="mt-2 text-sm text-muted-foreground">Crear borradores, publicar y consultar historial.</p><span className="mt-6 inline-block font-bold text-[#0051A2] group-hover:text-[#FF46A2]">Gestionar eventos →</span></Link>}
@@ -42,7 +41,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
 }
 
 function Login({ mensaje }: { mensaje?: string }) {
-  return <main className="grid min-h-screen place-items-center bg-[#003d7a] p-6 text-white"><form action={requestMagicLink} className="w-full max-w-md space-y-5 border border-white/20 bg-[#0051A2] p-8"><input type="hidden" name="next" value="/admin" /><h1 className="text-3xl font-bold">Acceso administrativo</h1><p className="text-sm text-white/75">Ingresa tu correo institucional. Recibirás un enlace seguro para entrar.</p>{mensaje === "revisa-tu-correo" && <p className="bg-[#99CC33]/20 p-3 text-sm">Revisa tu correo para continuar.</p>}<label className="grid gap-2 text-sm font-semibold">Correo<input name="email" type="email" required className="border border-white/30 bg-white p-3 text-[#003d7a]" /></label><button className="w-full bg-[#99CC33] p-3 font-bold text-[#003d7a]">Enviar enlace de acceso</button><Link href="/" className="block text-center text-sm underline">Volver al sitio</Link></form></main>;
+  return <main className="grid min-h-screen place-items-center bg-[#003d7a] p-6 text-white"><form action={signInWithPassword} className="w-full max-w-md space-y-5 border border-white/20 bg-[#0051A2] p-8"><input type="hidden" name="next" value="/admin" /><h1 className="text-3xl font-bold">Acceso administrativo</h1><p className="text-sm text-white/75">Ingresa con el correo y la contraseña de tu cuenta administrativa.</p>{mensaje === "credenciales-invalidas" && <p className="border border-[#FF46A2]/50 bg-[#FF46A2]/20 p-3 text-sm">El correo o la contraseña no son correctos.</p>}<label className="grid gap-2 text-sm font-semibold">Correo<input name="email" type="email" autoComplete="username" required className="border border-white/30 bg-white p-3 text-[#003d7a]" /></label><label className="grid gap-2 text-sm font-semibold">Contraseña<input name="password" type="password" autoComplete="current-password" required minLength={8} className="border border-white/30 bg-white p-3 text-[#003d7a]" /></label><button className="w-full bg-[#99CC33] p-3 font-bold text-[#003d7a]">Iniciar sesión</button><Link href="/" className="block text-center text-sm underline">Volver al sitio</Link></form></main>;
 }
 
 function SetupNotice() {

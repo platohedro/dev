@@ -81,18 +81,20 @@ Nunca subas `.env.local` ni secretos de Wompi al repositorio.
 
 - Agenda pública: `/eventos`.
 - Panel del equipo de comunicaciones: `/admin/eventos`.
-- El acceso al panel usa un enlace mágico enviado al correo; no hay contraseñas almacenadas en la aplicación.
+- El acceso al panel usa correo y contraseña administrados por Supabase Auth; la aplicación no almacena contraseñas.
 
 Para activarlo, crea un proyecto Supabase, añade `NEXT_PUBLIC_SUPABASE_URL` y
 `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en `.env.local`, y ejecuta
 `supabase/migrations/20260806_events.sql` y
-`supabase/migrations/20260806_event_admin_roles.sql` en el SQL Editor. Luego, después de
-que el comunicador inicie sesión una vez, autoriza su cuenta desde el SQL Editor:
+`supabase/migrations/20260805_admin_roles.sql` antes de las demás migraciones y
+`supabase/migrations/20260806_event_admin_roles.sql` después de eventos. Crea la cuenta
+en Authentication > Users > Add user y autorízala desde el SQL Editor:
 
 ```sql
-insert into public.event_admins (user_id)
-select id from auth.users
-where email = 'comunicaciones@tu-dominio.org';
+insert into public.user_roles (user_id, role)
+select id, 'super_admin'::public.app_role from auth.users
+where email = 'comunicaciones@tu-dominio.org'
+on conflict do nothing;
 ```
 
 Las políticas RLS de la migración permiten que cualquier visitante vea solo
@@ -100,8 +102,8 @@ eventos publicados y que únicamente una cuenta de `event_admins` cree, edite,
 publique o elimine eventos. Cambia el correo del ejemplo por el real.
 
 El acceso administrativo está en `/admin`: muestra únicamente los módulos que
-corresponden al rol de la cuenta. La sesión se crea mediante un enlace mágico y
-el callback guarda la cookie de sesión antes de llevar al panel.
+corresponden al rol de la cuenta. La sesión se crea con Supabase Auth y se conserva
+en una cookie segura administrada por el servidor.
 
 ## Recomendaciones para producción y escalabilidad
 - Añadir testing automatizado (unit + e2e) y linting (`eslint + vitest`).

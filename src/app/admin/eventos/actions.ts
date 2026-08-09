@@ -1,6 +1,5 @@
 "use server";
 
-import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -11,19 +10,15 @@ function requiredText(formData: FormData, field: string) {
   return value.trim();
 }
 
-export async function requestMagicLink(formData: FormData) {
+export async function signInWithPassword(formData: FormData) {
   const email = requiredText(formData, "email");
-  const requestHeaders = await headers();
-  const origin = requestHeaders.get("origin") ?? process.env.NEXT_PUBLIC_SITE_URL;
+  const password = requiredText(formData, "password");
   const requestedNext = formData.get("next");
   const next = requestedNext === "/admin" ? "/admin" : "/admin/eventos";
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.auth.signInWithOtp({
-    email,
-    options: { emailRedirectTo: `${origin}/auth/callback?next=${next}` },
-  });
-  if (error) throw new Error("No fue posible enviar el enlace de acceso.");
-  redirect(`${next}?mensaje=revisa-tu-correo`);
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) redirect(`${next}?mensaje=credenciales-invalidas`);
+  redirect(next);
 }
 
 export async function createEvent(formData: FormData) {
