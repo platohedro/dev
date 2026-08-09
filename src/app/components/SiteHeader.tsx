@@ -42,17 +42,24 @@ export function SiteHeader() {
           <img src={logo} alt="Platohedro" className="h-12 w-[76px] object-contain" />
         </a>
         <nav className="hidden items-center gap-1 lg:flex">
-          {links.map(([label, href]) => <a key={href} href={href} className="whitespace-nowrap px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground">{label}</a>)}
+          {links.map(([label, href]) => <a key={href} href={href} className="whitespace-nowrap px-4 py-2 text-sm text-white/90 transition-colors hover:text-white">{label}</a>)}
         </nav>
         <div className="hidden items-center gap-3 lg:flex">
           <a href="/#donate" className="group flex items-center gap-2 bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-foreground"><Heart size={14} className="transition-transform group-hover:scale-110" />{t("nav.donate")}</a>
         </div>
-        <button type="button" aria-label={isDark ? t("theme.light") : t("theme.dark")} onClick={() => { const next = !isDark; setIsDark(next); applyTheme(next); }} className="mr-2 rounded-md p-2 text-current hover:bg-white/10">{isDark ? <Sun size={16} /> : <Moon size={16} />}</button>
+        <button type="button" aria-label={isDark ? t("theme.light") : t("theme.dark")} onClick={() => { const next = !isDark; setIsDark(next); applyTheme(next); }} className="mr-2 cursor-pointer rounded-md p-2 text-white transition-all duration-200 ease-out hover:scale-105 hover:bg-white/10 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.25)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80">{isDark ? <Sun size={16} /> : <Moon size={16} />}</button>
         <LanguageSwitcher />
-        <button type="button" className="text-white lg:hidden" onClick={() => setNavOpen((open) => !open)} aria-label={navOpen ? t("menu.close") : t("menu.open")}>{navOpen ? <X size={22} /> : <Menu size={22} />}</button>
+        <button
+          type="button"
+          className="cursor-pointer rounded-md p-2 text-white transition-all duration-200 ease-out hover:scale-105 hover:bg-white/10 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.25)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 lg:hidden"
+          onClick={() => setNavOpen((open) => !open)}
+          aria-label={navOpen ? t("menu.close") : t("menu.open")}
+        >
+          {navOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </div>
       {navOpen && <div className="space-y-4 border-t border-white/20 bg-[#003d7a] px-6 py-6 lg:hidden">
-        {links.map(([label, href]) => <a key={href} href={href} onClick={() => setNavOpen(false)} className="block py-1 text-sm text-muted-foreground hover:text-foreground">{label}</a>)}
+        {links.map(([label, href]) => <a key={href} href={href} onClick={() => setNavOpen(false)} className="block py-1 text-sm text-white/90 hover:text-white">{label}</a>)}
         <a href="/#donate" onClick={() => setNavOpen(false)} className="flex w-fit items-center gap-2 bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground"><Heart size={14} />{t("nav.donate")}</a>
       </div>}
     </header>

@@ -34,7 +34,7 @@ export function LanguageSwitcher() {
     <button
       type="button"
       onClick={toggleLanguage}
-      className="flex items-center gap-2 p-2 rounded-md bg-transparent hover:bg-white/10 text-current"
+      className="flex items-center gap-2 rounded-md bg-transparent p-2 text-white transition-all duration-200 ease-out hover:scale-105 hover:bg-white/10 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.25)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 cursor-pointer"
       aria-label={`${t("language.label")}: ${nextLanguageName}`}
       title={`${t("language.label")}: ${nextLanguageName}`}
     >
