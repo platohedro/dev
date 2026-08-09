@@ -1,7 +1,7 @@
 -- Roles del panel administrativo. Ejecuta esta migración antes de las
 -- migraciones de eventos, noticias, tienda y residencias.
 do $$ begin
-  create type public.app_role as enum ('super_admin', 'events_admin', 'news_admin');
+  create type public.app_role as enum ('super_admin', 'events_admin', 'news_admin', 'store_admin', 'residency_admin');
 exception
   when duplicate_object then null;
 end $$;
@@ -38,6 +38,8 @@ as $$
   select public.has_role(array['super_admin'::public.app_role, 'news_admin'::public.app_role]);
 $$;
 
+revoke execute on function public.has_role(public.app_role[]) from public;
+revoke execute on function public.is_news_admin() from public;
 grant execute on function public.has_role(public.app_role[]) to authenticated;
 grant execute on function public.is_news_admin() to authenticated;
 

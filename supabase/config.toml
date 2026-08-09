@@ -1,0 +1,9 @@
+# Configuración mínima para validar migraciones localmente y en CI.
+# No contiene credenciales ni apunta a un proyecto remoto.
+project_id = "platohedro-local"
+
+[db]
+major_version = 17
+
+[studio]
+enabled = false

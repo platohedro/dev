@@ -49,8 +49,41 @@ Para desarrollo abre únicamente la URL que imprime `pnpm dev` (por defecto,
 despliega en una plataforma compatible con Next.js. El repositorio usa solo pnpm;
 no ejecutes `npm install` ni conserves `package-lock.json`.
 
+## Ambientes de ejecución
+
+El proyecto debe operar con tres ambientes separados:
+
+- `local`: desarrollo en el equipo, usando `.env.local`.
+- `staging`: rama `staging` o deploy previews de Netlify, conectado a un proyecto Supabase de pruebas.
+- `production`: rama `main`, conectado al proyecto Supabase de producción.
+
+En Netlify configura las variables por contexto, sin guardarlas en Git:
+
+| Variable | Local | Staging | Production |
+| --- | --- | --- | --- |
+| `NEXT_PUBLIC_APP_ENV` | `local` | `staging` | `production` |
+| `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` | URL de staging | Dominio público |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase local o de desarrollo | Proyecto Supabase staging | Proyecto Supabase production |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Clave local | Clave staging | Clave production |
+| `WOMPI_*` | Sandbox, cuando se implemente | Sandbox | Producción |
+
+La configuración `netlify.toml` asigna automáticamente el ambiente público a los
+contextos de branch deploy, deploy preview y production. La rama `staging` debe
+configurarse en Netlify como branch deploy. Las migraciones de Supabase deben
+probarse primero en staging y luego aplicarse a producción mediante un proceso
+aprobado; nunca se deben compartir las bases de datos entre ambientes.
+
+Las migraciones usan el formato `YYYYMMDDHHMMSS_nombre.sql` para que Supabase las
+ejecute en un orden determinista. Antes de modificar una migración existente,
+confirma que aún no haya sido aplicada en un ambiente compartido. El comando
+`pnpm test:migrations` valida los nombres, el orden y las dependencias conocidas.
+Además, CI inicia una instancia local de Supabase con Docker y ejecuta
+`supabase db reset --yes`, comprobando que todas las migraciones puedan aplicarse
+desde una base vacía.
+
 ## Flujo de build y CI
 - Hay un workflow de CI en [.github/workflows/ci.yml](.github/workflows/ci.yml) que: checkout, instala pnpm, instala dependencias (`pnpm install --frozen-lockfile`), ejecuta `pnpm build` y `pnpm audit`. Recomendado para PRs y pushes a `main`.
+- Las tareas de operación y recuperación están documentadas en [docs/operations.md](docs/operations.md).
 
 ## Configuración destacada
 - `src/app/layout.tsx` define el documento, los metadatos y el proveedor de idioma.
@@ -96,6 +129,10 @@ select id, 'super_admin'::public.app_role from auth.users
 where email = 'comunicaciones@tu-dominio.org'
 on conflict do nothing;
 ```
+
+Los permisos están separados por módulo: `events_admin`, `news_admin`,
+`store_admin` y `residency_admin`. `super_admin` conserva acceso total. No asignes
+`events_admin` para habilitar tienda o residencias.
 
 Las políticas RLS de la migración permiten que cualquier visitante vea solo
 eventos publicados y que únicamente una cuenta de `event_admins` cree, edite,

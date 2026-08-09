@@ -1,28 +1,76 @@
 name: CI
 
 on:
-  push:
-    branches: [ main, master ]
   pull_request:
-    branches: [ main, master ]
+  push:
+    branches:
+      - main
+      - staging
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
+  validate:
+    name: Validate application
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.20.0
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'pnpm'
-      - name: Install pnpm
-        run: corepack prepare pnpm@latest --activate
+          node-version: 22
+          cache: pnpm
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Run build
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Validate Supabase migrations
+        run: pnpm test:migrations
+
+      - name: Validate SEO configuration
+        run: pnpm test:seo
+
+      - name: Build production bundle
         run: pnpm build
-      - name: Run audit
-        run: pnpm audit --audit-level=moderate || true
-      - name: Run lint (if configured)
-        run: pnpm run lint --if-present
+
+      - name: Audit dependencies
+        run: pnpm audit --audit-level=high
+
+  database:
+    name: Validate Supabase from clean database
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start local Supabase
+        run: supabase start
+
+      - name: Apply all migrations from clean state
+        run: supabase db reset --yes
+
+      - name: Stop local Supabase
+        if: always()
+        run: supabase stop

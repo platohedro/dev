@@ -1,15 +1,18 @@
-import { createSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase/server";
+import { createSupabasePublicClient, isSupabasePublicConfigured } from "@/lib/supabase/public";
 import type { PublicEvent } from "@/lib/events";
 import { EventosPageClient } from "./EventosPageClient";
+import type { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+export const metadata: Metadata = { title: "Eventos | Platohedro", description: "Consulta talleres, encuentros y actividades de arte, tecnología y educación en Platohedro.", alternates: { canonical: "/eventos" } };
+
+export const revalidate = 300;
 
 export default async function EventosPage() {
   let events: PublicEvent[] = [];
   let loadError = false;
 
-  if (isSupabaseConfigured) {
-    const supabase = await createSupabaseServerClient();
+  if (isSupabasePublicConfigured) {
+    const supabase = createSupabasePublicClient();
     const { data, error } = await supabase
       .from("events")
       .select("id, slug, title, summary, content, starts_at, ends_at, venue, address, city, category, cover_image_url, registration_url")
@@ -21,6 +24,6 @@ export default async function EventosPage() {
   }
 
   return (
-    <EventosPageClient events={events} isSupabaseConfigured={isSupabaseConfigured} loadError={loadError} />
+    <EventosPageClient events={events} isSupabaseConfigured={isSupabasePublicConfigured} loadError={loadError} />
   );
 }

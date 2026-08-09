@@ -19,7 +19,7 @@ export function ProductDetailClient({ product, images }: { product: Product; ima
     <main className="min-h-screen bg-background">
       <SiteHeader />
       <div className="mx-auto grid max-w-6xl gap-10 p-8 md:grid-cols-2">
-        <ProductGallery images={images} />
+        <ProductGallery images={images} productName={product.name} />
         <section>
           <h1 className="text-4xl font-bold">{product.name}</h1>
           <p className="mt-5 text-muted-foreground">{product.description}</p>

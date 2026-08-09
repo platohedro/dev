@@ -10,7 +10,7 @@ export default async function StoreAdmin({ searchParams }: { searchParams: Promi
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return <main className="p-10">Inicia sesión en <Link href="/admin">/admin</Link>.</main>;
   const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id);
-  if (!roles?.some(({ role }) => role === "super_admin" || role === "events_admin")) return <main className="p-10">Sin permiso.</main>;
+  if (!roles?.some(({ role }) => role === "super_admin" || role === "store_admin")) return <main className="p-10">Sin permiso.</main>;
   const { data: items } = await supabase.from("products").select("*").order("created_at", { ascending: false });
   const { data: item } = editar ? await supabase.from("products").select("*").eq("id", editar).maybeSingle() : { data: null };
   return <main className="min-h-screen bg-background p-8 md:p-10"><div className="mx-auto max-w-4xl">

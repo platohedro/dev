@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
-import { createSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase/server";
+import { createSupabasePublicClient, isSupabasePublicConfigured } from "@/lib/supabase/public";
+
+export const revalidate = 300;
 
 export async function GET() {
-  if (!isSupabaseConfigured) return NextResponse.json({ events: [] });
-  const supabase = await createSupabaseServerClient();
+  if (!isSupabasePublicConfigured) return NextResponse.json({ events: [] });
+  const supabase = createSupabasePublicClient();
   const { data, error } = await supabase
     .from("events")
     .select("id, slug, title, summary, content, starts_at, ends_at, venue, address, city, category, cover_image_url, registration_url")
