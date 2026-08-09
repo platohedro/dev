@@ -1,6 +1,7 @@
 "use client";
 
 import { CircleMarker, MapContainer, Popup, TileLayer } from "react-leaflet";
+import { useTranslation } from "react-i18next";
 
 export type ResidentMapItem = {
   id: string;
@@ -21,6 +22,7 @@ type CountryGroup = {
 };
 
 export function ResidentsMap({ residents }: { residents: ResidentMapItem[] }) {
+  const { t } = useTranslation();
   const countries = Object.values(residents.reduce<Record<string, CountryGroup>>((groups, resident) => {
     const key = resident.country.trim().toLowerCase();
     if (!groups[key]) groups[key] = { country: resident.country, lat: resident.country_lat, lng: resident.country_lng, residents: [] };
@@ -37,7 +39,7 @@ export function ResidentsMap({ residents }: { residents: ResidentMapItem[] }) {
             <Popup>
               <div className="min-w-52 text-[#003d7a]">
                 <strong className="text-base">{country.country}</strong>
-                <p className="my-1 text-xs font-semibold">{country.residents.length} residente{country.residents.length === 1 ? "" : "s"}</p>
+                <p className="my-1 text-xs font-semibold">{country.residents.length} {country.residents.length === 1 ? t("residentsMap.residentSingular") : t("residentsMap.residentPlural")}</p>
                 <ul className="max-h-48 space-y-1 overflow-auto border-t pt-2 text-sm">
                   {country.residents.sort((a, b) => b.residency_year - a.residency_year || a.name.localeCompare(b.name)).map((resident) => <li key={resident.id}>{resident.profile_url ? <a href={resident.profile_url} target="_blank" rel="noreferrer" className="font-bold underline">{resident.name} ↗</a> : <b>{resident.name}</b>} <span className="text-xs">· {resident.nationality}, {resident.residency_year}</span></li>)}
                 </ul>
@@ -46,7 +48,7 @@ export function ResidentsMap({ residents }: { residents: ResidentMapItem[] }) {
           </CircleMarker>
         ))}
       </MapContainer>
-      <p className="border-t border-[#0051A2]/20 bg-white px-4 py-3 text-sm text-[#003d7a]"><span className="mr-2 inline-block size-3 rounded-full bg-[#ff466f]" />Países con residentes · selecciona un punto para ver el directorio.</p>
+      <p className="border-t border-[#0051A2]/20 bg-white px-4 py-3 text-sm text-[#003d7a]"><span className="mr-2 inline-block size-3 rounded-full bg-[#ff466f]" />{t("residentsMap.caption")}</p>
     </div>
   );
 }

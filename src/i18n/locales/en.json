@@ -402,5 +402,92 @@
     "description": "If you're interested in collaborating, volunteering or participating in our programs, contact us. We're always open to new ideas and collaborations that can enrich our community work.",
     "volunteer": "Become a Volunteer",
     "contact": "Contact Us"
+  },
+  "notFound": {
+    "eyebrow": "Error 404",
+    "title": "This page got lost along the way",
+    "description": "The link you followed is broken or the page no longer exists. Let's get you back to familiar ground.",
+    "home": "Go to homepage",
+    "events": "See events agenda",
+    "shop": "Visit the shop",
+    "contact": "Contact us"
+  },
+  "eventosPage": {
+    "eyebrow": "Agenda",
+    "title": "Events and calendar",
+    "subtitle": "Find workshops, exhibitions, gatherings and Platohedro activities.",
+    "notConfigured": "The agenda will be available soon.",
+    "loadError": "We couldn't load the events. Please try again.",
+    "empty": "There are no upcoming published events right now. Check back soon.",
+    "register": "Register",
+    "viewEvent": "View event →",
+    "detail": {
+      "info": "Information",
+      "fallbackContent": "We'll share more information about this event soon."
+    }
+  },
+  "tiendaPage": {
+    "title": "Shop",
+    "viewProduct": "View product and gallery →",
+    "detail": {
+      "rate": "Rate",
+      "comingSoon": "Online purchase coming soon. For now you can browse the product gallery."
+    }
+  },
+  "residenciasPage": {
+    "hero": {
+      "eyebrow": "Art, thought and territory",
+      "title": "Platohedro Residencies",
+      "subtitle": "A space to research, create, share knowledge and develop contemporary artistic projects in conversation with Medellín and its communities."
+    },
+    "practice": {
+      "title": "A situated practice",
+      "description": "Residencies strengthen artistic practice through exchange, experimentation and critical reflection. We support processes that connect art, technology, education and free culture."
+    },
+    "cards": {
+      "territory": { "title": "Territory", "text": "Medellín as a living laboratory" },
+      "community": { "title": "Community", "text": "Exchange of knowledge" },
+      "experimentation": { "title": "Experimentation", "text": "Open and critical processes" }
+    },
+    "map": {
+      "eyebrow": "2014 — present",
+      "title": "Platohedro residents map",
+      "subtitle": "Each point brings together the people who have completed a residency, grouped by their country of nationality.",
+      "empty": "The map will appear once residents are published from the admin directory."
+    },
+    "modalities": {
+      "eyebrow": "Modalities",
+      "research": { "title": "Research and creation", "text": "Projects that explore questions, languages and methodologies." },
+      "community": { "title": "Community residency", "text": "Collaborative processes rooted in the territory." },
+      "lab": { "title": "Open laboratory", "text": "Prototypes, learnings and public conversations." }
+    },
+    "propose": {
+      "title": "Want to propose a residency?",
+      "description": "Write to us with a description of your process and research questions.",
+      "cta": "Send proposal"
+    }
+  },
+  "residentsDirectory": {
+    "eyebrow": "Living archive",
+    "title": "Residents directory",
+    "viewAll": "View all",
+    "allYears": "All years",
+    "empty": "No residents published for this year yet."
+  },
+  "residentsMap": {
+    "caption": "Countries with residents · select a point to see the directory.",
+    "residentSingular": "resident",
+    "residentPlural": "residents"
+  },
+  "productBuyButton": {
+    "soldOut": "Sold out",
+    "buy": "Buy with Wompi"
+  },
+  "donacionResultado": {
+    "badge": "PLATOHEDRO · DONATION",
+    "title": "We're verifying your contribution",
+    "description": "Wompi will inform us of the final result through a secure confirmation. This screen alone does not confirm the transaction.",
+    "reference": "Wompi reference",
+    "back": "Back to Platohedro"
   }
 }

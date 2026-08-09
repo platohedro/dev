@@ -360,5 +360,92 @@
     "label": "Idioma",
     "es": "Español",
     "en": "English"
+  },
+  "notFound": {
+    "eyebrow": "Error 404",
+    "title": "Esta página se perdió en el camino",
+    "description": "El enlace que seguiste está roto o la página ya no existe. Volvamos a un lugar conocido.",
+    "home": "Ir al inicio",
+    "events": "Ver agenda de eventos",
+    "shop": "Visitar la tienda",
+    "contact": "Contáctanos"
+  },
+  "eventosPage": {
+    "eyebrow": "Agenda",
+    "title": "Eventos y calendario",
+    "subtitle": "Encuentra talleres, exposiciones, encuentros y actividades de Platohedro.",
+    "notConfigured": "La agenda estará disponible pronto.",
+    "loadError": "No fue posible cargar los eventos. Inténtalo nuevamente.",
+    "empty": "No hay eventos próximos publicados por ahora. Vuelve pronto.",
+    "register": "Inscribirme",
+    "viewEvent": "Ver evento →",
+    "detail": {
+      "info": "Información",
+      "fallbackContent": "Pronto compartiremos más información sobre este evento."
+    }
+  },
+  "tiendaPage": {
+    "title": "Tienda",
+    "viewProduct": "Ver producto y galería →",
+    "detail": {
+      "rate": "Tasa",
+      "comingSoon": "Compra en línea próximamente. Por ahora puedes explorar la galería del producto."
+    }
+  },
+  "residenciasPage": {
+    "hero": {
+      "eyebrow": "Arte, pensamiento y territorio",
+      "title": "Residencias Platohedro",
+      "subtitle": "Un espacio para investigar, crear, compartir saberes y desarrollar proyectos artísticos contemporáneos en conversación con Medellín y sus comunidades."
+    },
+    "practice": {
+      "title": "Una práctica situada",
+      "description": "Las residencias fortalecen la práctica artística mediante el intercambio, la experimentación y la reflexión crítica. Acompañamos procesos que conectan arte, tecnología, educación y cultura libre."
+    },
+    "cards": {
+      "territory": { "title": "Territorio", "text": "Medellín como laboratorio vivo" },
+      "community": { "title": "Comunidad", "text": "Intercambio de saberes" },
+      "experimentation": { "title": "Experimentación", "text": "Procesos abiertos y críticos" }
+    },
+    "map": {
+      "eyebrow": "2014 — presente",
+      "title": "Mapa de residentes Platohedro",
+      "subtitle": "Cada punto reúne a las personas que han realizado una residencia, agrupadas por su país de nacionalidad.",
+      "empty": "El mapa aparecerá al publicar residentes desde el directorio administrativo."
+    },
+    "modalities": {
+      "eyebrow": "Modalidades",
+      "research": { "title": "Investigación y creación", "text": "Proyectos que exploran preguntas, lenguajes y metodologías." },
+      "community": { "title": "Residencia comunitaria", "text": "Procesos colaborativos arraigados en el territorio." },
+      "lab": { "title": "Laboratorio abierto", "text": "Prototipos, aprendizajes y conversaciones públicas." }
+    },
+    "propose": {
+      "title": "¿Quieres proponer una residencia?",
+      "description": "Escríbenos con una descripción de tu proceso y tus preguntas de investigación.",
+      "cta": "Enviar propuesta"
+    }
+  },
+  "residentsDirectory": {
+    "eyebrow": "Archivo vivo",
+    "title": "Directorio de residentes",
+    "viewAll": "Ver todos",
+    "allYears": "Todos los años",
+    "empty": "Aún no hay residentes publicados para este año."
+  },
+  "residentsMap": {
+    "caption": "Países con residentes · selecciona un punto para ver el directorio.",
+    "residentSingular": "residente",
+    "residentPlural": "residentes"
+  },
+  "productBuyButton": {
+    "soldOut": "Agotado",
+    "buy": "Comprar con Wompi"
+  },
+  "donacionResultado": {
+    "badge": "PLATOHEDRO · DONACIÓN",
+    "title": "Estamos verificando tu aporte",
+    "description": "Wompi nos informará el resultado definitivo mediante una confirmación segura. Esta pantalla no confirma por sí sola la transacción.",
+    "reference": "Referencia de Wompi",
+    "back": "Volver a Platohedro"
   }
 }
