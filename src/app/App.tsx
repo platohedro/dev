@@ -171,7 +171,7 @@ const techInitiatives = [
 const residencyTypeAssets = [
   {
     color: "#0051A2",
-    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&h=600&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/on.jpg",
   },
   {
     color: "#FF46A2",
