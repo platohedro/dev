@@ -33,6 +33,7 @@ function residentValues(formData: FormData) {
     residency_year: Math.trunc(number(formData, "residency_year", 2000, 2100)),
     project: text(formData, "project") || null,
     profile_url: text(formData, "profile_url") || null,
+    image_url: text(formData, "image_url") || null,
     is_published: isPublished,
   };
 }

@@ -50,7 +50,6 @@ jobs:
         run: pnpm build
 
       - name: Audit dependencies
-        continue-on-error: true
         run: pnpm audit --audit-level=moderate
 
   database:

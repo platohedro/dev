@@ -41,7 +41,7 @@ export function RenovationPopup({ isOpen, onClose }: RenovationPopupProps) {
 
             <DialogHeader className="text-center mb-6">
               <DialogTitle className="text-2xl font-bold text-[#99CC33] mb-2">
-                Pagnia en remodelación
+                Pagina en remodelación
               </DialogTitle>
               <DialogDescription className="text-white/90 text-base leading-relaxed">
                 disculpa las molestas
