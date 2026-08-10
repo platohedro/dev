@@ -8,7 +8,7 @@ export async function saveProduct(form: FormData) {
   const { data: { user } } = await supabase.auth.getUser(); if (!user) redirect("/admin");
   const name = String(form.get("name") ?? "").trim(); const cop = Number(form.get("price_cop")); const usd = Number(form.get("price_usd"));
   if (!name || !Number.isSafeInteger(cop) || cop < 1 || !Number.isFinite(usd) || usd <= 0) throw new Error("Completa nombre y precios válidos.");
-  let imageUrl = String(form.get("current_image_url") ?? "").trim() || null;
+  let imageUrl = String(form.get("image_url") ?? "").trim() || String(form.get("current_image_url") ?? "").trim() || null;
   const files = form.getAll("images").filter((value): value is File => value instanceof File && value.size > 0);
   const uploaded: string[] = [];
   for (const file of files) { if (file.size > 2 * 1024 * 1024 || !["image/jpeg", "image/png", "image/webp"].includes(file.type)) throw new Error("Cada imagen debe ser JPG, PNG o WebP y pesar máximo 2 MB."); const path=`${user.id}/${crypto.randomUUID()}.${file.type.split("/")[1]}`; const {error}=await supabase.storage.from("product-images").upload(path,await file.arrayBuffer(),{contentType:file.type}); if(error)throw new Error(`No fue posible subir la imagen: ${error.message}`); uploaded.push(supabase.storage.from("product-images").getPublicUrl(path).data.publicUrl); }
