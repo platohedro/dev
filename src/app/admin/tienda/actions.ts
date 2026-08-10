@@ -42,3 +42,28 @@ export async function deleteProduct(form: FormData) {
   revalidatePath("/tienda");
   redirect("/admin/tienda?mensaje=eliminado");
 }
+
+export async function deleteProductImage(form: FormData) {
+  const productId = String(form.get("product_id") ?? "").trim();
+  const imageId = String(form.get("image_id") ?? "").trim();
+  if (!productId || !imageId) throw new Error("Imagen inválida.");
+  const supabase = await createSupabaseServerClient();
+  const { data: product } = await supabase.from("products").select("slug").eq("id", productId).maybeSingle();
+  const { error } = await supabase.from("product_images").delete().eq("id", imageId).eq("product_id", productId);
+  if (error) throw new Error(`No fue posible borrar la imagen: ${error.message}`);
+  revalidatePath("/tienda");
+  if (product?.slug) revalidatePath(`/tienda/${product.slug}`);
+  redirect(`/admin/tienda?editar=${productId}&mensaje=guardado`);
+}
+
+export async function deleteProductMainImage(form: FormData) {
+  const productId = String(form.get("product_id") ?? "").trim();
+  if (!productId) throw new Error("Producto inválido.");
+  const supabase = await createSupabaseServerClient();
+  const { data: product } = await supabase.from("products").select("slug").eq("id", productId).maybeSingle();
+  const { error } = await supabase.from("products").update({ image_url: null }).eq("id", productId);
+  if (error) throw new Error(`No fue posible borrar la imagen principal: ${error.message}`);
+  revalidatePath("/tienda");
+  if (product?.slug) revalidatePath(`/tienda/${product.slug}`);
+  redirect(`/admin/tienda?editar=${productId}&mensaje=guardado`);
+}
