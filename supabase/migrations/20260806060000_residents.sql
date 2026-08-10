@@ -3,9 +3,9 @@ create table if not exists public.residents (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   nationality text not null,
-  country text not null,
-  country_lat numeric(9,6) not null check (country_lat between -90 and 90),
-  country_lng numeric(9,6) not null check (country_lng between -180 and 180),
+  country text,
+  country_lat numeric(9,6),
+  country_lng numeric(9,6),
   residency_year integer not null check (residency_year between 2000 and 2100),
   project text,
   profile_url text,
@@ -14,6 +14,19 @@ create table if not exists public.residents (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.residents
+  alter column country drop not null,
+  alter column country_lat drop not null,
+  alter column country_lng drop not null;
+
+alter table public.residents
+  drop constraint if exists residents_country_lat_check,
+  drop constraint if exists residents_country_lng_check;
+
+alter table public.residents
+  add constraint residents_country_lat_check check (country_lat is null or country_lat between -90 and 90),
+  add constraint residents_country_lng_check check (country_lng is null or country_lng between -180 and 180);
 
 -- Seguro para proyectos donde la tabla se hubiera creado antes de este campo.
 alter table public.residents add column if not exists profile_url text;

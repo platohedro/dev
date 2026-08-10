@@ -26,3 +26,17 @@ supabase db lint
 
 El despliegue de producción debe conservar el historial de migraciones y contar
 con un backup verificado previo.
+
+## Importación del directorio histórico
+
+La migración `20260809100000_import_historical_residents.sql` importa 83 entradas
+de 2014 a 2025 recuperadas del directorio y del mapa público de Platohedro. Es
+idempotente por nombre y año, por lo que conserva los registros existentes y
+puede ejecutarse tanto en una base limpia como en un ambiente que ya tenga parte
+del directorio. Cada entrada conserva su enlace al perfil histórico. Los
+registros históricos tienen `created_by` nulo porque no
+pertenecen a una cuenta administrativa actual.
+
+Antes de promoverla a producción, comprobar en staging el total, los nombres
+compuestos y los países. La fuente histórica agrupaba algunos colectivos en una
+sola entrada aunque su contador visual contabilizaba a sus integrantes.

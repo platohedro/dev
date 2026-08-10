@@ -13,10 +13,12 @@ type Resident = {
 
 export default async function ResidenciasPage() {
   let residents: Resident[] = [];
+  let loadError = false;
   if (isSupabasePublicConfigured) {
     const supabase = createSupabasePublicClient();
-    const { data } = await supabase.from("residents").select("id, name, nationality, country, country_lat, country_lng, residency_year, profile_url").eq("is_published", true).order("residency_year", { ascending: false });
+    const { data, error } = await supabase.from("residents").select("id, name, nationality, country, country_lat, country_lng, residency_year, profile_url").eq("is_published", true).not("country", "is", null).not("country_lat", "is", null).not("country_lng", "is", null).order("residency_year", { ascending: false });
     residents = (data ?? []) as Resident[];
+    loadError = Boolean(error);
   }
-  return <ResidenciasPageClient residents={residents} />;
+  return <ResidenciasPageClient residents={residents} loadError={loadError} />;
 }
