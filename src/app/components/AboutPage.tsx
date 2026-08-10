@@ -1,4 +1,4 @@
-import { ArrowUpRight, FileText, Heart, Users } from "lucide-react";
+import { ArrowUpRight, FileText, Heart, Unlock, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const focuses = [
@@ -25,33 +25,35 @@ const focusesEnglish = [
   "We work with grassroots communities and social practices that pursue collective well-being by transforming their own realities according to their dreams and aspirations, building and valuing what is held in common.",
 ];
 
+const focusIcons = [Heart, Unlock, Users];
+
 const history = [
-  ["2004", "Inicios", "Platohedro nace como un colectivo audiovisual: queríamos darle voz a una ciudad y un país silenciados en el terror de la violencia.", "https://platohedro.org/wp-content/uploads/2022/02/amazon-3.png"],
-  ["2005", "Foco Crítico", "Nuestro primer proyecto, semilla del programa D-Formación: una escuela alternativa de cine y audiovisuales para jóvenes.", "https://platohedro.org/wp-content/uploads/2022/02/fococritico.png"],
-  ["2006", "Presentación de cortometrajes", "Platohedro se da a conocer a la ciudad en su lanzamiento oficial.", "https://platohedro.org/wp-content/uploads/2022/03/presenta_colombo.jpg"],
-  ["2006", "Sede propia", "Adquirimos la actual sede en el barrio Buenos Aires, una casa para la creación colectiva y colaborativa.", "https://platohedro.org/wp-content/uploads/2022/03/Fotografia-09_-Sede-nueva-copy.jpg"],
+  ["2004", "Inicios", "Platohedro nace como un colectivo audiovisual: queríamos darle voz a una ciudad y un país silenciados en el terror de la violencia.", "https://backup.platohedro.org/wp-content/uploads/2022/02/amazon-3.png"],
+  ["2005", "Foco Crítico", "Nuestro primer proyecto, semilla del programa D-Formación: una escuela alternativa de cine y audiovisuales para jóvenes.", "https://backup.platohedro.org/wp-content/uploads/2022/02/fococritico.png"],
+  ["2006", "Presentación de cortometrajes", "Platohedro se da a conocer a la ciudad en su lanzamiento oficial.", "https://backup.platohedro.org/wp-content/uploads/2022/03/presenta_colombo.jpg"],
+  ["2006", "Sede propia", "Adquirimos la actual sede en el barrio Buenos Aires, una casa para la creación colectiva y colaborativa.", "https://backup.platohedro.org/wp-content/uploads/2022/02/sedepropia.png"],
   ["2007", "Registro oficial de la Corporación", "Entidad sin ánimo de lucro registrada en enero de 2007 como Corporación Platohedro Grupo Audiovisual.", null],
-  ["2007", "CasAbierta", "Inauguramos la Casa Platohedro con una semana de celebración, exposiciones, charlas, feria y conciertos.", "https://platohedro.org/wp-content/uploads/2022/03/casabierta.gif"],
-  ["2007–2008", "El Matinée", "Espacio alternativo con niñxs para apropiarse del barrio desde sus voces, miradas y complicidades.", "https://platohedro.org/wp-content/uploads/2022/03/matinee.jpg"],
-  ["2007–2008", "Armar la podrida", "Participación en escenarios clave para la ciudad que abrieron aprendizajes y expansión de redes.", "https://platohedro.org/wp-content/uploads/2022/03/Armar-la-podrida.jpg"],
-  ["2009–2011", "Moción de Claridad", "Primer proyecto de cooperación internacional con formación política y audiovisual alternativa junto a OtraEZcuela.", "https://platohedro.org/wp-content/uploads/2022/03/Mocion-de-claridad.jpg"],
-  ["2010–2013", "Co-Inspiraciones", "Encuentros nacionales e internacionales: Seminario de Comunicación Juvenil, Medelab, Comunlab, Plataforma Puente, LabSurLab y más.", "https://platohedro.org/wp-content/uploads/2022/03/labsurlab.webp"],
-  ["2013", "Laboratorios Comunes de Creación", "Residencias creativas y trabajo con equipamientos públicos para tejer alianzas y procesos colaborativos.", "https://platohedro.org/wp-content/uploads/2022/03/Laboratorios-comunes-de-creacion.png"],
-  ["2013", "Manga Libre", "Proceso comunitario de revitalización social de un terreno baldío, convertido en espacio público de uso colectivo.", "https://platohedro.org/wp-content/uploads/2022/03/mangalibre.jpg"],
-  ["2013", "Intromisiones pedagógicas", "Producción audiovisual en 14 instituciones con actividades para niñxs y adolescentes en jornadas escolares complementarias.", "https://platohedro.org/wp-content/uploads/2022/03/inststituciones-educativas.png"],
-  ["2014", "La Jaquer EsCool", "Escuelita hacker creada desde el interés de niñxs y jóvenes por tecnologías, cuerpo, naturaleza y experimentación.", "https://platohedro.org/wp-content/uploads/2022/03/la-jaquer.jpg"],
-  ["2014–actualidad", "Arts Collaboratory", "Red internacional para conocimiento libre, sostenibilidad y creación y gestión en red, clave para la proyección organizacional.", "https://platohedro.org/wp-content/uploads/2022/03/ARTS.jpg"],
-  ["2014–2016", "Ondas expansivas", "Producción audiovisual de CuBOX junto a C3P y AC; publicación y visibilización de jóvenes como artistas hackers.", "https://platohedro.org/wp-content/uploads/2022/03/ondas.jpg"],
-  ["2015", "Proyección al 2020", "Actualización de misión, visión, enfoques y estructura: Salvaguardia, D-Formación, Residencias y Comunicación Libre y Compartida.", "https://platohedro.org/wp-content/uploads/2022/03/2020.png"],
-  ["2015", "MDE15", "Anfitrionxs del Encuentro Internacional de Arte de Medellín y procesos de creación colaborativa con artistas locales e internacionales.", "https://platohedro.org/wp-content/uploads/2022/03/mde15.jpg"],
-  ["2016", "CreAcción", "Reinvención de Foco Crítico hacia apoyo a iniciativas y emprendimientos juveniles desde autoevaluación y aprendizaje colectivo.", "https://platohedro.org/wp-content/uploads/2022/03/Creaccion.jpg"],
-  ["2018", "FemArtNet", "Proyecto con perspectiva de género, arte feminista y derechos humanos que llegó a la Bienal de Arte Joven de Moscú.", "https://platohedro.org/wp-content/uploads/2022/03/FANMM-WEB.png"],
-  ["2019", "Next-Generation Prince Claus Fund", "Consolidación de una nueva generación de jóvenes con espíritu crítico, autonomía creativa y búsqueda del Buen Vivir Común.", "https://platohedro.org/wp-content/uploads/2022/03/netx-gen.png"],
-  ["2019", "Multiversos", "Publicación escrita a muchas manos que recoge historia, aprendizajes y metodologías de los primeros 15 años de Platohedro.", "https://platohedro.org/wp-content/uploads/2022/03/Multiversos.jpg"],
-  ["2019", "Platoteca", "Acervo documental digital y físico de consulta abierta para la comunidad, basado en cultura libre.", "https://platohedro.org/wp-content/uploads/2022/03/platoteca.png"],
-  ["2020", "Curaduría para el Buen Vivir Común", "Investigación sobre lo común en la cultura, desde contexto local, Sur Global y voces del ecosistema Platohedro.", "https://platohedro.org/wp-content/uploads/2022/03/AP01.jpg"],
-  ["2021", "Cypher_Platxs", "Grupo de estudio de intercambio cripto para imaginar economías alternativas y futuros compartidos del Buen Vivir.", "https://platohedro.org/wp-content/uploads/2022/04/cypherplatxs.jpg"],
-  ["2022", "Plan Maestro a 2027", "Nuevo plan estratégico para renovación organizacional e infraestructura, impulsado por investigación en sostenibilidad.", "https://platohedro.org/wp-content/uploads/2022/04/220428_125852.png"],
+  ["2007", "CasAbierta", "Inauguramos la Casa Platohedro con una semana de celebración, exposiciones, charlas, feria y conciertos.", "https://backup.platohedro.org/wp-content/uploads/2022/03/casabierta.gif"],
+  ["2007–2008", "El Matinée", "Espacio alternativo con niñxs para apropiarse del barrio desde sus voces, miradas y complicidades.", "https://backup.platohedro.org/wp-content/uploads/2022/03/matinee.jpg"],
+  ["2007–2008", "Armar la podrida", "Participación en escenarios clave para la ciudad que abrieron aprendizajes y expansión de redes.", "https://backup.platohedro.org/wp-content/uploads/2022/03/Armar-la-podrida-1.jpg"],
+  ["2009–2011", "Moción de Claridad", "Primer proyecto de cooperación internacional con formación política y audiovisual alternativa junto a OtraEZcuela.", "https://backup.platohedro.org/wp-content/uploads/2022/03/Mocion-de-claridad.jpg"],
+  ["2010–2013", "Co-Inspiraciones", "Encuentros nacionales e internacionales: Seminario de Comunicación Juvenil, Medelab, Comunlab, Plataforma Puente, LabSurLab y más.", "https://backup.platohedro.org/wp-content/uploads/2022/03/labsurlab.webp"],
+  ["2013", "Laboratorios Comunes de Creación", "Residencias creativas y trabajo con equipamientos públicos para tejer alianzas y procesos colaborativos.", "https://backup.platohedro.org/wp-content/uploads/2022/03/Laboratorios-comunes-de-creacion.png"],
+  ["2013", "Manga Libre", "Proceso comunitario de revitalización social de un terreno baldío, convertido en espacio público de uso colectivo.", "https://backup.platohedro.org/wp-content/uploads/2022/03/mangalibre.jpg"],
+  ["2013", "Intromisiones pedagógicas", "Producción audiovisual en 14 instituciones con actividades para niñxs y adolescentes en jornadas escolares complementarias.", "https://backup.platohedro.org/wp-content/uploads/2022/03/inststituciones-educativas.png"],
+  ["2014", "La Jaquer EsCool", "Escuelita hacker creada desde el interés de niñxs y jóvenes por tecnologías, cuerpo, naturaleza y experimentación.", "https://backup.platohedro.org/wp-content/uploads/2022/03/la-jaquer.jpg"],
+  ["2014–actualidad", "Arts Collaboratory", "Red internacional para conocimiento libre, sostenibilidad y creación y gestión en red, clave para la proyección organizacional.", "https://backup.platohedro.org/wp-content/uploads/2022/03/ARTS.jpg"],
+  ["2014–2016", "Ondas expansivas", "Producción audiovisual de CuBOX junto a C3P y AC; publicación y visibilización de jóvenes como artistas hackers.", "https://backup.platohedro.org/wp-content/uploads/2022/03/ondas.jpg"],
+  ["2015", "Proyección al 2020", "Actualización de misión, visión, enfoques y estructura: Salvaguardia, D-Formación, Residencias y Comunicación Libre y Compartida.", "https://backup.platohedro.org/wp-content/uploads/2022/03/2020.png"],
+  ["2015", "MDE15", "Anfitrionxs del Encuentro Internacional de Arte de Medellín y procesos de creación colaborativa con artistas locales e internacionales.", "https://backup.platohedro.org/wp-content/uploads/2022/03/mde15.jpg"],
+  ["2016", "CreAcción", "Reinvención de Foco Crítico hacia apoyo a iniciativas y emprendimientos juveniles desde autoevaluación y aprendizaje colectivo.", "https://backup.platohedro.org/wp-content/uploads/2022/03/Creaccion.jpg"],
+  ["2018", "FemArtNet", "Proyecto con perspectiva de género, arte feminista y derechos humanos que llegó a la Bienal de Arte Joven de Moscú.", "https://backup.platohedro.org/wp-content/uploads/2022/03/FANMM-WEB.png"],
+  ["2019", "Next-Generation Prince Claus Fund", "Consolidación de una nueva generación de jóvenes con espíritu crítico, autonomía creativa y búsqueda del Buen Vivir Común.", "https://backup.platohedro.org/wp-content/uploads/2022/03/netx-gen.png"],
+  ["2019", "Multiversos", "Publicación escrita a muchas manos que recoge historia, aprendizajes y metodologías de los primeros 15 años de Platohedro.", "https://backup.platohedro.org/wp-content/uploads/2022/03/Multiversos.jpg"],
+  ["2019", "Platoteca", "Acervo documental digital y físico de consulta abierta para la comunidad, basado en cultura libre.", "https://backup.platohedro.org/wp-content/uploads/2022/03/platoteca.png"],
+  ["2020", "Curaduría para el Buen Vivir Común", "Investigación sobre lo común en la cultura, desde contexto local, Sur Global y voces del ecosistema Platohedro.", "https://backup.platohedro.org/wp-content/uploads/2022/03/curaduria-para-el-buen-vivir.png"],
+  ["2021", "Cypher_Platxs", "Grupo de estudio de intercambio cripto para imaginar economías alternativas y futuros compartidos del Buen Vivir.", "https://backup.platohedro.org/wp-content/uploads/2022/04/cypherplatxs.jpg"],
+  ["2022", "Plan Maestro a 2027", "Nuevo plan estratégico para renovación organizacional e infraestructura, impulsado por investigación en sostenibilidad.", "https://backup.platohedro.org/wp-content/uploads/2022/03/2027.png"],
 ] as const;
 
 const historyEnglish = [
@@ -91,9 +93,10 @@ const team = [
   ["Shara Castaño", "Coordinadora de Educación", "https://backup.platohedro.org/wp-content/uploads/2025/03/IMG_1458-768x1024.jpg"],
   ["Kenny Paternina", "Comunicador", "https://backup.platohedro.org/wp-content/uploads/2025/03/kenny-768x1024.jpg"],
   ["Juan Jaramillo", "Coordinador de Comunicaciones", "https://backup.platohedro.org/wp-content/uploads/2025/03/IMG_1504-768x1024.jpg"],
+  ["Sandra Ramirez", "Coordinadora de arte y pensamiento", "https://backup.platohedro.org/wp-content/uploads/2026/08/photo_2026-08-10_01-02-23.jpg"],
 ] as const;
 
-const teamRolesEnglish = ["Administrator", "Co-Director", "Co-Director", "Education Coordinator", "Education Coordinator", "Communicator", "Communications Coordinator"];
+const teamRolesEnglish = ["Administrator", "Co-Director", "Co-Director", "Education Coordinator", "Education Coordinator", "Communicator", "Communications Coordinator", "Art and Thought Coordinator"];
 
 export function AboutPage() {
   const { i18n } = useTranslation();
@@ -133,7 +136,7 @@ export function AboutPage() {
       <section className="mx-auto max-w-7xl px-6 py-24 md:px-10">
         <div className="mb-12 text-center"><p className="mb-3 text-xs uppercase tracking-[0.25em] text-primary">{copy.approach}</p><h2 className="text-4xl font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>{copy.focuses}</h2></div>
         <div className="grid gap-6 md:grid-cols-3">
-          {focuses.map((focus, index) => <article key={focus.name} className="border border-border bg-card p-7 md:p-8"><p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">{copy.culture}</p><h3 className="my-3 text-3xl font-bold">{focus.name}</h3><p className="leading-relaxed text-muted-foreground">{isEnglish ? focusesEnglish[index] : focus.description}</p></article>)}
+          {focuses.map((focus, index) => { const Icon = focusIcons[index]; return <article key={focus.name} className="border border-border bg-card p-7 md:p-8"><div className="mb-6 flex size-12 items-center justify-center rounded-full bg-primary/15 text-primary"><Icon size={25} strokeWidth={1.8} aria-hidden="true" /></div><p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">{copy.culture}</p><h3 className="my-3 text-3xl font-bold">{focus.name}</h3><p className="leading-relaxed text-muted-foreground">{isEnglish ? focusesEnglish[index] : focus.description}</p></article>; })}
         </div>
       </section>
 

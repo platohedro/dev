@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
-  Play,
   Calendar,
   MapPin,
   Heart,
@@ -49,7 +48,7 @@ const programs = [
     titleKey: "programs.items.0.title",
     tagKey: "programs.items.0.tag",
     descKey: "programs.items.0.description",
-    image: "https://images.unsplash.com/photo-1588072432836-e10032774350?w=700&h=500&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2022/04/c_buenvivir.jpg",
     color: "#d4f500",
   },
   {
@@ -57,7 +56,7 @@ const programs = [
     titleKey: "programs.items.1.title",
     tagKey: "programs.items.1.tag",
     descKey: "programs.items.1.description",
-    image: "https://images.unsplash.com/photo-1603344797033-f0f4f587ab60?w=700&h=500&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2022/04/experimentacion-tecnologica01.jpg",
     color: "#ff3366",
   },
   {
@@ -65,7 +64,7 @@ const programs = [
     titleKey: "programs.items.2.title",
     tagKey: "programs.items.2.tag",
     descKey: "programs.items.2.description",
-    image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=700&h=500&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2022/04/IMG_2265.jpg",
     color: "#a78bfa",
   },
   {
@@ -73,7 +72,7 @@ const programs = [
     titleKey: "programs.items.3.title",
     tagKey: "programs.items.3.tag",
     descKey: "programs.items.3.description",
-    image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=700&h=500&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2022/05/lifepatch2.jpg",
     color: "#fb923c",
   },
   {
@@ -81,7 +80,7 @@ const programs = [
     titleKey: "programs.items.4.title",
     tagKey: "programs.items.4.tag",
     descKey: "programs.items.4.description",
-    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=700&h=500&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2023/11/1697073676568-scaled.jpg",
     color: "#34d399",
   },
 ];
@@ -121,6 +120,9 @@ const events = [
 ];
 
 const sponsors = [
+  { name: "Arts Collaboratory", full: "Arts Collaboratory", image: "https://backup.platohedro.org/wp-content/uploads/2022/04/ac_.png" },
+  { name: "TDH", full: "TDH", image: "https://backup.platohedro.org/wp-content/uploads/2022/02/TDH-1.png" },
+  { name: "Exploratorio", full: "Exploratorio", image: "https://backup.platohedro.org/wp-content/uploads/2022/04/LOGO_EXPLORATORIO-1.png" },
   { name: "Ministerio de Cultura", full: "Ministerio de Cultura de Colombia" },
   { name: "Alcaldía de Medellín", full: "Alcaldía de Medellín" },
   { name: "Idartes", full: "Instituto Distrital de las Artes" },
@@ -128,6 +130,43 @@ const sponsors = [
   { name: "Redes", full: "Red Nacional de Cultura" },
   { name: "Open Society", full: "Open Society Foundations" },
 ];
+
+function AnimatedStat({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const statRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const element = statRef.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setStarted(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.4 });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    const duration = 1400;
+    let frame = 0;
+    let startTime = 0;
+    const animate = (time: number) => {
+      if (!startTime) startTime = time;
+      const progress = Math.min((time - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(value * eased));
+      if (progress < 1) frame = requestAnimationFrame(animate);
+    };
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [started, value]);
+
+  return <div ref={statRef}>{count}{suffix}</div>;
+}
 
 const artsThoughts = [
   {
@@ -171,15 +210,15 @@ const techInitiatives = [
 const residencyTypeAssets = [
   {
     color: "#0051A2",
-    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&h=600&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/on.jpg",
   },
   {
     color: "#FF46A2",
-    image: "https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=1400&h=800&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/IMG_4154-1024x768-1.jpg",
   },
   {
     color: "#99CC33",
-    image: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&h=800&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/Lokakarya_Squaresynth_01.jpg",
   },
 ];
 
@@ -222,7 +261,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
     stats: Array<{ value: string; label: string }>;
     apply: string;
   };
-  const residencyTypes = t("residencies.types", { returnObjects: true }) as Array<{ title: string; tag: string; description: string; color: string; image: string }>;
+  const residencyTypes = (t("residencies.types", { returnObjects: true }) as Array<{ title: string; tag: string; description: string }>).map((res, index) => ({ ...res, ...residencyTypeAssets[index] }));
   const techInitiativesData = techInitiatives.map((item, index) => ({
     ...item,
     title: t(`technology.initiatives.${index}.title`),
@@ -391,17 +430,17 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           {/* Quick stats */}
           <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border">
             {[
-              ["432", t("hero.stats.youth")],
-              ["79", t("hero.stats.mothers")],
-              ["287", t("hero.stats.residencies")],
-              ["22 años", t("hero.stats.years")],
-            ].map(([num, label]) => (
+              { value: 432, label: t("hero.stats.youth") },
+              { value: 79, label: t("hero.stats.mothers") },
+              { value: 287, label: t("hero.stats.residencies") },
+              { value: 22, suffix: " años", label: t("hero.stats.years") },
+            ].map(({ value, suffix, label }) => (
               <div key={label} className="bg-background/80 backdrop-blur-sm px-6 py-5">
                 <div
                   className="text-2xl md:text-3xl font-bold text-primary mb-1"
                   style={{ fontFamily: "'DM Serif Display', serif" }}
                 >
-                  {num}
+                  <AnimatedStat value={value} suffix={suffix} />
                 </div>
                 <div className="text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>
                   {label}
@@ -606,7 +645,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-[#0051A2]/30 mb-8">
             <div className="relative overflow-hidden aspect-[4/3] bg-[#003d7a]">
               <img
-                src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&h=600&fit=crop&auto=format"
+                src="https://backup.platohedro.org/wp-content/uploads/2023/10/becomingfungal.jpg"
                 alt="Artista en residencia trabajando en el estudio de Platohedro"
                 className="w-full h-full object-cover"
               />
@@ -704,7 +743,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           <div className="relative">
             <div className="aspect-square overflow-hidden border border-white/30 bg-[#003d7a]">
               <img
-                src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&h=800&fit=crop&auto=format"
+                src="https://backup.platohedro.org/wp-content/uploads/2022/04/IMG_1870.jpg"
                 alt="Jóvenes usando computadores y software creativo en el laboratorio digital de Platohedro"
                 className="w-full h-full object-cover"
               />
@@ -773,17 +812,10 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           </div>
 
           <div className="relative aspect-video bg-muted border border-border overflow-hidden max-w-4xl mx-auto group cursor-pointer">
-            <img
-              src="https://images.unsplash.com/photo-1571260899304-425eee4c7efd?w=1200&h=700&fit=crop&auto=format"
-              alt="Comunidad reunida en el estudio principal de Platohedro durante una sesión abierta"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-background/50 group-hover:bg-background/40 transition-colors" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-2xl">
-                <Play size={32} className="text-primary-foreground ml-1" />
-              </div>
-            </div>
+            <video controls playsInline preload="metadata" className="h-full w-full object-cover" aria-label="Platohedro en movimiento">
+              <source src="https://backup.platohedro.org/wp-content/uploads/2022/02/intro.mp4" type="video/mp4" />
+              Tu navegador no puede reproducir este video.
+            </video>
             <div className="absolute bottom-6 left-6 right-6">
               <div className="inline-block bg-background/90 backdrop-blur-sm px-4 py-2">
                 <p className="text-sm font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>
@@ -882,9 +914,9 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 className="bg-[#99CC33] flex items-center justify-center px-6 py-8 hover:bg-white/50 transition-colors cursor-pointer group"
                 title={sponsor.full}
               >
-                <span className="text-[#0051A2] group-hover:text-[#0051A2] text-xs text-center font-semibold tracking-wide transition-colors" style={{ fontFamily: "'DM Mono', monospace" }}>
+                {sponsor.image ? <img src={sponsor.image} alt={sponsor.full} className={sponsor.name === "TDH" || sponsor.name === "Exploratorio" ? "h-24 max-w-[95%] scale-[1.7] object-contain" : "h-24 max-w-[95%] object-contain"} /> : <span className="text-[#0051A2] group-hover:text-[#0051A2] text-xs text-center font-semibold tracking-wide transition-colors" style={{ fontFamily: "'DM Mono', monospace" }}>
                   {sponsor.name}
-                </span>
+                </span>}
               </div>
             ))}
           </div>

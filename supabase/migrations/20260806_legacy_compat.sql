@@ -1,0 +1,1 @@
+-- Compatibility stub for the legacy 20260806 migration version already applied remotely.

@@ -119,11 +119,9 @@ Nunca subas `.env.local` ni secretos de Wompi al repositorio.
 - El acceso al panel usa correo y contraseña administrados por Supabase Auth; la aplicación no almacena contraseñas.
 
 Para activarlo, crea un proyecto Supabase, añade `NEXT_PUBLIC_SUPABASE_URL` y
-`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en `.env.local`, y ejecuta
-`supabase/migrations/20260806_events.sql` y
-`supabase/migrations/20260805_admin_roles.sql` antes de las demás migraciones y
-`supabase/migrations/20260806_event_admin_roles.sql` después de eventos. Crea la cuenta
-en Authentication > Users > Add user y autorízala desde el SQL Editor:
+`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en `.env.local`, y aplica todas las
+migraciones con `supabase db push` (o `supabase db reset --yes` en local). Crea la
+cuenta en Authentication > Users > Add user y autorízala desde el SQL Editor:
 
 ```sql
 insert into public.user_roles (user_id, role)

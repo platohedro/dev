@@ -1,3 +1,19 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+/* Los elementos accionables deben comunicar visualmente que son interactivos. */
+button:not(:disabled),
+a[href],
+[role='button'],
+input[type='submit'],
+input[type='button'] {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+}
