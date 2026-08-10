@@ -1,0 +1,1 @@
+-- Compatibility stub for an older Supabase migration version already applied remotely.

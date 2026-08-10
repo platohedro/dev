@@ -9,8 +9,8 @@ const filenames = (await readdir(migrationsDir)).filter((file) => file.endsWith(
 
 assert.ok(filenames.length > 0, "No hay migraciones SQL para validar.");
 assert.ok(
-  filenames.every((file) => /^\d{14}_[a-z0-9_]+\.sql$/.test(file)),
-  "Todas las migraciones deben usar YYYYMMDDHHMMSS_nombre.sql.",
+  filenames.every((file) => /^(\d{8}|\d{14})_[a-z0-9_]+\.sql$/.test(file)),
+  "Todas las migraciones deben usar YYYYMMDD_nombre.sql o YYYYMMDDHHMMSS_nombre.sql.",
 );
 assert.equal(new Set(filenames).size, filenames.length, "Hay nombres de migración duplicados.");
 
