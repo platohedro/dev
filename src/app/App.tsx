@@ -175,7 +175,7 @@ const residencyTypeAssets = [
   },
   {
     color: "#FF46A2",
-    image: "https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=1400&h=800&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/IMG_4154-1024x768-1.jpg",
   },
   {
     color: "#99CC33",
@@ -222,7 +222,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
     stats: Array<{ value: string; label: string }>;
     apply: string;
   };
-  const residencyTypes = t("residencies.types", { returnObjects: true }) as Array<{ title: string; tag: string; description: string; color: string; image: string }>;
+  const residencyTypes = (t("residencies.types", { returnObjects: true }) as Array<{ title: string; tag: string; description: string }>).map((res, index) => ({ ...res, ...residencyTypeAssets[index] }));
   const techInitiativesData = techInitiatives.map((item, index) => ({
     ...item,
     title: t(`technology.initiatives.${index}.title`),
