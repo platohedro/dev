@@ -179,7 +179,7 @@ const residencyTypeAssets = [
   },
   {
     color: "#99CC33",
-    image: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&h=800&fit=crop&auto=format",
+    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/Lokakarya_Squaresynth_01.jpg",
   },
 ];
 
