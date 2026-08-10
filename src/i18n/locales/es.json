@@ -411,7 +411,8 @@
       "eyebrow": "2014 — presente",
       "title": "Mapa de residentes Platohedro",
       "subtitle": "Cada punto reúne a las personas que han realizado una residencia, agrupadas por su país de nacionalidad.",
-      "empty": "El mapa aparecerá al publicar residentes desde el directorio administrativo."
+      "empty": "El mapa aparecerá al publicar residentes desde el directorio administrativo.",
+      "loadError": "No fue posible cargar los residentes. Verifica que las migraciones de Supabase estén aplicadas."
     },
     "modalities": {
       "eyebrow": "Modalidades",

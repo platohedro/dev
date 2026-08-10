@@ -17,7 +17,7 @@ type Resident = {
   profile_url?: string | null;
 };
 
-export function ResidenciasPageClient({ residents }: { residents: Resident[] }) {
+export function ResidenciasPageClient({ residents, loadError }: { residents: Resident[]; loadError: boolean }) {
   const { t } = useTranslation();
 
   return (
@@ -49,7 +49,9 @@ export function ResidenciasPageClient({ residents }: { residents: Resident[] }) 
           <h2 className="mt-2 text-4xl font-bold md:text-5xl">{t("residenciasPage.map.title")}</h2>
           <p className="mt-4 max-w-2xl text-white/75">{t("residenciasPage.map.subtitle")}</p>
           <div className="mt-9">
-            {residents.length ? (
+            {loadError ? (
+              <div className="border border-[#FF46A2]/60 bg-[#FF46A2]/15 p-8 text-white">{t("residenciasPage.map.loadError")}</div>
+            ) : residents.length ? (
               <ResidentsMapClient residents={residents} />
             ) : (
               <div className="border border-white/25 bg-white/10 p-8 text-white/80">{t("residenciasPage.map.empty")}</div>

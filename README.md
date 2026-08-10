@@ -73,9 +73,11 @@ configurarse en Netlify como branch deploy. Las migraciones de Supabase deben
 probarse primero en staging y luego aplicarse a producción mediante un proceso
 aprobado; nunca se deben compartir las bases de datos entre ambientes.
 
-Las migraciones usan el formato `YYYYMMDDHHMMSS_nombre.sql` para que Supabase las
-ejecute en un orden determinista. Antes de modificar una migración existente,
-confirma que aún no haya sido aplicada en un ambiente compartido. El comando
+Las migraciones usan un prefijo de fecha estable en el nombre del archivo para
+que Supabase las ejecute en un orden determinista. En este repositorio conviven
+archivos heredados con formato `YYYYMMDDHHMMSS_nombre.sql` y otros con
+`YYYYMMDD_nombre.sql`. Antes de modificar una migración existente, confirma que
+aún no haya sido aplicada en un ambiente compartido. El comando
 `pnpm test:migrations` valida los nombres, el orden y las dependencias conocidas.
 Además, CI inicia una instancia local de Supabase con Docker y ejecuta
 `supabase db reset --yes`, comprobando que todas las migraciones puedan aplicarse

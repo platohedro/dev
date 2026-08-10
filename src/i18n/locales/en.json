@@ -453,7 +453,8 @@
       "eyebrow": "2014 — present",
       "title": "Platohedro residents map",
       "subtitle": "Each point brings together the people who have completed a residency, grouped by their country of nationality.",
-      "empty": "The map will appear once residents are published from the admin directory."
+      "empty": "The map will appear once residents are published from the admin directory.",
+      "loadError": "Residents could not be loaded. Check that the Supabase migrations have been applied."
     },
     "modalities": {
       "eyebrow": "Modalities",

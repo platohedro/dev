@@ -9,8 +9,8 @@ const filenames = (await readdir(migrationsDir)).filter((file) => file.endsWith(
 
 assert.ok(filenames.length > 0, "No hay migraciones SQL para validar.");
 assert.ok(
-  filenames.every((file) => /^\d{14}_[a-z0-9_]+\.sql$/.test(file)),
-  "Todas las migraciones deben usar YYYYMMDDHHMMSS_nombre.sql.",
+  filenames.every((file) => /^(\d{8}|\d{14})_[a-z0-9_]+\.sql$/.test(file)),
+  "Todas las migraciones deben usar YYYYMMDD_nombre.sql o YYYYMMDDHHMMSS_nombre.sql.",
 );
 assert.equal(new Set(filenames).size, filenames.length, "Hay nombres de migración duplicados.");
 
@@ -46,6 +46,12 @@ assert.match(content.get(filenames[position("residents")]), /'residency_admin'::
 assert.match(rolesMigration, /revoke execute on function public\.has_role.*from public/s);
 assert.match(content.get(filenames[position("store")]), /revoke execute on function public\.is_store_admin.*from public/s);
 assert.match(content.get(filenames[position("residents")]), /revoke execute on function public\.is_residency_admin.*from public/s);
+const residentsPolicyFix = content.get(filenames[position("fix_residents_public_policy")]);
+assert.match(residentsPolicyFix, /for select to anon, authenticated\s+using \(is_published\)/s);
+assert.doesNotMatch(residentsPolicyFix, /is_residency_admin/);
+const residentsImport = content.get(filenames[position("import_historical_residents")]);
+assert.match(residentsImport, /where not exists/s);
+assert.match(residentsImport, /is_published, created_by/s);
 assert.notEqual(position("performance_indexes"), -1, "Falta la migración de índices de rendimiento.");
 
 console.log(`Migrations OK: ${filenames.length} archivos, orden y dependencias validados.`);

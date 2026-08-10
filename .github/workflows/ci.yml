@@ -66,6 +66,8 @@ jobs:
         with:
           version: latest
 
+      - name: Stop any previous local Supabase
+        run: supabase stop || true
       - name: Start local Supabase
         run: supabase start
 
