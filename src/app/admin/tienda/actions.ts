@@ -43,17 +43,17 @@ export async function deleteProduct(form: FormData) {
   redirect("/admin/tienda?mensaje=eliminado");
 }
 
-export async function deleteProductImage(form: FormData) {
-  const productId = String(form.get("product_id") ?? "").trim();
-  const imageId = String(form.get("image_id") ?? "").trim();
-  if (!productId || !imageId) throw new Error("Imagen inválida.");
+export async function deleteProductImage(imageId: string, productId: string, _form: FormData) {
+  const normalizedProductId = productId.trim();
+  const normalizedImageId = imageId.trim();
+  if (!normalizedProductId || !normalizedImageId) throw new Error("Imagen inválida.");
   const supabase = await createSupabaseServerClient();
-  const { data: product } = await supabase.from("products").select("slug").eq("id", productId).maybeSingle();
-  const { error } = await supabase.from("product_images").delete().eq("id", imageId).eq("product_id", productId);
+  const { data: product } = await supabase.from("products").select("slug").eq("id", normalizedProductId).maybeSingle();
+  const { error } = await supabase.from("product_images").delete().eq("id", normalizedImageId).eq("product_id", normalizedProductId);
   if (error) throw new Error(`No fue posible borrar la imagen: ${error.message}`);
   revalidatePath("/tienda");
   if (product?.slug) revalidatePath(`/tienda/${product.slug}`);
-  redirect(`/admin/tienda?editar=${productId}&mensaje=guardado`);
+  redirect(`/admin/tienda?editar=${normalizedProductId}&mensaje=guardado`);
 }
 
 export async function deleteProductMainImage(form: FormData) {
