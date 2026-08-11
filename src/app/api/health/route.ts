@@ -17,7 +17,7 @@ export async function GET() {
 
   const healthy = Object.values(checks).every((value) => value !== "error");
   return NextResponse.json(
-    { status: healthy ? "ok" : "degraded", environment: process.env.NEXT_PUBLIC_APP_ENV ?? "unknown", checks, timestamp: new Date().toISOString() },
+    { status: healthy ? "ok" : "degraded", checks, timestamp: new Date().toISOString() },
     { status: healthy ? 200 : 503, headers: { "Cache-Control": "no-store" } },
   );
 }

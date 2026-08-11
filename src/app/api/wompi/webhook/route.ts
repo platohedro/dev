@@ -1,11 +1,13 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { isRateLimited } from "@/lib/rate-limit";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type WompiEvent = { event?: string; data?: { transaction?: Record<string, unknown> }; timestamp?: number; signature?: { properties?: string[]; checksum?: string } };
+type WompiEvent = { event?: string; environment?: string; data?: { transaction?: Record<string, unknown> }; timestamp?: number; signature?: { properties?: string[]; checksum?: string } };
+const MAX_EVENT_BYTES = 128 * 1024;
 
 function readPath(value: unknown, path: string): unknown {
   return path.split(".").reduce<unknown>((current, key) => current && typeof current === "object" && key in current ? (current as Record<string, unknown>)[key] : undefined, value);
@@ -22,11 +24,24 @@ function verifyEvent(event: WompiEvent, secret: string, headerChecksum: string |
 }
 
 export async function POST(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  if (isRateLimited(`wompi-webhook:${ip}`, 60, 60_000)) return NextResponse.json({ error: "Demasiadas solicitudes." }, { status: 429 });
+  const contentLength = Number(request.headers.get("content-length") ?? 0);
+  if (contentLength > MAX_EVENT_BYTES) return NextResponse.json({ error: "Evento demasiado grande." }, { status: 413 });
+  if (!request.headers.get("content-type")?.toLowerCase().startsWith("application/json")) return NextResponse.json({ error: "Tipo de evento inválido." }, { status: 415 });
+
   const secret = process.env.WOMPI_EVENTS_SECRET;
   if (!secret) return NextResponse.json({ error: "Secreto de eventos no configurado." }, { status: 503 });
   let event: WompiEvent;
-  try { event = await request.json(); } catch { return NextResponse.json({ error: "Evento inválido." }, { status: 400 }); }
+  try {
+    const body = await request.text();
+    if (new TextEncoder().encode(body).byteLength > MAX_EVENT_BYTES) return NextResponse.json({ error: "Evento demasiado grande." }, { status: 413 });
+    event = JSON.parse(body) as WompiEvent;
+  } catch { return NextResponse.json({ error: "Evento inválido." }, { status: 400 }); }
   if (!verifyEvent(event, secret, request.headers.get("x-event-checksum"))) return NextResponse.json({ error: "Firma inválida." }, { status: 401 });
+  const wompiBaseUrl = process.env.WOMPI_API_BASE_URL ?? "https://sandbox.wompi.co/v1";
+  const expectedEnvironment = wompiBaseUrl.includes("sandbox") ? "test" : "prod";
+  if (event.environment && event.environment !== expectedEnvironment) return NextResponse.json({ error: "Ambiente de evento inválido." }, { status: 400 });
   if (event.event !== "transaction.updated" || !event.data?.transaction) return NextResponse.json({ received: true });
 
   const transaction = event.data.transaction;

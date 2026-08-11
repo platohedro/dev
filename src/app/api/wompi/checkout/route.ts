@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 
 const MINIMUM_COP = 1_000;
 const MAXIMUM_COP = 50_000_000;
+const MAX_CHECKOUT_BYTES = 32 * 1024;
 
 function getSiteUrl(request: NextRequest) {
   return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || new URL(request.url).origin;
@@ -29,7 +30,15 @@ export async function POST(request: NextRequest) {
   if (missing.length) return NextResponse.json({ error: `Configuración incompleta: faltan ${missing.join(", ")}.` }, { status: 503 });
 
   let payload: { amount?: unknown; productId?: unknown; items?: unknown; email?: unknown; fullName?: unknown };
-  try { payload = await request.json(); } catch { return NextResponse.json({ error: "Solicitud inválida." }, { status: 400 }); }
+  const contentLength = Number(request.headers.get("content-length") ?? 0);
+  if (contentLength > MAX_CHECKOUT_BYTES) return NextResponse.json({ error: "Solicitud demasiado grande." }, { status: 413 });
+  try {
+    const body = await request.text();
+    if (new TextEncoder().encode(body).byteLength > MAX_CHECKOUT_BYTES) return NextResponse.json({ error: "Solicitud demasiado grande." }, { status: 413 });
+    const parsed = JSON.parse(body) as unknown;
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("invalid_payload");
+    payload = parsed as typeof payload;
+  } catch { return NextResponse.json({ error: "Solicitud inválida." }, { status: 400 }); }
 
   const email = typeof payload.email === "string" ? payload.email.trim().slice(0, 254) : null;
   const fullName = typeof payload.fullName === "string" ? payload.fullName.trim().slice(0, 160) : null;
@@ -39,6 +48,7 @@ export async function POST(request: NextRequest) {
   let items: { product_id: string; quantity: number; unit_price_cop: number; product_snapshot: Record<string, unknown> }[] = [];
 
   const requestedItems = Array.isArray(payload.items) ? payload.items : typeof payload.productId === "string" ? [{ productId: payload.productId, quantity: 1 }] : [];
+  if (requestedItems.length > 50) return NextResponse.json({ error: "Carrito inválido." }, { status: 400 });
   if (requestedItems.length) {
     const normalized = requestedItems.map((entry) => ({ productId: typeof entry === "object" && entry !== null && "productId" in entry ? String((entry as { productId: unknown }).productId) : "", quantity: typeof entry === "object" && entry !== null && "quantity" in entry ? Number((entry as { quantity: unknown }).quantity) : 0 })).filter((entry) => entry.productId && Number.isSafeInteger(entry.quantity) && entry.quantity > 0 && entry.quantity <= 99);
     if (!normalized.length || normalized.length !== requestedItems.length) return NextResponse.json({ error: "Carrito inválido." }, { status: 400 });

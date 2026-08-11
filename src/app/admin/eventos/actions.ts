@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { requireAdminRole } from "@/lib/auth/require-admin-role";
 
 function requiredText(formData: FormData, field: string) {
   const value = formData.get(field);
@@ -23,8 +24,7 @@ export async function signInWithPassword(formData: FormData) {
 
 export async function createEvent(formData: FormData) {
   const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/admin/eventos");
+  await requireAdminRole(supabase, "is_event_admin");
 
   const startsAt = requiredText(formData, "starts_at");
   const endsAt = String(formData.get("ends_at") ?? "").trim();
@@ -73,6 +73,7 @@ export async function createEvent(formData: FormData) {
 export async function updateEvent(formData: FormData) {
   const id = requiredText(formData, "id");
   const supabase = await createSupabaseServerClient();
+  await requireAdminRole(supabase, "is_event_admin");
   const title = requiredText(formData, "title");
   const startsAt = requiredText(formData, "starts_at");
   const endsAt = String(formData.get("ends_at") ?? "").trim();

@@ -2,10 +2,11 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { requireAdminRole } from "@/lib/auth/require-admin-role";
 
 export async function saveProduct(form: FormData) {
   const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser(); if (!user) redirect("/admin");
+  const user = await requireAdminRole(supabase, "is_store_admin");
   const name = String(form.get("name") ?? "").trim(); const cop = Number(form.get("price_cop")); const usd = Number(form.get("price_usd"));
   if (!name || !Number.isSafeInteger(cop) || cop < 1 || !Number.isFinite(usd) || usd <= 0) throw new Error("Completa nombre y precios válidos.");
   let imageUrl = String(form.get("image_url") ?? "").trim() || String(form.get("current_image_url") ?? "").trim() || null;
@@ -37,6 +38,7 @@ export async function deleteProduct(form: FormData) {
   const id = String(form.get("id") ?? "");
   if (!id) throw new Error("Producto inválido.");
   const supabase = await createSupabaseServerClient();
+  await requireAdminRole(supabase, "is_store_admin");
   const { error } = await supabase.from("products").delete().eq("id", id);
   if (error) throw new Error(`No fue posible borrar el producto: ${error.message}`);
   revalidatePath("/tienda");
@@ -48,6 +50,7 @@ export async function deleteProductImage(imageId: string, productId: string, _fo
   const normalizedImageId = imageId.trim();
   if (!normalizedProductId || !normalizedImageId) throw new Error("Imagen inválida.");
   const supabase = await createSupabaseServerClient();
+  await requireAdminRole(supabase, "is_store_admin");
   const { data: product } = await supabase.from("products").select("slug").eq("id", normalizedProductId).maybeSingle();
   const { error } = await supabase.from("product_images").delete().eq("id", normalizedImageId).eq("product_id", normalizedProductId);
   if (error) throw new Error(`No fue posible borrar la imagen: ${error.message}`);
@@ -60,6 +63,7 @@ export async function deleteProductMainImage(form: FormData) {
   const productId = String(form.get("product_id") ?? "").trim();
   if (!productId) throw new Error("Producto inválido.");
   const supabase = await createSupabaseServerClient();
+  await requireAdminRole(supabase, "is_store_admin");
   const { data: product } = await supabase.from("products").select("slug").eq("id", productId).maybeSingle();
   const { error } = await supabase.from("products").update({ image_url: null }).eq("id", productId);
   if (error) throw new Error(`No fue posible borrar la imagen principal: ${error.message}`);
