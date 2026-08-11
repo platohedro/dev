@@ -10,9 +10,11 @@ export default function PaymentResultPage() {
   const [result, setResult] = useState<Result | null>(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get("id");
-    if (!id) { setLoading(false); return; }
-    fetch(`/api/wompi/transactions/${encodeURIComponent(id)}`).then((response) => response.json()).then(setResult).catch(() => setResult({ error: "No fue posible consultar el pago." })).finally(() => setLoading(false));
+    const searchParams = new URLSearchParams(window.location.search);
+    const id = searchParams.get("id");
+    const reference = searchParams.get("reference");
+    if (!id || !reference) { setLoading(false); return; }
+    fetch(`/api/wompi/transactions/${encodeURIComponent(id)}?reference=${encodeURIComponent(reference)}`).then((response) => response.json()).then(setResult).catch(() => setResult({ error: "No fue posible consultar el pago." })).finally(() => setLoading(false));
   }, []);
   const status = result?.transaction?.status;
   const title = loading ? "Consultando tu pago…" : status === "APPROVED" ? "Pago aprobado" : status === "PENDING" ? "Pago en proceso" : "No pudimos aprobar el pago";

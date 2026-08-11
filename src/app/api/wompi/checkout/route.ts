@@ -53,11 +53,17 @@ export async function POST(request: NextRequest) {
   const reference = `${kind === "product" ? "ORD" : "DON"}-${Date.now().toString(36)}-${randomBytes(6).toString("hex")}`;
   const amountInCents = amount * 100;
   const signature = createHash("sha256").update(`${reference}${amountInCents}COP${integritySecret!}`).digest("hex");
-  const { data: order, error: orderError } = await supabase.from("orders").insert({ reference, kind, total_cop: amount, customer_email: email, customer_name: fullName }).select("id").single();
-  if (orderError || !order) return NextResponse.json({ error: "No fue posible crear la orden." }, { status: 500 });
-  if (items.length) {
-    const { error } = await supabase.from("order_items").insert(items.map((item) => ({ ...item, order_id: order.id })));
-    if (error) return NextResponse.json({ error: "No fue posible preparar la orden." }, { status: 500 });
+  const { data: order, error: orderError } = await supabase.rpc("create_wompi_order", {
+    p_reference: reference,
+    p_kind: kind,
+    p_total_cop: amount,
+    p_customer_email: email,
+    p_customer_name: fullName,
+    p_items: items.map((item) => ({ product_id: item.product_id, quantity: item.quantity })),
+  });
+  if (orderError || !order || typeof order !== "object" || !("id" in order)) {
+    const status = orderError?.message === "insufficient_stock" ? 409 : orderError?.message === "product_unavailable" ? 404 : 500;
+    return NextResponse.json({ error: status === 409 ? "El stock cambió. Revisa el carrito e inténtalo nuevamente." : "No fue posible preparar la orden." }, { status });
   }
 
   const fields: Record<string, string> = {
@@ -65,7 +71,7 @@ export async function POST(request: NextRequest) {
     "signature:integrity": signature,
   };
   const siteUrl = getSiteUrl(request);
-  if (!/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(siteUrl)) fields["redirect-url"] = `${siteUrl}/pago/resultado`;
+  if (!/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(siteUrl)) fields["redirect-url"] = `${siteUrl}/pago/resultado?reference=${encodeURIComponent(reference)}`;
   if (email) fields["customer-data:email"] = email;
   if (fullName) fields["customer-data:full-name"] = fullName;
   return NextResponse.json({ checkoutUrl: "https://checkout.wompi.co/p/", fields, orderReference: reference });
