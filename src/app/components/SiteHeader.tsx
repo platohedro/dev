@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Heart, Menu, Moon, Sun, X } from "lucide-react";
+import { Heart, Menu, Moon, ShoppingCart, Sun, X } from "lucide-react";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useCart } from "./CartProvider";
 
 const logo = "/logos/ph_blanco.png";
 
@@ -11,6 +12,7 @@ export function SiteHeader() {
   const { t } = useTranslation();
   const [navOpen, setNavOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const { count } = useCart();
 
   const applyTheme = (dark: boolean) => {
     document.documentElement.classList.toggle("dark", dark);
@@ -45,6 +47,7 @@ export function SiteHeader() {
           {links.map(([label, href]) => <a key={href} href={href} className="whitespace-nowrap px-4 py-2 text-sm text-white/90 transition-colors hover:text-white">{label}</a>)}
         </nav>
         <div className="hidden items-center gap-3 lg:flex">
+          <a href="/tienda/carrito" aria-label="Carrito" className="relative p-2 text-white hover:text-[#99CC33]"><ShoppingCart size={18} />{count > 0 && <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#99CC33] px-1 text-xs font-bold text-[#003d7a]">{count}</span>}</a>
           <a href="/#donate" className="group flex items-center gap-2 bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-foreground"><Heart size={14} className="transition-transform group-hover:scale-110" />{t("nav.donate")}</a>
         </div>
         <button type="button" aria-label={isDark ? t("theme.light") : t("theme.dark")} onClick={() => { const next = !isDark; setIsDark(next); applyTheme(next); }} className="mr-2 cursor-pointer rounded-md p-2 text-white transition-all duration-200 ease-out hover:scale-105 hover:bg-white/10 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.25)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80">{isDark ? <Sun size={16} /> : <Moon size={16} />}</button>

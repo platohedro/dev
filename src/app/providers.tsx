@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { I18nextProvider } from "react-i18next";
 import { useEffect, useState } from "react";
 import i18n from "@/i18n/config";
+import { CartProvider } from "./components/CartProvider";
 
 export function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
   const router = useRouter();
@@ -43,5 +44,5 @@ export function Providers({ children }: Readonly<{ children: React.ReactNode }>)
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [router]);
 
-  return <I18nextProvider key={language} i18n={i18n}>{children}</I18nextProvider>;
+  return <I18nextProvider key={language} i18n={i18n}><CartProvider>{children}</CartProvider></I18nextProvider>;
 }
