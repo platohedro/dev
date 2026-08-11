@@ -32,6 +32,7 @@ before("events.sql", "event_content");
 before("events.sql", "event_admin_roles");
 before("store.sql", "product_gallery");
 before("product_gallery", "wompi_orders");
+before("wompi_orders", "reconcile_production_schema");
 
 const sql = await Promise.all(filenames.map(async (file) => [file, await readFile(path.join(migrationsDir, file), "utf8")]));
 const content = new Map(sql);
@@ -59,5 +60,12 @@ assert.match(wompiMigration, /create table public\.orders/);
 assert.match(wompiMigration, /create table public\.payment_transactions/);
 assert.match(wompiMigration, /finalize_wompi_order/);
 assert.match(wompiMigration, /enable row level security/);
+const reconciliationMigration = content.get(filenames[position("reconcile_production_schema")]);
+assert.match(reconciliationMigration, /create type public\.donation_frequency/);
+assert.match(reconciliationMigration, /create type public\.fulfillment_status/);
+assert.match(reconciliationMigration, /create table if not exists public\.donations/);
+assert.match(reconciliationMigration, /create table if not exists public\.news/);
+assert.match(reconciliationMigration, /is_news_admin/);
+assert.match(reconciliationMigration, /fulfillment_status/);
 
 console.log(`Migrations OK: ${filenames.length} archivos, orden y dependencias validados.`);
