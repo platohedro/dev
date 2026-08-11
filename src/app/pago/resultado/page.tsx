@@ -9,14 +9,27 @@ type Result = { transaction?: { id: string; reference: string; status: string; p
 export default function PaymentResultPage() {
   const [result, setResult] = useState<Result | null>(null);
   const [loading, setLoading] = useState(true);
+  const [subscription, setSubscription] = useState<{ id: string; token: string } | null>(null);
+  const [cancelling, setCancelling] = useState(false);
+  const [cancelled, setCancelled] = useState(false);
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get("id");
     const reference = searchParams.get("reference");
+    const subscriptionId = searchParams.get("subscription_id");
+    const cancelToken = searchParams.get("cancel_token");
+    if (subscriptionId && cancelToken) setSubscription({ id: subscriptionId, token: cancelToken });
     if (!id || !reference) { setLoading(false); return; }
     fetch(`/api/wompi/transactions/${encodeURIComponent(id)}?reference=${encodeURIComponent(reference)}`).then((response) => response.json()).then(setResult).catch(() => setResult({ error: "No fue posible consultar el pago." })).finally(() => setLoading(false));
   }, []);
+  const cancelSubscription = async () => {
+    if (!subscription) return;
+    setCancelling(true);
+    const response = await fetch(`/api/wompi/subscriptions/${encodeURIComponent(subscription.id)}/cancel`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: subscription.token }) });
+    setCancelled(response.ok);
+    setCancelling(false);
+  };
   const status = result?.transaction?.status;
   const title = loading ? "Consultando tu pago…" : status === "APPROVED" ? "Pago aprobado" : status === "PENDING" ? "Pago en proceso" : "No pudimos aprobar el pago";
-  return <div className="min-h-screen bg-[#003d7a] text-white"><SiteHeader /><main className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6"><section className="w-full max-w-xl border border-white/20 bg-[#0051A2] p-8 text-center shadow-2xl md:p-12"><p className="mb-4 text-xs font-bold tracking-[0.2em] text-[#99CC33]">PLATOHEDRO · WOMPI</p><h1 className="text-3xl font-bold md:text-4xl">{title}</h1><p className="mt-5 leading-relaxed text-white/80">{result?.error || (status === "APPROVED" ? "Recibimos tu pago. Gracias por apoyar a Platohedro." : "Puedes consultar nuevamente en unos momentos o contactarnos si necesitas ayuda.")}</p>{result?.transaction?.reference && <p className="mt-5 break-all text-xs text-white/50">Referencia: {result.transaction.reference}</p>}<Link href="/" className="mt-8 inline-flex bg-[#99CC33] px-5 py-3 font-bold text-[#003d7a] transition-colors hover:bg-white">Volver a Platohedro</Link></section></main></div>;
+  return <div className="min-h-screen bg-[#003d7a] text-white"><SiteHeader /><main className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6"><section className="w-full max-w-xl border border-white/20 bg-[#0051A2] p-8 text-center shadow-2xl md:p-12"><p className="mb-4 text-xs font-bold tracking-[0.2em] text-[#99CC33]">PLATOHEDRO · WOMPI</p><h1 className="text-3xl font-bold md:text-4xl">{title}</h1><p className="mt-5 leading-relaxed text-white/80">{result?.error || (status === "APPROVED" ? "Recibimos tu pago. Gracias por apoyar a Platohedro." : "Puedes consultar nuevamente en unos momentos o contactarnos si necesitas ayuda.")}</p>{result?.transaction?.reference && <p className="mt-5 break-all text-xs text-white/50">Referencia: {result.transaction.reference}</p>}{subscription && <div className="mt-8 border-t border-white/20 pt-6"><p className="text-sm text-white/75">Tu aporte recurrente quedó configurado.</p>{cancelled ? <p className="mt-3 text-sm text-[#99CC33]">La suscripción fue cancelada.</p> : <button onClick={cancelSubscription} disabled={cancelling} className="mt-4 border border-white/50 px-4 py-2 text-sm hover:bg-white hover:text-[#003d7a] disabled:opacity-60">{cancelling ? "Cancelando…" : "Cancelar aportes recurrentes"}</button>}</div>}<Link href="/" className="mt-8 inline-flex bg-[#99CC33] px-5 py-3 font-bold text-[#003d7a] transition-colors hover:bg-white">Volver a Platohedro</Link></section></main></div>;
 }

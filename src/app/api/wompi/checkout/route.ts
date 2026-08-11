@@ -75,6 +75,10 @@ export async function POST(request: NextRequest) {
     const status = orderError?.message === "insufficient_stock" ? 409 : orderError?.message === "product_unavailable" ? 404 : 500;
     return NextResponse.json({ error: status === 409 ? "El stock cambió. Revisa el carrito e inténtalo nuevamente." : "No fue posible preparar la orden." }, { status });
   }
+  if (kind === "donation") {
+    const { error: donationError } = await supabase.from("donations").insert({ order_id: order.id, frequency: "one_time" });
+    if (donationError) return NextResponse.json({ error: "No fue posible registrar la donación." }, { status: 500 });
+  }
 
   const fields: Record<string, string> = {
     "public-key": publicKey!, currency: "COP", "amount-in-cents": String(amountInCents), reference,
