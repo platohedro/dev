@@ -3,13 +3,16 @@
 import { useTranslation } from "react-i18next";
 import { SiteHeader } from "@/app/components/SiteHeader";
 import { ProductGallery } from "@/app/components/ProductGallery";
+import { ProductBuyButton } from "@/app/components/ProductBuyButton";
 
 type Product = {
+  id: string;
   name: string;
   description: string | null;
   price_cop: number;
   price_usd: number;
   exchange_rate: number;
+  stock: number;
 };
 
 export function ProductDetailClient({ product, images }: { product: Product; images: string[] }) {
@@ -25,7 +28,8 @@ export function ProductDetailClient({ product, images }: { product: Product; ima
           <p className="mt-5 text-muted-foreground">{product.description}</p>
           <p className="mt-8 text-2xl font-bold">${Number(product.price_cop).toLocaleString("es-CO")} COP</p>
           <p className="text-muted-foreground">US$ {product.price_usd} · {t("tiendaPage.detail.rate")}: ${product.exchange_rate} COP/USD</p>
-          <p className="mt-8 border border-[#99CC33] bg-[#99CC33]/10 p-4 text-sm">{t("tiendaPage.detail.comingSoon")}</p>
+          <p className="mt-8 text-sm text-muted-foreground">{product.stock > 0 ? `${product.stock} disponible(s)` : t("productBuyButton.soldOut")}</p>
+          <ProductBuyButton productId={product.id} name={product.name} priceCop={product.price_cop} imageUrl={images[0] ?? null} disabled={product.stock < 1} />
         </section>
       </div>
     </main>

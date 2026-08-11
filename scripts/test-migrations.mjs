@@ -31,6 +31,7 @@ before("admin_roles", "residents");
 before("events.sql", "event_content");
 before("events.sql", "event_admin_roles");
 before("store.sql", "product_gallery");
+before("product_gallery", "wompi_orders");
 
 const sql = await Promise.all(filenames.map(async (file) => [file, await readFile(path.join(migrationsDir, file), "utf8")]));
 const content = new Map(sql);
@@ -53,5 +54,10 @@ const residentsImport = content.get(filenames[position("import_historical_reside
 assert.match(residentsImport, /where not exists/s);
 assert.match(residentsImport, /is_published, created_by/s);
 assert.notEqual(position("performance_indexes"), -1, "Falta la migración de índices de rendimiento.");
+const wompiMigration = content.get(filenames[position("wompi_orders")]);
+assert.match(wompiMigration, /create table public\.orders/);
+assert.match(wompiMigration, /create table public\.payment_transactions/);
+assert.match(wompiMigration, /finalize_wompi_order/);
+assert.match(wompiMigration, /enable row level security/);
 
 console.log(`Migrations OK: ${filenames.length} archivos, orden y dependencias validados.`);
