@@ -8,8 +8,26 @@ const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
-  useEffect(() => { try { const saved = window.localStorage.getItem("platohedro-cart"); if (saved) setItems(JSON.parse(saved)); } catch { setItems([]); } }, []);
-  useEffect(() => { window.localStorage.setItem("platohedro-cart", JSON.stringify(items)); }, [items]);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem("platohedro-cart");
+      if (saved) {
+        const parsed = JSON.parse(saved) as CartItem[];
+        setItems(Array.isArray(parsed) ? parsed : []);
+      }
+    } catch {
+      setItems([]);
+    } finally {
+      setHydrated(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    window.localStorage.setItem("platohedro-cart", JSON.stringify(items));
+  }, [hydrated, items]);
   const value = useMemo(() => ({
     items, count: items.reduce((sum, item) => sum + item.quantity, 0), total: items.reduce((sum, item) => sum + item.priceCop * item.quantity, 0),
     add: (item: Omit<CartItem, "quantity">) => setItems((current) => { const found = current.find((entry) => entry.productId === item.productId); return found ? current.map((entry) => entry.productId === item.productId ? { ...entry, quantity: entry.quantity + 1 } : entry) : [...current, { ...item, quantity: 1 }]; }),
