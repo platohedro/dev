@@ -2,10 +2,12 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { requireAdminRole } from "@/lib/auth/require-admin-role";
 
 const text = (form: FormData, key: string) => String(form.get(key) ?? "").trim();
 export async function saveNews(form: FormData) {
   const supabase = await createSupabaseServerClient();
+  await requireAdminRole(supabase, "is_news_admin");
   const title = text(form, "title");
   if (!title) throw new Error("El título es obligatorio.");
   const published = form.get("publication") === "published";

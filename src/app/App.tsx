@@ -239,12 +239,51 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [selectedTier, setSelectedTier] = useState(1);
   const [customAmount, setCustomAmount] = useState("");
+  const [donationFrequency, setDonationFrequency] = useState<"one_time" | "monthly" | "annual">("one_time");
+  const [donorEmail, setDonorEmail] = useState("");
+  const [donorName, setDonorName] = useState("");
+  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [acceptPersonalData, setAcceptPersonalData] = useState(false);
+  const [acceptance, setAcceptance] = useState<{ publicKey: string; acceptance: { acceptance_token: string; permalink: string }; personalAuth: { acceptance_token: string; permalink: string } } | null>(null);
+  const recurringFormRef = useRef<HTMLDivElement>(null);
   const [donateStep, setDonateStep] = useState(1);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [donationError, setDonationError] = useState("");
   const [showRenovationPopup, setShowRenovationPopup] = useState(true);
   const [publishedEvents, setPublishedEvents] = useState<PublicEvent[]>([]);
   const [publishedProducts, setPublishedProducts] = useState<Array<{ id: string; slug: string; name: string; image_url: string | null; price_cop: number }>>([]);
+
+  useEffect(() => {
+    if (donationFrequency === "one_time") { setAcceptance(null); return; }
+    fetch("/api/wompi/acceptance").then((response) => response.ok ? response.json() : Promise.reject(new Error("No fue posible cargar los términos de Wompi."))).then(setAcceptance).catch((error) => setDonationError(error instanceof Error ? error.message : "No fue posible cargar los términos de Wompi."));
+  }, [donationFrequency]);
+
+  useEffect(() => {
+    if (!acceptance || !acceptTerms || !acceptPersonalData || !recurringFormRef.current) return;
+    const amount = selectedTier >= 0 ? donationAmounts[selectedTier] ?? 0 : Number(customAmount);
+    if (!Number.isSafeInteger(amount) || amount < 1_000) return;
+    const container = recurringFormRef.current;
+    container.replaceChildren();
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/api/wompi/recurring";
+    const fields: Record<string, string> = {
+      frequency: donationFrequency,
+      amount: String(amount),
+      email: donorEmail,
+      fullName: donorName,
+      acceptance_token: acceptance.acceptance.acceptance_token,
+      accept_personal_auth: acceptance.personalAuth.acceptance_token,
+    };
+    Object.entries(fields).forEach(([name, value]) => { const input = document.createElement("input"); input.type = "hidden"; input.name = name; input.value = value; form.append(input); });
+    const script = document.createElement("script");
+    script.src = "https://checkout.wompi.co/widget.js";
+    script.setAttribute("data-render", "button");
+    script.setAttribute("data-widget-operation", "tokenize");
+    script.setAttribute("data-public-key", acceptance.publicKey);
+    form.append(script);
+    container.append(form);
+  }, [acceptance, acceptTerms, acceptPersonalData, customAmount, donorEmail, donorName, donationFrequency, selectedTier]);
 
   const quotes = t("testimonials.quotes", { returnObjects: true }) as Array<{ text: string; author: string; role: string }>;
   const programsData = programs.map((prog) => ({
@@ -335,7 +374,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
       const response = await fetch("/api/wompi/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount }),
+        body: JSON.stringify({ amount, frequency: "one_time" }),
       });
       const data = await response.json() as { error?: string; checkoutUrl?: string; fields?: Record<string, string> };
       if (!response.ok || !data.checkoutUrl || !data.fields) {
@@ -1018,12 +1057,14 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                   {donateFrequencyOptions.map((freq, i) => (
                     <button
                       key={freq}
+                      type="button"
+                      onClick={() => setDonationFrequency(i === 0 ? "one_time" : i === 1 ? "monthly" : "annual")}
                       className="flex-1 py-2.5 text-xs font-semibold border-y border-r first:border-l transition-colors"
                       style={{
                         fontFamily: "'DM Mono', monospace",
                         borderColor: "rgba(212,245,0,0.12)",
-                        backgroundColor: i === 0 ? "rgba(212,245,0,0.1)" : "transparent",
-                        color: i === 0 ? "#d4f500" : "#a08cb8",
+                        backgroundColor: (i === 0 && donationFrequency === "one_time") || (i === 1 && donationFrequency === "monthly") || (i === 2 && donationFrequency === "annual") ? "rgba(212,245,0,0.1)" : "transparent",
+                        color: (i === 0 && donationFrequency === "one_time") || (i === 1 && donationFrequency === "monthly") || (i === 2 && donationFrequency === "annual") ? "#d4f500" : "#a08cb8",
                       }}
                     >
                       {freq}
@@ -1032,7 +1073,14 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 </div>
               </div>
 
-              <button
+              {donationFrequency !== "one_time" && <div className="mb-6 grid gap-3">
+                <input required value={donorName} onChange={(event) => setDonorName(event.target.value)} placeholder="Nombre completo" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
+                <input required type="email" value={donorEmail} onChange={(event) => setDonorEmail(event.target.value)} placeholder="Correo electrónico" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
+                {acceptance && <div className="grid gap-2 text-xs text-white/80"><label><input type="checkbox" checked={acceptTerms} onChange={(event) => setAcceptTerms(event.target.checked)} className="mr-2" />Acepto los <a className="underline" target="_blank" rel="noreferrer" href={acceptance.acceptance.permalink}>términos de Wompi</a>.</label><label><input type="checkbox" checked={acceptPersonalData} onChange={(event) => setAcceptPersonalData(event.target.checked)} className="mr-2" />Acepto la <a className="underline" target="_blank" rel="noreferrer" href={acceptance.personalAuth.permalink}>autorización de datos personales</a>.</label></div>}
+                <div ref={recurringFormRef} className="min-h-12" />
+              </div>}
+
+              {donationFrequency === "one_time" && <button
                 onClick={startWompiCheckout}
                 disabled={isCreatingCheckout}
                 className="group w-full flex items-center justify-between px-6 py-4 bg-primary text-primary-foreground font-bold hover:bg-foreground transition-colors duration-200 disabled:cursor-wait disabled:opacity-70"
@@ -1041,7 +1089,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                   <CreditCard size={16} /> {isCreatingCheckout ? "Conectando con Wompi…" : donateButton}
                 </span>
                 <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </button>
+              </button>}
 
               {donationError && <p role="alert" className="mt-3 text-center text-sm text-[#FFB3D6]">{donationError}</p>}
 

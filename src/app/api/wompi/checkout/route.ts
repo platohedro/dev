@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 
 const MINIMUM_COP = 1_000;
 const MAXIMUM_COP = 50_000_000;
+const MAX_CHECKOUT_BYTES = 32 * 1024;
 
 function getSiteUrl(request: NextRequest) {
   return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || new URL(request.url).origin;
@@ -29,7 +30,15 @@ export async function POST(request: NextRequest) {
   if (missing.length) return NextResponse.json({ error: `Configuración incompleta: faltan ${missing.join(", ")}.` }, { status: 503 });
 
   let payload: { amount?: unknown; productId?: unknown; items?: unknown; email?: unknown; fullName?: unknown };
-  try { payload = await request.json(); } catch { return NextResponse.json({ error: "Solicitud inválida." }, { status: 400 }); }
+  const contentLength = Number(request.headers.get("content-length") ?? 0);
+  if (contentLength > MAX_CHECKOUT_BYTES) return NextResponse.json({ error: "Solicitud demasiado grande." }, { status: 413 });
+  try {
+    const body = await request.text();
+    if (new TextEncoder().encode(body).byteLength > MAX_CHECKOUT_BYTES) return NextResponse.json({ error: "Solicitud demasiado grande." }, { status: 413 });
+    const parsed = JSON.parse(body) as unknown;
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("invalid_payload");
+    payload = parsed as typeof payload;
+  } catch { return NextResponse.json({ error: "Solicitud inválida." }, { status: 400 }); }
 
   const email = typeof payload.email === "string" ? payload.email.trim().slice(0, 254) : null;
   const fullName = typeof payload.fullName === "string" ? payload.fullName.trim().slice(0, 160) : null;
@@ -39,6 +48,7 @@ export async function POST(request: NextRequest) {
   let items: { product_id: string; quantity: number; unit_price_cop: number; product_snapshot: Record<string, unknown> }[] = [];
 
   const requestedItems = Array.isArray(payload.items) ? payload.items : typeof payload.productId === "string" ? [{ productId: payload.productId, quantity: 1 }] : [];
+  if (requestedItems.length > 50) return NextResponse.json({ error: "Carrito inválido." }, { status: 400 });
   if (requestedItems.length) {
     const normalized = requestedItems.map((entry) => ({ productId: typeof entry === "object" && entry !== null && "productId" in entry ? String((entry as { productId: unknown }).productId) : "", quantity: typeof entry === "object" && entry !== null && "quantity" in entry ? Number((entry as { quantity: unknown }).quantity) : 0 })).filter((entry) => entry.productId && Number.isSafeInteger(entry.quantity) && entry.quantity > 0 && entry.quantity <= 99);
     if (!normalized.length || normalized.length !== requestedItems.length) return NextResponse.json({ error: "Carrito inválido." }, { status: 400 });
@@ -53,11 +63,21 @@ export async function POST(request: NextRequest) {
   const reference = `${kind === "product" ? "ORD" : "DON"}-${Date.now().toString(36)}-${randomBytes(6).toString("hex")}`;
   const amountInCents = amount * 100;
   const signature = createHash("sha256").update(`${reference}${amountInCents}COP${integritySecret!}`).digest("hex");
-  const { data: order, error: orderError } = await supabase.from("orders").insert({ reference, kind, total_cop: amount, customer_email: email, customer_name: fullName }).select("id").single();
-  if (orderError || !order) return NextResponse.json({ error: "No fue posible crear la orden." }, { status: 500 });
-  if (items.length) {
-    const { error } = await supabase.from("order_items").insert(items.map((item) => ({ ...item, order_id: order.id })));
-    if (error) return NextResponse.json({ error: "No fue posible preparar la orden." }, { status: 500 });
+  const { data: order, error: orderError } = await supabase.rpc("create_wompi_order", {
+    p_reference: reference,
+    p_kind: kind,
+    p_total_cop: amount,
+    p_customer_email: email,
+    p_customer_name: fullName,
+    p_items: items.map((item) => ({ product_id: item.product_id, quantity: item.quantity })),
+  });
+  if (orderError || !order || typeof order !== "object" || !("id" in order)) {
+    const status = orderError?.message === "insufficient_stock" ? 409 : orderError?.message === "product_unavailable" ? 404 : 500;
+    return NextResponse.json({ error: status === 409 ? "El stock cambió. Revisa el carrito e inténtalo nuevamente." : "No fue posible preparar la orden." }, { status });
+  }
+  if (kind === "donation") {
+    const { error: donationError } = await supabase.from("donations").insert({ order_id: order.id, frequency: "one_time" });
+    if (donationError) return NextResponse.json({ error: "No fue posible registrar la donación." }, { status: 500 });
   }
 
   const fields: Record<string, string> = {
@@ -65,7 +85,7 @@ export async function POST(request: NextRequest) {
     "signature:integrity": signature,
   };
   const siteUrl = getSiteUrl(request);
-  if (!/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(siteUrl)) fields["redirect-url"] = `${siteUrl}/pago/resultado`;
+  if (!/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(siteUrl)) fields["redirect-url"] = `${siteUrl}/pago/resultado?reference=${encodeURIComponent(reference)}`;
   if (email) fields["customer-data:email"] = email;
   if (fullName) fields["customer-data:full-name"] = fullName;
   return NextResponse.json({ checkoutUrl: "https://checkout.wompi.co/p/", fields, orderReference: reference });

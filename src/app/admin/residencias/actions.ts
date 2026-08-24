@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { requireAdminRole } from "@/lib/auth/require-admin-role";
 
 function text(formData: FormData, key: string, required = false) {
   const value = String(formData.get(key) ?? "").trim();
@@ -40,6 +41,7 @@ function residentValues(formData: FormData) {
 
 export async function saveResident(formData: FormData) {
   const supabase = await createSupabaseServerClient();
+  await requireAdminRole(supabase, "is_residency_admin");
   const id = text(formData, "id");
   const values = residentValues(formData);
   const query = id ? supabase.from("residents").update(values).eq("id", id) : supabase.from("residents").insert(values);
