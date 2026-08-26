@@ -543,60 +543,6 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
         </div>
       </section>
 
-
-      {/* ══════════════════════════════════════════════════════
-          QUOTES / TESTIMONIALS
-      ══════════════════════════════════════════════════════ */}
-      <section className="border-y border-white/20 py-20 px-6 md:px-10" style={{ backgroundColor: "#FF46A2" }}>
-        <div className="max-w-4xl mx-auto text-center">
-          <span className="text-xs text-white/70 tracking-widest uppercase block mb-10" style={{ fontFamily: "'DM Mono', monospace" }}>
-            {t("testimonials.label")}
-          </span>
-
-          <div className="relative min-h-[160px] flex flex-col items-center justify-center">
-            <blockquote
-              key={quoteIndex}
-              className="text-xl md:text-2xl text-white leading-relaxed italic mb-8"
-              style={{ fontFamily: "'DM Serif Display', serif" }}
-            >
-              "{quotes[quoteIndex].text}"
-            </blockquote>
-            <div>
-              <div className="text-sm font-semibold text-white">{quotes[quoteIndex].author}</div>
-              <div className="text-xs text-white/70 mt-1" style={{ fontFamily: "'DM Mono', monospace" }}>
-                {quotes[quoteIndex].role}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <button
-              onClick={prevQuote}
-              className="w-9 h-9 border border-white/40 flex items-center justify-center text-white hover:border-white hover:bg-white/10 transition-colors"
-            >
-              <ChevronLeft size={16} />
-            </button>
-            <div className="flex gap-2">
-              {quotes.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setQuoteIndex(i)}
-                  className="w-2 h-2 rounded-full transition-colors"
-                  style={{ backgroundColor: i === quoteIndex ? "#ffffff" : "rgba(255,255,255,0.35)" }}
-                />
-              ))}
-            </div>
-            <button
-              onClick={nextQuote}
-              className="w-9 h-9 border border-white/40 flex items-center justify-center text-white hover:border-white hover:bg-white/10 transition-colors"
-            >
-              <ChevronRight size={16} />
-            </button>
-          </div>
-        </div>
-      </section>
-
-
       {/* ══════════════════════════════════════════════════════
           EDUCACIÓN — CAROUSEL / GRID
       ══════════════════════════════════════════════════════ */}
@@ -709,6 +655,59 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           <a href="#" className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-colors duration-200">
             Ver todos los programas <ArrowUpRight size={16} />
           </a>
+        </div>
+      </section>
+
+
+      {/* ══════════════════════════════════════════════════════
+          QUOTES / TESTIMONIALS
+      ══════════════════════════════════════════════════════ */}
+      <section className="border-y border-white/20 py-20 px-6 md:px-10" style={{ backgroundColor: "#FF46A2" }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <span className="text-xs text-white/70 tracking-widest uppercase block mb-10" style={{ fontFamily: "'DM Mono', monospace" }}>
+            {t("testimonials.label")}
+          </span>
+
+          <div className="relative min-h-[160px] flex flex-col items-center justify-center">
+            <blockquote
+              key={quoteIndex}
+              className="text-xl md:text-2xl text-white leading-relaxed italic mb-8"
+              style={{ fontFamily: "'DM Serif Display', serif" }}
+            >
+              "{quotes[quoteIndex].text}"
+            </blockquote>
+            <div>
+              <div className="text-sm font-semibold text-white">{quotes[quoteIndex].author}</div>
+              <div className="text-xs text-white/70 mt-1" style={{ fontFamily: "'DM Mono', monospace" }}>
+                {quotes[quoteIndex].role}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
+              onClick={prevQuote}
+              className="w-9 h-9 border border-white/40 flex items-center justify-center text-white hover:border-white hover:bg-white/10 transition-colors"
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <div className="flex gap-2">
+              {quotes.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setQuoteIndex(i)}
+                  className="w-2 h-2 rounded-full transition-colors"
+                  style={{ backgroundColor: i === quoteIndex ? "#ffffff" : "rgba(255,255,255,0.35)" }}
+                />
+              ))}
+            </div>
+            <button
+              onClick={nextQuote}
+              className="w-9 h-9 border border-white/40 flex items-center justify-center text-white hover:border-white hover:bg-white/10 transition-colors"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
         </div>
       </section>
 

@@ -11,6 +11,13 @@ function requiredText(formData: FormData, field: string) {
   return value.trim();
 }
 
+function revalidateEventContent(slug: string) {
+  revalidatePath("/");
+  revalidatePath("/eventos");
+  revalidatePath(`/eventos/${slug}`);
+  revalidatePath("/sitemap.xml");
+}
+
 export async function signInWithPassword(formData: FormData) {
   const email = requiredText(formData, "email");
   const password = requiredText(formData, "password");
@@ -34,9 +41,10 @@ export async function createEvent(formData: FormData) {
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
     .slice(0, 80) || "evento";
+  const slug = `${slugBase}-${crypto.randomUUID().slice(0, 8)}`;
 
   const { error } = await supabase.from("events").insert({
-    slug: `${slugBase}-${crypto.randomUUID().slice(0, 8)}`,
+    slug,
     title,
     summary: String(formData.get("summary") ?? "").trim() || null,
     content: String(formData.get("content") ?? "").trim() || null,
@@ -66,7 +74,7 @@ export async function createEvent(formData: FormData) {
     }
     throw new Error(`No fue posible guardar el evento: ${error.message}`);
   }
-  revalidatePath("/eventos");
+  revalidateEventContent(slug);
   redirect("/admin/eventos?mensaje=evento-guardado");
 }
 
@@ -78,6 +86,12 @@ export async function updateEvent(formData: FormData) {
   const startsAt = requiredText(formData, "starts_at");
   const endsAt = String(formData.get("ends_at") ?? "").trim();
   const isPublished = formData.get("publication") === "published";
+  const { data: currentEvent, error: currentEventError } = await supabase
+    .from("events")
+    .select("slug")
+    .eq("id", id)
+    .maybeSingle();
+  if (currentEventError || !currentEvent) throw new Error("No fue posible encontrar el evento para actualizarlo.");
   const { error } = await supabase.from("events").update({
     title,
     summary: String(formData.get("summary") ?? "").trim() || null,
@@ -94,8 +108,7 @@ export async function updateEvent(formData: FormData) {
     published_at: isPublished ? new Date().toISOString() : null,
   }).eq("id", id);
   if (error) throw new Error(`No fue posible actualizar el evento: ${error.message}`);
-  revalidatePath("/");
-  revalidatePath("/eventos");
+  revalidateEventContent(currentEvent.slug);
   redirect("/admin/eventos?mensaje=evento-actualizado");
 }
 

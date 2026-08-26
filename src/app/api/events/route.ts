@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import { createSupabasePublicClient, isSupabasePublicConfigured } from "@/lib/supabase/public";
 
-export const revalidate = 300;
+// La consulta depende de la hora actual; una respuesta estática puede seguir
+// ocultando un evento recién publicado durante varios minutos en la portada.
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  if (!isSupabasePublicConfigured) return NextResponse.json({ events: [] });
+  if (!isSupabasePublicConfigured) return NextResponse.json({ events: [] }, { headers: { "Cache-Control": "no-store" } });
   const supabase = createSupabasePublicClient();
   const { data, error } = await supabase
     .from("events")
@@ -13,6 +15,6 @@ export async function GET() {
     .gte("starts_at", new Date().toISOString())
     .order("starts_at", { ascending: true })
     .limit(5);
-  if (error) return NextResponse.json({ error: "No fue posible cargar los eventos." }, { status: 500 });
-  return NextResponse.json({ events: data });
+  if (error) return NextResponse.json({ error: "No fue posible cargar los eventos." }, { status: 500, headers: { "Cache-Control": "no-store" } });
+  return NextResponse.json({ events: data }, { headers: { "Cache-Control": "no-store" } });
 }
