@@ -75,13 +75,18 @@ export async function POST(request: NextRequest) {
   const transactionResponse = await fetch(`${baseUrl}/transactions`, {
     method: "POST",
     headers: { Authorization: `Bearer ${privateKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ amount_in_cents: amountInCents, currency: "COP", customer_email: email, reference, signature, payment_source_id: sourceId, recurrent: true }),
+    body: JSON.stringify({ amount_in_cents: amountInCents, currency: "COP", customer_email: email, reference, signature, payment_method: { installments: 1 }, payment_source_id: sourceId, recurrent: true }),
   });
-  const transactionPayload = await transactionResponse.json().catch(() => null) as { data?: { id?: string } } | null;
+  const transactionPayload = await transactionResponse.json().catch(() => null) as { data?: { id?: string }; error?: { reason?: string; type?: string } } | null;
   const transactionId = transactionPayload?.data?.id;
   if (!transactionResponse.ok || !transactionId) {
     await supabase.from("donation_subscriptions").update({ status: "past_due" }).eq("id", subscription.id);
-    return NextResponse.json({ error: "No fue posible iniciar el primer cobro." }, { status: 422 });
+    const reason = transactionPayload?.error?.reason;
+    console.error("[wompi/recurring] first charge failed", { type: transactionPayload?.error?.type, reason });
+    return NextResponse.json({
+      error: "No fue posible iniciar el primer cobro.",
+      ...(process.env.NODE_ENV === "development" && reason ? { debug: { type: transactionPayload?.error?.type, reason } } : {}),
+    }, { status: 422 });
   }
   await supabase.from("orders").update({ wompi_transaction_id: transactionId }).eq("id", order.id);
   return NextResponse.redirect(`${siteUrl}/pago/resultado?id=${encodeURIComponent(transactionId)}&reference=${encodeURIComponent(reference)}&subscription_id=${encodeURIComponent(subscription.id)}&cancel_token=${encodeURIComponent(cancelToken)}`, 303);

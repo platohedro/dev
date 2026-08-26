@@ -18,7 +18,14 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const baseUrl = process.env.WOMPI_API_BASE_URL || "https://api-sandbox.wompi.co/v1";
   if (!privateKey) return NextResponse.json({ error: "Wompi no está configurado." }, { status: 503 });
   const response = await fetch(`${baseUrl}/payment_sources/${subscription.wompi_payment_source_id}/void`, { method: "PUT", headers: { Authorization: `Bearer ${privateKey}` } });
-  if (!response.ok) return NextResponse.json({ error: "No fue posible cancelar el medio de pago." }, { status: 502 });
+  const wompiPayload = await response.json().catch(() => null) as { error?: { reason?: string; type?: string } } | null;
+  if (!response.ok) {
+    console.error("[wompi/subscriptions/cancel] void failed", { status: response.status, type: wompiPayload?.error?.type, reason: wompiPayload?.error?.reason });
+    return NextResponse.json({
+      error: "No fue posible cancelar el medio de pago.",
+      ...(process.env.NODE_ENV === "development" ? { debug: { status: response.status, type: wompiPayload?.error?.type, reason: wompiPayload?.error?.reason } } : {}),
+    }, { status: 502 });
+  }
   await supabase.from("donation_subscriptions").update({ status: "cancelled", cancelled_at: new Date().toISOString(), updated_at: new Date().toISOString() }).eq("id", id);
   return NextResponse.json({ cancelled: true });
 }

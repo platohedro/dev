@@ -72,12 +72,31 @@ export async function POST(request: NextRequest) {
     p_items: items.map((item) => ({ product_id: item.product_id, quantity: item.quantity })),
   });
   if (orderError || !order || typeof order !== "object" || !("id" in order)) {
+    if (orderError) console.error("[wompi/checkout] create_wompi_order failed", {
+      code: orderError.code,
+      message: orderError.message,
+      details: orderError.details,
+      hint: orderError.hint,
+    });
     const status = orderError?.message === "insufficient_stock" ? 409 : orderError?.message === "product_unavailable" ? 404 : 500;
-    return NextResponse.json({ error: status === 409 ? "El stock cambió. Revisa el carrito e inténtalo nuevamente." : "No fue posible preparar la orden." }, { status });
+    return NextResponse.json({
+      error: status === 409 ? "El stock cambió. Revisa el carrito e inténtalo nuevamente." : "No fue posible preparar la orden.",
+      ...(process.env.NODE_ENV === "development" && orderError ? {
+        debug: { code: orderError.code, message: orderError.message, details: orderError.details, hint: orderError.hint },
+      } : {}),
+    }, { status });
   }
   if (kind === "donation") {
     const { error: donationError } = await supabase.from("donations").insert({ order_id: order.id, frequency: "one_time" });
-    if (donationError) return NextResponse.json({ error: "No fue posible registrar la donación." }, { status: 500 });
+    if (donationError) {
+      console.error("[wompi/checkout] donation insert failed", {
+        code: donationError.code,
+        message: donationError.message,
+        details: donationError.details,
+        hint: donationError.hint,
+      });
+      return NextResponse.json({ error: "No fue posible registrar la donación." }, { status: 500 });
+    }
   }
 
   const fields: Record<string, string> = {

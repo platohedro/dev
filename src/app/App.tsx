@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ArrowUpRight,
@@ -26,6 +26,31 @@ import type { PublicEvent } from "@/lib/events";
 
 const lightLogo = "/logos/ph_blanco.png";
 const donationAmounts = [50_000, 150_000, 300_000, 1_000_000];
+
+type CardBrand = "visa" | "mastercard" | "amex" | "discover" | "diners" | "unknown";
+
+function detectCardBrand(value: string): CardBrand {
+  const number = value.replace(/\D/g, "");
+  if (/^4/.test(number)) return "visa";
+  if (/^(5[1-5]|2(?:2[2-9]|[3-6]\d|7[01]))/.test(number)) return "mastercard";
+  if (/^3[47]/.test(number)) return "amex";
+  if (/^(6011|65|64[4-9])/.test(number)) return "discover";
+  if (/^3(?:0[0-5]|[68])/.test(number)) return "diners";
+  return "unknown";
+}
+
+function formatCardNumber(value: string) {
+  return value.replace(/\D/g, "").slice(0, 19).replace(/(.{4})/g, "$1 ").trim();
+}
+
+const cardBrandLabels: Record<CardBrand, string> = {
+  visa: "VISA",
+  mastercard: "MASTERCARD",
+  amex: "AMERICAN EXPRESS",
+  discover: "DISCOVER",
+  diners: "DINERS CLUB",
+  unknown: "TARJETA",
+};
 
 const parseHash = (hash: string): { page: "home" | "about"; section: string } => {
   const cleaned = hash.replace(/^#/, "");
@@ -245,7 +270,11 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [acceptPersonalData, setAcceptPersonalData] = useState(false);
   const [acceptance, setAcceptance] = useState<{ publicKey: string; acceptance: { acceptance_token: string; permalink: string }; personalAuth: { acceptance_token: string; permalink: string } } | null>(null);
-  const recurringFormRef = useRef<HTMLDivElement>(null);
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardCvc, setCardCvc] = useState("");
+  const [cardExpMonth, setCardExpMonth] = useState("");
+  const [cardExpYear, setCardExpYear] = useState("");
+  const [cardHolder, setCardHolder] = useState("");
   const [donateStep, setDonateStep] = useState(1);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [donationError, setDonationError] = useState("");
@@ -257,33 +286,6 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
     if (donationFrequency === "one_time") { setAcceptance(null); return; }
     fetch("/api/wompi/acceptance").then((response) => response.ok ? response.json() : Promise.reject(new Error("No fue posible cargar los términos de Wompi."))).then(setAcceptance).catch((error) => setDonationError(error instanceof Error ? error.message : "No fue posible cargar los términos de Wompi."));
   }, [donationFrequency]);
-
-  useEffect(() => {
-    if (!acceptance || !acceptTerms || !acceptPersonalData || !recurringFormRef.current) return;
-    const amount = selectedTier >= 0 ? donationAmounts[selectedTier] ?? 0 : Number(customAmount);
-    if (!Number.isSafeInteger(amount) || amount < 1_000) return;
-    const container = recurringFormRef.current;
-    container.replaceChildren();
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = "/api/wompi/recurring";
-    const fields: Record<string, string> = {
-      frequency: donationFrequency,
-      amount: String(amount),
-      email: donorEmail,
-      fullName: donorName,
-      acceptance_token: acceptance.acceptance.acceptance_token,
-      accept_personal_auth: acceptance.personalAuth.acceptance_token,
-    };
-    Object.entries(fields).forEach(([name, value]) => { const input = document.createElement("input"); input.type = "hidden"; input.name = name; input.value = value; form.append(input); });
-    const script = document.createElement("script");
-    script.src = "https://checkout.wompi.co/widget.js";
-    script.setAttribute("data-render", "button");
-    script.setAttribute("data-widget-operation", "tokenize");
-    script.setAttribute("data-public-key", acceptance.publicKey);
-    form.append(script);
-    container.append(form);
-  }, [acceptance, acceptTerms, acceptPersonalData, customAmount, donorEmail, donorName, donationFrequency, selectedTier]);
 
   const quotes = t("testimonials.quotes", { returnObjects: true }) as Array<{ text: string; author: string; role: string }>;
   const programsData = programs.map((prog) => ({
@@ -398,6 +400,57 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
       setIsCreatingCheckout(false);
     }
   };
+
+  const startRecurringDonation = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const amount = selectedTier >= 0 ? donationAmounts[selectedTier] ?? 0 : Number(customAmount);
+    const number = cardNumber.replace(/\s+/g, "");
+    const apiBase = process.env.NEXT_PUBLIC_WOMPI_API_BASE_URL || "https://api-sandbox.wompi.co/v1";
+    if (!acceptance || !acceptTerms || !acceptPersonalData || !donorName || !donorEmail || !Number.isSafeInteger(amount) || amount < 1_000 || !/^\d{13,19}$/.test(number) || !/^\d{3,4}$/.test(cardCvc) || !/^\d{2}$/.test(cardExpMonth) || !/^\d{2}$/.test(cardExpYear) || !cardHolder.trim()) {
+      setDonationError("Completa correctamente los datos de la tarjeta y las autorizaciones.");
+      return;
+    }
+
+    setDonationError("");
+    setIsCreatingCheckout(true);
+    try {
+      const tokenResponse = await fetch(`${apiBase}/tokens/cards`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${acceptance.publicKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ number, cvc: cardCvc, exp_month: cardExpMonth, exp_year: cardExpYear, card_holder: cardHolder.trim() }),
+      });
+      const tokenPayload = await tokenResponse.json().catch(() => null) as { data?: { id?: string }; error?: { reason?: string; type?: string } } | null;
+      const token = tokenPayload?.data?.id;
+      if (!tokenResponse.ok || !token) throw new Error(tokenPayload?.error?.reason || "Wompi no pudo tokenizar la tarjeta. Verifica los datos e inténtalo nuevamente.");
+
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = "/api/wompi/recurring";
+      const fields: Record<string, string> = {
+        token,
+        frequency: donationFrequency,
+        amount: String(amount),
+        email: donorEmail,
+        fullName: donorName,
+        acceptance_token: acceptance.acceptance.acceptance_token,
+        accept_personal_auth: acceptance.personalAuth.acceptance_token,
+      };
+      Object.entries(fields).forEach(([name, value]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.value = value;
+        form.append(input);
+      });
+      document.body.append(form);
+      form.submit();
+    } catch (error) {
+      setDonationError(error instanceof Error ? error.message : "No fue posible iniciar la suscripción.");
+      setIsCreatingCheckout(false);
+    }
+  };
+
+  const cardBrand = detectCardBrand(cardNumber);
 
   return (
     <div
@@ -1077,7 +1130,33 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 <input required value={donorName} onChange={(event) => setDonorName(event.target.value)} placeholder="Nombre completo" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
                 <input required type="email" value={donorEmail} onChange={(event) => setDonorEmail(event.target.value)} placeholder="Correo electrónico" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
                 {acceptance && <div className="grid gap-2 text-xs text-white/80"><label><input type="checkbox" checked={acceptTerms} onChange={(event) => setAcceptTerms(event.target.checked)} className="mr-2" />Acepto los <a className="underline" target="_blank" rel="noreferrer" href={acceptance.acceptance.permalink}>términos de Wompi</a>.</label><label><input type="checkbox" checked={acceptPersonalData} onChange={(event) => setAcceptPersonalData(event.target.checked)} className="mr-2" />Acepto la <a className="underline" target="_blank" rel="noreferrer" href={acceptance.personalAuth.permalink}>autorización de datos personales</a>.</label></div>}
-                <div ref={recurringFormRef} className="min-h-12" />
+                {acceptance && acceptTerms && acceptPersonalData && <form onSubmit={startRecurringDonation} className="grid gap-3 border border-white/20 p-4">
+                  <div className="flex items-center justify-between border border-white/20 bg-white/5 px-3 py-3">
+                    <div className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-full bg-white/15"><CreditCard size={18} /></span><span className="text-sm font-semibold">{cardBrandLabels[cardBrand]}</span></div>
+                    <span className="text-right text-[10px] tracking-widest text-white/50">VISA · MC · AMEX</span>
+                  </div>
+                  <p className="text-xs text-white/70">La tarjeta se tokeniza directamente con Wompi. Platohedro no recibe ni almacena el número, CVC o fecha.</p>
+                  <label className="grid gap-1 text-xs text-white/75">Número de tarjeta
+                    <input required inputMode="numeric" autoComplete="cc-number" value={cardNumber} onChange={(event) => setCardNumber(formatCardNumber(event.target.value))} placeholder="0000 0000 0000 0000" className="border border-white/20 bg-transparent p-3 text-sm tracking-widest text-white placeholder:text-white/40" />
+                  </label>
+                  <label className="grid gap-1 text-xs text-white/75">Nombre del titular
+                    <input required autoComplete="cc-name" value={cardHolder} onChange={(event) => setCardHolder(event.target.value.slice(0, 120))} placeholder="Como aparece en la tarjeta" className="border border-white/20 bg-transparent p-3 text-sm uppercase text-white placeholder:text-white/40" />
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    <label className="grid gap-1 text-xs text-white/75">Mes
+                      <input required inputMode="numeric" autoComplete="cc-exp-month" value={cardExpMonth} onChange={(event) => setCardExpMonth(event.target.value.replace(/\D/g, "").slice(0, 2))} placeholder="MM" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
+                    </label>
+                    <label className="grid gap-1 text-xs text-white/75">Año
+                      <input required inputMode="numeric" autoComplete="cc-exp-year" value={cardExpYear} onChange={(event) => setCardExpYear(event.target.value.replace(/\D/g, "").slice(0, 2))} placeholder="YY" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
+                    </label>
+                    <label className="grid gap-1 text-xs text-white/75">CVC
+                      <input required inputMode="numeric" autoComplete="cc-csc" value={cardCvc} onChange={(event) => setCardCvc(event.target.value.replace(/\D/g, "").slice(0, 4))} placeholder="123" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
+                    </label>
+                  </div>
+                  <button type="submit" disabled={isCreatingCheckout} className="w-full bg-primary px-4 py-3 font-bold text-primary-foreground disabled:cursor-wait disabled:opacity-70">
+                    {isCreatingCheckout ? "Conectando con Wompi…" : `Activar aporte ${donationFrequency === "monthly" ? "mensual" : "anual"}`}
+                  </button>
+                </form>}
               </div>}
 
               {donationFrequency === "one_time" && <button
