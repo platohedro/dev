@@ -485,7 +485,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
             {/* Label */}
             <div className="flex items-center gap-3 mb-8">
               <div className="h-px w-10 bg-accent" />
-              <span className="text-xs text-accent tracking-[0.3em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
+              <span className="text-xs font-bold text-accent tracking-[0.3em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
                 {t("hero.label")}
               </span>
             </div>
