@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { InputHTMLAttributes } from "react";
 import { createSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase/server";
-import { createEvent, signInWithPassword, signOut, updateEvent } from "./actions";
+import { ConfirmDeleteForm } from "@/app/admin/ConfirmDeleteForm";
+import { createEvent, deleteEvent, signInWithPassword, signOut, updateEvent } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -37,7 +38,7 @@ export default async function AdminEventosPage({ searchParams }: { searchParams:
           <div><p className="text-xs font-bold tracking-widest text-[#0051A2] uppercase">Administración</p><h1 className="text-3xl font-bold">{editingEvent ? "Editar evento" : "Nuevo evento"}</h1></div>
           <div className="flex gap-4"><Link href="/admin" className="text-sm underline">Panel</Link><form action={signOut}><button className="text-sm underline">Cerrar sesión</button></form></div>
         </div>
-        {(mensaje === "evento-guardado" || mensaje === "evento-actualizado") && <p className="mb-5 border border-[#99CC33] bg-[#99CC33]/15 p-4 text-sm">Evento guardado correctamente.</p>}
+        {(mensaje === "evento-guardado" || mensaje === "evento-actualizado" || mensaje === "evento-eliminado") && <p className="mb-5 border border-[#99CC33] bg-[#99CC33]/15 p-4 text-sm">{mensaje === "evento-eliminado" ? "Evento eliminado correctamente." : "Evento guardado correctamente."}</p>}
         <form action={editingEvent ? updateEvent : createEvent} className="grid gap-5 rounded-lg border border-border bg-card p-6 shadow-sm">
           {editingEvent && <input type="hidden" name="id" value={editingEvent.id} />}
           <Field name="title" label="Título" required defaultValue={editingEvent?.title ?? ""} />
@@ -51,7 +52,7 @@ export default async function AdminEventosPage({ searchParams }: { searchParams:
           <div className="flex flex-wrap gap-3"><button name="publication" value="draft" className="border border-[#0051A2] px-5 py-3 font-bold text-[#0051A2] hover:bg-[#0051A2] hover:text-white">Guardar borrador</button><button name="publication" value="published" className="bg-[#0051A2] px-5 py-3 font-bold text-white hover:bg-[#FF46A2]">Publicar evento</button>{editingEvent && <Link href="/admin/eventos" className="px-5 py-3 text-sm underline">Cancelar</Link>}</div>
         </form>
         <section id="historial" className="mt-12"><h2 className="mb-5 text-2xl font-bold">Historial de eventos</h2>
-          {eventHistory?.length ? <div className="divide-y border border-border">{eventHistory.map((event) => <div key={event.id} className="flex flex-wrap items-center justify-between gap-3 p-4"><div><p className="font-bold">{event.title}</p><p className="text-xs text-muted-foreground">{new Date(event.starts_at).toLocaleString("es-CO")}</p></div><div className="flex items-center gap-4"><span className={event.is_published ? "text-xs font-bold text-[#0051A2]" : "text-xs font-bold text-[#FF46A2]"}>{event.is_published ? "Publicado" : "Borrador"}</span><Link href={`/admin/eventos?editar=${event.id}`} className="text-sm underline">Editar</Link>{event.is_published && <Link href={`/eventos/${event.slug}`} className="text-sm underline">Ver</Link>}</div></div>)}</div> : <p className="border border-border p-5 text-sm text-muted-foreground">Aún no se han creado eventos.</p>}
+          {eventHistory?.length ? <div className="divide-y border border-border">{eventHistory.map((event) => <div key={event.id} className="flex flex-wrap items-center justify-between gap-3 p-4"><div><p className="font-bold">{event.title}</p><p className="text-xs text-muted-foreground">{new Date(event.starts_at).toLocaleString("es-CO")}</p></div><div className="flex items-center gap-4"><span className={event.is_published ? "text-xs font-bold text-[#0051A2]" : "text-xs font-bold text-[#FF46A2]"}>{event.is_published ? "Publicado" : "Borrador"}</span><Link href={`/admin/eventos?editar=${event.id}`} className="text-sm underline">Editar</Link>{event.is_published && <Link href={`/eventos/${event.slug}`} className="text-sm underline">Ver</Link>}<ConfirmDeleteForm action={deleteEvent} id={event.id} message={`¿Borrar definitivamente el evento “${event.title}”? Esta acción no se puede deshacer.`} /></div></div>)}</div> : <p className="border border-border p-5 text-sm text-muted-foreground">Aún no se han creado eventos.</p>}
         </section>
       </div>
     </main>

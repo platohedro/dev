@@ -142,6 +142,10 @@ El acceso administrativo está en `/admin`: muestra únicamente los módulos que
 corresponden al rol de la cuenta. La sesión se crea con Supabase Auth y se conserva
 en una cookie segura administrada por el servidor.
 
+Los paneles de eventos, noticias, residencias y tienda incluyen borrado con una
+confirmación explícita. El borrado de productos con órdenes registradas se bloquea
+para conservar el historial de pagos.
+
 La recuperación de contraseña comienza en `/auth/recuperar-clave`. En Supabase,
 `Authentication > URL Configuration`, agrega como redirect permitido
 `https://platohedro.org/auth/callback` (y `http://localhost:3000/**` para desarrollo).

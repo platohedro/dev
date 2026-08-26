@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { ConfirmDeleteForm } from "@/app/admin/ConfirmDeleteForm";
 import { deleteProduct, deleteProductImage, deleteProductMainImage, saveProduct } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -31,6 +32,6 @@ export default async function StoreAdmin({ searchParams }: { searchParams: Promi
       {item && <div className="grid gap-3"><p className="text-sm font-semibold">Fotos actuales de la galería</p>{gallery?.length ? <div className="grid grid-cols-2 gap-3 md:grid-cols-4">{gallery.map((image) => <div key={image.id} className="border p-2"><a href={image.image_url} target="_blank" rel="noreferrer"><img src={image.image_url} alt={`Foto adicional de ${item.name}`} className="h-28 w-full object-cover" /><span className="mt-1 block truncate text-xs underline">Abrir imagen</span></a><button type="submit" formAction={deleteProductImage.bind(null, image.id, item.id)} className="mt-2 text-xs text-red-600 underline">Borrar foto</button></div>)}</div> : <p className="text-sm text-muted-foreground">Este producto aún no tiene fotos adicionales.</p>}</div>}
       <div className="flex gap-3"><button name="publication" value="draft" className="border px-4 py-3">Guardar borrador</button><button name="publication" value="published" className="bg-[#0051A2] px-4 py-3 text-white">Publicar</button></div>
     </form>
-    <h2 className="mt-10 text-2xl font-bold">Productos</h2><div className="mt-4 divide-y border">{items?.map((product) => <div key={product.id} className="flex items-center justify-between gap-4 p-4"><span>{product.name} · {product.is_published ? "Publicado" : "Borrador"}</span><div className="flex gap-4"><Link href={`/admin/tienda?editar=${product.id}`} className="underline">Editar</Link><form action={deleteProduct}><input type="hidden" name="id" value={product.id} /><button className="text-red-600 underline" type="submit">Borrar</button></form></div></div>)}</div>
+    <h2 className="mt-10 text-2xl font-bold">Productos</h2><div className="mt-4 divide-y border">{items?.map((product) => <div key={product.id} className="flex items-center justify-between gap-4 p-4"><span>{product.name} · {product.is_published ? "Publicado" : "Borrador"}</span><div className="flex gap-4"><Link href={`/admin/tienda?editar=${product.id}`} className="underline">Editar</Link><ConfirmDeleteForm action={deleteProduct} id={product.id} message={`¿Borrar definitivamente el producto “${product.name}”? Si tiene órdenes registradas no podrá eliminarse.`} /></div></div>)}</div>
   </div></main>;
 }
