@@ -69,36 +69,45 @@
     "items": [
       {
         "id": 1,
-        "title": "Educación Artística Comunitaria",
-        "tag": "Niñes 8–18",
-        "description": "Talleres semanales de artes plásticas, escultura y medios mixtos que construyen confianza creativa desde la raíz."
+        "title": "Matinée",
+        "tag": "Niñxs 6 - 14 años",
+        "description": "Somos un grupo de niñxs curiosxs y divertidxs, jugamos, aprendemos y experimentamos con arte y tecnología cada sábado en el barrio El Faro y en el barrio Buenos Aires."
       },
       {
         "id": 2,
-        "title": "Laboratorio de Medios Digitales",
+        "title": "La Jaquer EsCool",
         "tag": "Todas las edades",
-        "description": "Fotografía, edición de video e ilustración digital con herramientas de nivel profesional, accesibles para todes."
+        "description": "La Jaquer Escool es un espacio de aprendizaje y creación abierto para jóvenes de todas las edades."
       },
       {
         "id": 3,
-        "title": "Narrativas Colectivas",
-        "tag": "Jóvenes y adultes",
-        "description": "Historia oral, fanzines y escritura narrativa que centra las voces del territorio y la memoria viva."
+        "title": "Ideatorio",
+        "tag": "Jóvenes y adultxs",
+        "description": "Es un espacio de reunión para adolescentes, donde compartimos saberes y creamos colectivamente y con ritmo propio."
       },
       {
         "id": 4,
-        "title": "Música y Producción Sonora",
-        "tag": "13+ años",
-        "description": "Composición, producción de beats y grabación en estudio. Del barrio al escenario, con acompañamiento real."
+        "title": "Amapolas",
+        "tag": "Madres cabeza de familia",
+        "description": "Somos un grupo de mujeres cabeza de hogar que vivimos en los barrios el Faro y Buenos Aires. "
       },
       {
         "id": 5,
-        "title": "Residencias de Artes Visuales",
-        "tag": "Artistas",
+        "title": "Comunidad",
+        "tag": "Trabajo comunitario",
         "description": "Residencias de seis semanas con espacio de estudio, mentoría y exposición colectiva de cierre."
       }
     ],
-    "viewAll": "Ver todos los programas"
+    "viewAll": "Ir a D-Formación",
+    "learnMore": "Ver más"
+  },
+  "dFormacion": {
+    "label": "Educación · arte · tecnología",
+    "title": "D-Formación",
+    "description": "Procesos de aprendizaje, creación y experimentación que construimos con las comunidades de Medellín.",
+    "preliminary": "Información preliminar",
+    "programsTitle": "Nuestros procesos",
+    "homeCta": "Volver a la página principal"
   },
   "residencies": {
     "label": "Residencias",
@@ -122,17 +131,17 @@
     },
     "types": [
       {
-        "title": "Residencia de Investigación",
+        "title": "Residencia artística",
         "tag": "3 semanas",
         "description": "Para investigadores, teóricos y curadores que quieren trabajar en el cruce entre arte, territorio y conocimiento."
       },
       {
-        "title": "Residencia Sonora",
+        "title": "Residencia de investigación",
         "tag": "4 semanas",
         "description": "Producción, composición y experimentación sonora en el estudio de grabación. Para músicos, podcasters y artistas de audio."
       },
       {
-        "title": "Residencia Comunitaria",
+        "title": "Residencia tecnológica",
         "tag": "8 semanas",
         "description": "Proceso de co-creación con comunidades del barrio. Arte situado, memoria colectiva y transformación desde el territorio."
       }
@@ -181,7 +190,7 @@
     "label": "Míranos",
     "title": "Platohedro en movimiento",
     "play": "Ver video",
-    "videoTitle": "\"Platohedro: Un año en el estudio\" — Película anual 2024",
+    "videoTitle": "Platohedro",
     "duration": "12 min"
   },
   "events": {

@@ -29,11 +29,11 @@ export function SiteHeader() {
   }, []);
 
   const links = [
-    [t("nav.education"), "/#programs"],
+    [t("nav.education"), "/d-formacion"],
     [t("nav.residencies"), "/residencias"],
     [t("nav.technology"), "/#technology"],
-    [t("nav.events"), "/eventos"],
     [t("nav.shop"), "/#shop"],
+    [t("nav.events"), "/eventos"],
     [t("nav.about"), "/about"],
   ];
 

@@ -6,6 +6,7 @@ import {
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Calendar,
   MapPin,
   Heart,
@@ -17,6 +18,9 @@ import {
   Hammer,
   AlertCircle,
   Globe,
+  Monitor,
+  Clapperboard,
+  Cpu,
 } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { RenovationPopup } from "@/app/components/ui/renovation-popup";
@@ -81,7 +85,7 @@ const programs = [
     titleKey: "programs.items.1.title",
     tagKey: "programs.items.1.tag",
     descKey: "programs.items.1.description",
-    image: "https://backup.platohedro.org/wp-content/uploads/2022/04/experimentacion-tecnologica01.jpg",
+    image: "https://backup.platohedro.org/wp-content/uploads/2022/05/lifepatch2.jpg",
     color: "#ff3366",
   },
   {
@@ -89,7 +93,7 @@ const programs = [
     titleKey: "programs.items.2.title",
     tagKey: "programs.items.2.tag",
     descKey: "programs.items.2.description",
-    image: "https://backup.platohedro.org/wp-content/uploads/2022/04/IMG_2265.jpg",
+    image: "https://backup.platohedro.org/wp-content/uploads/2023/10/ideatorio.jpg",
     color: "#a78bfa",
   },
   {
@@ -97,7 +101,7 @@ const programs = [
     titleKey: "programs.items.3.title",
     tagKey: "programs.items.3.tag",
     descKey: "programs.items.3.description",
-    image: "https://backup.platohedro.org/wp-content/uploads/2022/05/lifepatch2.jpg",
+    image: "https://backup.platohedro.org/wp-content/uploads/2023/10/amapolas.jpg",
     color: "#fb923c",
   },
   {
@@ -216,17 +220,17 @@ const artsThoughts = [
 
 const techInitiatives = [
   {
-    icon: "🖥️",
+    Icon: Monitor,
     title: "Laboratorio de Acceso Digital",
     desc: "Acceso libre a computadores, Wi-Fi y talleres de alfabetización digital para integrantes de la comunidad.",
   },
   {
-    icon: "🎬",
+    Icon: Clapperboard,
     title: "Estudio de Cine y Podcast",
     desc: "Equipos de grabación de nivel profesional disponibles para residentes y participantes de programas.",
   },
   {
-    icon: "🤖",
+    Icon: Cpu,
     title: "Arte, IA y Conocimiento Libre",
     desc: "Sesiones mensuales para explorar críticamente las tecnologías emergentes desde prácticas artísticas y el Buen Conocer.",
   },
@@ -245,6 +249,12 @@ const residencyTypeAssets = [
     color: "#99CC33",
     image: "https://backup.platohedro.org/wp-content/uploads/2025/07/Lokakarya_Squaresynth_01.jpg",
   },
+];
+
+const residencyApplicationPaths = [
+  "/residencias/residencia-artistica",
+  "/residencias/residencia-de-investigacion",
+  "/residencias/residencia-tecnologica",
 ];
 
 // ─── COMPONENT ───────────────────────────────────────────────────────────────
@@ -279,6 +289,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [donationError, setDonationError] = useState("");
   const [showRenovationPopup, setShowRenovationPopup] = useState(true);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const [publishedEvents, setPublishedEvents] = useState<PublicEvent[]>([]);
   const [publishedProducts, setPublishedProducts] = useState<Array<{ id: string; slug: string; name: string; image_url: string | null; price_cop: number }>>([]);
 
@@ -344,6 +355,13 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
     window.addEventListener("hashchange", updateRoute);
     return () => window.removeEventListener("hashchange", updateRoute);
   }, [initialPage]);
+
+  useEffect(() => {
+    const updateBackToTopVisibility = () => setShowBackToTop(window.scrollY > 500);
+    updateBackToTopVisibility();
+    window.addEventListener("scroll", updateBackToTopVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", updateBackToTopVisibility);
+  }, []);
 
   useEffect(() => {
     fetch("/api/events")
@@ -546,10 +564,11 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
       {/* ══════════════════════════════════════════════════════
           EDUCACIÓN — CAROUSEL / GRID
       ══════════════════════════════════════════════════════ */}
-      <section id="programs" className="py-24 px-6 md:px-10 max-w-7xl mx-auto">
+      <section id="programs" className="border-t border-[#0051A2]/20 bg-[#99CC33] py-24 px-6 md:px-10 text-[#0051A2]">
+        <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <span className="text-xs text-primary tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
+            <span className="text-xs font-bold text-[#0051A2] tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
               {t("programs.label")}
             </span>
             <h2 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>
@@ -560,7 +579,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
             <button onClick={prevProgram} className="w-10 h-10 border border-border flex items-center justify-center text-muted-foreground hover:border-primary hover:text-primary transition-colors">
               <ChevronLeft size={18} />
             </button>
-            <span className="text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>
+            <span className="text-xs text-[#0051A2]/70" style={{ fontFamily: "'DM Mono', monospace" }}>
               {carouselIndex + 1} / {programs.length}
             </span>
             <button onClick={nextProgram} className="w-10 h-10 border border-border flex items-center justify-center text-muted-foreground hover:border-primary hover:text-primary transition-colors">
@@ -602,8 +621,8 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 <h3 className="text-sm font-bold mb-2 leading-tight" style={{ fontFamily: "'DM Serif Display', serif" }}>
                   {prog.title}
                 </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed flex-1">{prog.desc}</p>
-                <button className="mt-4 flex items-center gap-1 text-xs font-semibold transition-colors" style={{ color: prog.color }}>
+                <p className="text-xs text-[#0051A2]/80 leading-relaxed flex-1">{prog.desc}</p>
+                <button className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#0051A2] transition-colors hover:text-[#FF46A2]">
                   {t("programs.learnMore")} <ArrowUpRight size={12} />
                 </button>
               </div>
@@ -632,8 +651,8 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
               <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: "'DM Serif Display', serif" }}>
                 {programsData[carouselIndex].title}
               </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{programsData[carouselIndex].desc}</p>
-              <button className="mt-4 flex items-center gap-1 text-sm font-semibold" style={{ color: programs[carouselIndex].color }}>
+              <p className="text-sm text-[#0051A2]/80 leading-relaxed">{programsData[carouselIndex].desc}</p>
+              <button className="mt-4 flex items-center gap-1 text-sm font-semibold text-[#0051A2] transition-colors hover:text-[#FF46A2]">
                 {t("programs.learnMore")} <ArrowUpRight size={14} />
               </button>
             </div>
@@ -652,9 +671,10 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
         </div>
 
         <div className="mt-8 text-center">
-          <a href="#" className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-colors duration-200">
-            Ver todos los programas <ArrowUpRight size={16} />
+          <a href="/d-formacion" className="inline-flex items-center gap-2 px-6 py-3 border border-[#0051A2] text-[#0051A2] text-sm font-semibold hover:bg-[#0051A2] hover:text-white transition-colors duration-200">
+            {t("programs.viewAll")} <ArrowUpRight size={16} />
           </a>
+        </div>
         </div>
       </section>
 
@@ -719,7 +739,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <span className="text-xs text-[#0051A2] tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
+              <span className="text-xs font-bold text-[#0051A2] tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
                 {t("residencies.label")}
               </span>
               <h2 className="text-4xl md:text-5xl font-bold text-[#0051A2]" style={{ fontFamily: "'DM Serif Display', serif" }}>
@@ -771,7 +791,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
 
           {/* Other residency types */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {residencyTypes.map((res) => (
+            {residencyTypes.map((res, index) => (
               <article key={res.title} className="group cursor-pointer border border-[#0051A2]/20 hover:border-[#0051A2]/50 transition-all bg-white/80 flex flex-col">
                 <div className="overflow-hidden aspect-[16/9] bg-[#003d7a] relative">
                   <img src={res.image} alt={res.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -785,9 +805,9 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                     {res.title}
                   </h3>
                   <p className="text-xs text-[#0051A2]/70 leading-relaxed flex-1">{res.description}</p>
-                  <button className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#0051A2] hover:text-[#FF46A2] transition-colors">
+                  <a href={residencyApplicationPaths[index]} className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#0051A2] hover:text-[#FF46A2] transition-colors">
                     {t("residencies.learnMore")} <ArrowUpRight size={12} />
-                  </button>
+                  </a>
                 </div>
               </article>
             ))}
@@ -802,7 +822,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
       <section id="technology" className="border-t border-white/20 py-24 px-6 md:px-10" style={{ backgroundColor: "#FF46A2" }}>
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <span className="text-xs text-white/70 tracking-widest uppercase block mb-4" style={{ fontFamily: "'DM Mono', monospace" }}>
+            <span className="text-xs font-bold text-white/70 tracking-widest uppercase block mb-4" style={{ fontFamily: "'DM Mono', monospace" }}>
                   {t("technology.label")}
                 </span>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ fontFamily: "'DM Serif Display', serif" }}>
@@ -815,7 +835,9 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
             <div className="space-y-6">
               {techInitiativesData.map((item) => (
                 <div key={item.title} className="flex gap-5 group cursor-pointer">
-                  <div className="text-2xl shrink-0 w-10">{item.icon ?? '🔧'}</div>
+                  <div className="grid size-10 shrink-0 place-items-center border border-white/50 text-white transition-colors group-hover:border-[#0051A2] group-hover:bg-[#0051A2]" aria-hidden="true">
+                    <item.Icon size={20} strokeWidth={1.75} />
+                  </div>
                   <div>
                     <h3 className="font-bold mb-1 text-white group-hover:text-[#0051A2] transition-colors" style={{ fontFamily: "'DM Serif Display', serif" }}>
                       {item.title}
@@ -855,7 +877,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <span className="text-xs text-[#0051A2] tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
+              <span className="text-xs font-bold text-[#0051A2] tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
                 {t("shop.label")}
               </span>
               <h2 className="text-4xl md:text-5xl font-bold text-[#0051A2]" style={{ fontFamily: "'DM Serif Display', serif" }}>
@@ -903,7 +925,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           </div>
 
           <div className="relative aspect-video bg-muted border border-border overflow-hidden max-w-4xl mx-auto group cursor-pointer">
-            <video controls playsInline preload="metadata" className="h-full w-full object-cover" aria-label="Platohedro en movimiento">
+            <video autoPlay muted loop playsInline preload="metadata" className="h-full w-full object-cover" aria-label="Platohedro en movimiento">
               <source src="https://backup.platohedro.org/wp-content/uploads/2022/02/intro.mp4" type="video/mp4" />
               Tu navegador no puede reproducir este video.
             </video>
@@ -912,9 +934,13 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 <p className="text-sm font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>
                   {t("video.videoTitle")}
                 </p>
-                <p className="text-xs text-muted-foreground mt-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>{t("video.duration")}</p>
               </div>
             </div>
+          </div>
+          <div className="mt-8 text-center">
+            <a href="/about" className="inline-flex items-center gap-2 border border-white px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white hover:text-[#FF46A2]">
+              {t("video.aboutCta")} <ArrowUpRight size={16} />
+            </a>
           </div>
         </div>
       </section>
@@ -927,7 +953,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <span className="text-xs text-primary tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
+              <span className="text-xs font-bold text-primary tracking-widest uppercase block mb-3" style={{ fontFamily: "'DM Mono', monospace" }}>
                 {t("events.label")}
               </span>
               <h2 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>
@@ -1021,7 +1047,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
       {/* ══════════════════════════════════════════════════════
           APOYAR / DONACIONES
       ══════════════════════════════════════════════════════ */}
-      <section id="donate" className="border-t-4 border-[#99CC33] py-24 px-6 md:px-10" style={{ backgroundColor: "#003d7a" }}>
+      <section id="donate" className="border-t-4 border-[#99CC33] bg-white py-24 px-6 text-[#0051A2] [--background:#fff] [--foreground:#0051A2] [--muted-foreground:rgba(0,81,162,0.72)] [--border:rgba(0,81,162,0.2)] [--primary:#0051A2] [--primary-foreground:#fff] md:px-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-xs font-bold mb-6" style={{ fontFamily: "'DM Mono', monospace" }}>
@@ -1046,13 +1072,13 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                     style={{
                       backgroundColor: donateStep >= i + 1 ? "#d4f500" : "transparent",
                       color: donateStep >= i + 1 ? "#0d0714" : "#a08cb8",
-                      border: donateStep >= i + 1 ? "none" : "1px solid #3a2050",
+                      border: donateStep >= i + 1 ? "none" : "1px solid rgba(0,81,162,0.4)",
                       fontFamily: "'DM Mono', monospace",
                     }}
                   >
                     {donateStep > i + 1 ? <CheckCircle size={14} /> : i + 1}
                   </div>
-                  <span className="text-xs hidden md:block" style={{ fontFamily: "'DM Mono', monospace", color: donateStep >= i + 1 ? "#f0ead8" : "#a08cb8" }}>
+                  <span className="text-xs hidden md:block" style={{ fontFamily: "'DM Mono', monospace", color: donateStep >= i + 1 ? "#0051A2" : "rgba(0,81,162,0.6)" }}>
                     {label}
                   </span>
                 </button>
@@ -1116,7 +1142,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                         fontFamily: "'DM Mono', monospace",
                         borderColor: "rgba(212,245,0,0.12)",
                         backgroundColor: (i === 0 && donationFrequency === "one_time") || (i === 1 && donationFrequency === "monthly") || (i === 2 && donationFrequency === "annual") ? "rgba(212,245,0,0.1)" : "transparent",
-                        color: (i === 0 && donationFrequency === "one_time") || (i === 1 && donationFrequency === "monthly") || (i === 2 && donationFrequency === "annual") ? "#d4f500" : "#a08cb8",
+                        color: (i === 0 && donationFrequency === "one_time") || (i === 1 && donationFrequency === "monthly") || (i === 2 && donationFrequency === "annual") ? "#0051A2" : "rgba(0,81,162,0.6)",
                       }}
                     >
                       {freq}
@@ -1126,30 +1152,30 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
               </div>
 
               {donationFrequency !== "one_time" && <div className="mb-6 grid gap-3">
-                <input required value={donorName} onChange={(event) => setDonorName(event.target.value)} placeholder="Nombre completo" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
-                <input required type="email" value={donorEmail} onChange={(event) => setDonorEmail(event.target.value)} placeholder="Correo electrónico" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
-                {acceptance && <div className="grid gap-2 text-xs text-white/80"><label><input type="checkbox" checked={acceptTerms} onChange={(event) => setAcceptTerms(event.target.checked)} className="mr-2" />Acepto los <a className="underline" target="_blank" rel="noreferrer" href={acceptance.acceptance.permalink}>términos de Wompi</a>.</label><label><input type="checkbox" checked={acceptPersonalData} onChange={(event) => setAcceptPersonalData(event.target.checked)} className="mr-2" />Acepto la <a className="underline" target="_blank" rel="noreferrer" href={acceptance.personalAuth.permalink}>autorización de datos personales</a>.</label></div>}
-                {acceptance && acceptTerms && acceptPersonalData && <form onSubmit={startRecurringDonation} className="grid gap-3 border border-white/20 p-4">
-                  <div className="flex items-center justify-between border border-white/20 bg-white/5 px-3 py-3">
-                    <div className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-full bg-white/15"><CreditCard size={18} /></span><span className="text-sm font-semibold">{cardBrandLabels[cardBrand]}</span></div>
-                    <span className="text-right text-[10px] tracking-widest text-white/50">VISA · MC · AMEX</span>
+                <input required value={donorName} onChange={(event) => setDonorName(event.target.value)} placeholder="Nombre completo" className="border border-[#0051A2]/20 bg-white p-3 text-sm text-[#0051A2] placeholder:text-[#0051A2]/50" />
+                <input required type="email" value={donorEmail} onChange={(event) => setDonorEmail(event.target.value)} placeholder="Correo electrónico" className="border border-[#0051A2]/20 bg-white p-3 text-sm text-[#0051A2] placeholder:text-[#0051A2]/50" />
+                {acceptance && <div className="grid gap-2 text-xs text-[#0051A2]/80"><label><input type="checkbox" checked={acceptTerms} onChange={(event) => setAcceptTerms(event.target.checked)} className="mr-2" />Acepto los <a className="underline" target="_blank" rel="noreferrer" href={acceptance.acceptance.permalink}>términos de Wompi</a>.</label><label><input type="checkbox" checked={acceptPersonalData} onChange={(event) => setAcceptPersonalData(event.target.checked)} className="mr-2" />Acepto la <a className="underline" target="_blank" rel="noreferrer" href={acceptance.personalAuth.permalink}>autorización de datos personales</a>.</label></div>}
+                {acceptance && acceptTerms && acceptPersonalData && <form onSubmit={startRecurringDonation} className="grid gap-3 border border-[#0051A2]/20 p-4">
+                  <div className="flex items-center justify-between border border-[#0051A2]/20 bg-[#0051A2]/5 px-3 py-3">
+                    <div className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-full bg-[#0051A2]/10"><CreditCard size={18} /></span><span className="text-sm font-semibold">{cardBrandLabels[cardBrand]}</span></div>
+                    <span className="text-right text-[10px] tracking-widest text-[#0051A2]/50">VISA · MC · AMEX</span>
                   </div>
-                  <p className="text-xs text-white/70">La tarjeta se tokeniza directamente con Wompi. Platohedro no recibe ni almacena el número, CVC o fecha.</p>
-                  <label className="grid gap-1 text-xs text-white/75">Número de tarjeta
-                    <input required inputMode="numeric" autoComplete="cc-number" value={cardNumber} onChange={(event) => setCardNumber(formatCardNumber(event.target.value))} placeholder="0000 0000 0000 0000" className="border border-white/20 bg-transparent p-3 text-sm tracking-widest text-white placeholder:text-white/40" />
+                  <p className="text-xs text-[#0051A2]/70">La tarjeta se tokeniza directamente con Wompi. Platohedro no recibe ni almacena el número, CVC o fecha.</p>
+                  <label className="grid gap-1 text-xs text-[#0051A2]/75">Número de tarjeta
+                    <input required inputMode="numeric" autoComplete="cc-number" value={cardNumber} onChange={(event) => setCardNumber(formatCardNumber(event.target.value))} placeholder="0000 0000 0000 0000" className="border border-[#0051A2]/20 bg-white p-3 text-sm tracking-widest text-[#0051A2] placeholder:text-[#0051A2]/40" />
                   </label>
-                  <label className="grid gap-1 text-xs text-white/75">Nombre del titular
-                    <input required autoComplete="cc-name" value={cardHolder} onChange={(event) => setCardHolder(event.target.value.slice(0, 120))} placeholder="Como aparece en la tarjeta" className="border border-white/20 bg-transparent p-3 text-sm uppercase text-white placeholder:text-white/40" />
+                  <label className="grid gap-1 text-xs text-[#0051A2]/75">Nombre del titular
+                    <input required autoComplete="cc-name" value={cardHolder} onChange={(event) => setCardHolder(event.target.value.slice(0, 120))} placeholder="Como aparece en la tarjeta" className="border border-[#0051A2]/20 bg-white p-3 text-sm uppercase text-[#0051A2] placeholder:text-[#0051A2]/40" />
                   </label>
                   <div className="grid grid-cols-3 gap-2">
-                    <label className="grid gap-1 text-xs text-white/75">Mes
-                      <input required inputMode="numeric" autoComplete="cc-exp-month" value={cardExpMonth} onChange={(event) => setCardExpMonth(event.target.value.replace(/\D/g, "").slice(0, 2))} placeholder="MM" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
+                    <label className="grid gap-1 text-xs text-[#0051A2]/75">Mes
+                      <input required inputMode="numeric" autoComplete="cc-exp-month" value={cardExpMonth} onChange={(event) => setCardExpMonth(event.target.value.replace(/\D/g, "").slice(0, 2))} placeholder="MM" className="border border-[#0051A2]/20 bg-white p-3 text-sm text-[#0051A2] placeholder:text-[#0051A2]/50" />
                     </label>
-                    <label className="grid gap-1 text-xs text-white/75">Año
-                      <input required inputMode="numeric" autoComplete="cc-exp-year" value={cardExpYear} onChange={(event) => setCardExpYear(event.target.value.replace(/\D/g, "").slice(0, 2))} placeholder="YY" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
+                    <label className="grid gap-1 text-xs text-[#0051A2]/75">Año
+                      <input required inputMode="numeric" autoComplete="cc-exp-year" value={cardExpYear} onChange={(event) => setCardExpYear(event.target.value.replace(/\D/g, "").slice(0, 2))} placeholder="YY" className="border border-[#0051A2]/20 bg-white p-3 text-sm text-[#0051A2] placeholder:text-[#0051A2]/50" />
                     </label>
-                    <label className="grid gap-1 text-xs text-white/75">CVC
-                      <input required inputMode="numeric" autoComplete="cc-csc" value={cardCvc} onChange={(event) => setCardCvc(event.target.value.replace(/\D/g, "").slice(0, 4))} placeholder="123" className="border border-white/20 bg-transparent p-3 text-sm text-white placeholder:text-white/50" />
+                    <label className="grid gap-1 text-xs text-[#0051A2]/75">CVC
+                      <input required inputMode="numeric" autoComplete="cc-csc" value={cardCvc} onChange={(event) => setCardCvc(event.target.value.replace(/\D/g, "").slice(0, 4))} placeholder="123" className="border border-[#0051A2]/20 bg-white p-3 text-sm text-[#0051A2] placeholder:text-[#0051A2]/50" />
                     </label>
                   </div>
                   <button type="submit" disabled={isCreatingCheckout} className="w-full bg-primary px-4 py-3 font-bold text-primary-foreground disabled:cursor-wait disabled:opacity-70">
@@ -1169,7 +1195,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </button>}
 
-              {donationError && <p role="alert" className="mt-3 text-center text-sm text-[#FFB3D6]">{donationError}</p>}
+              {donationError && <p role="alert" className="mt-3 text-center text-sm text-[#C22670]">{donationError}</p>}
 
               <p className="text-xs text-muted-foreground mt-3 text-center" style={{ fontFamily: "'DM Mono', monospace" }}>
                 {donateSecurePaymentNote}
@@ -1220,6 +1246,18 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                   <p><span className="text-foreground font-medium">{t("donate.otherWays.transfer.title")}</span> {t("donate.otherWays.transfer.description")}</p>
                   <p><span className="text-foreground font-medium">{t("donate.otherWays.inKind.title")}</span> {t("donate.otherWays.inKind.description")}</p>
                   <p><span className="text-foreground font-medium">{t("donate.otherWays.volunteer.title")}</span> {t("donate.otherWays.volunteer.description")}</p>
+                </div>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  <a href="https://patreon.com/Platohedro?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink" target="_blank" rel="noreferrer" className="group border border-[#0051A2]/20 p-4 transition-colors hover:border-[#0051A2] hover:bg-[#0051A2]/5">
+                    <p className="font-bold text-[#0051A2]">{t("donate.otherWays.patreon.title")}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{t("donate.otherWays.patreon.description")}</p>
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#0051A2] group-hover:text-[#FF46A2]">{t("donate.otherWays.patreon.cta")} <ExternalLink size={12} /></span>
+                  </a>
+                  <div className="border border-dashed border-[#0051A2]/30 p-4">
+                    <p className="font-bold text-[#0051A2]">{t("donate.otherWays.vaki.title")}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{t("donate.otherWays.vaki.description")}</p>
+                    <span className="mt-3 inline-flex text-xs font-bold text-[#0051A2]/60">{t("donate.otherWays.vaki.cta")}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1278,6 +1316,15 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
         isOpen={showRenovationPopup}
         onClose={() => setShowRenovationPopup(false)}
       />
+      {showBackToTop && <button
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="fixed right-6 bottom-6 z-40 grid size-12 place-items-center rounded-full bg-[#0051A2] text-white shadow-lg transition-colors hover:bg-[#FF46A2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#99CC33] focus-visible:ring-offset-2"
+        aria-label="Volver al inicio"
+        title="Volver al inicio"
+      >
+        <ChevronUp size={22} aria-hidden="true" />
+      </button>}
       </>) }
     </div>
   );

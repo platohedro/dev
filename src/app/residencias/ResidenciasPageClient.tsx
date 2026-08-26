@@ -65,9 +65,9 @@ export function ResidenciasPageClient({ residents, loadError }: { residents: Res
         <div className="mx-auto max-w-7xl">
           <p className="text-xs font-bold tracking-widest text-[#0051A2] uppercase">{t("residenciasPage.modalities.eyebrow")}</p>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            <Article title={t("residenciasPage.modalities.research.title")} text={t("residenciasPage.modalities.research.text")} />
-            <Article title={t("residenciasPage.modalities.community.title")} text={t("residenciasPage.modalities.community.text")} />
-            <Article title={t("residenciasPage.modalities.lab.title")} text={t("residenciasPage.modalities.lab.text")} />
+            <Article href="/residencias/residencia-artistica" title="Residencia artística" text={t("residenciasPage.modalities.research.text")} />
+            <Article href="/residencias/residencia-de-investigacion" title="Residencia de investigación" text={t("residenciasPage.modalities.community.text")} />
+            <Article href="/residencias/residencia-tecnologica" title="Residencia tecnológica" text={t("residenciasPage.modalities.lab.text")} />
           </div>
         </div>
       </section>
@@ -93,11 +93,12 @@ function Card({ icon, title, text }: { icon: React.ReactNode; title: string; tex
   );
 }
 
-function Article({ title, text }: { title: string; text: string }) {
+function Article({ href, title, text }: { href: string; title: string; text: string }) {
   return (
-    <article className="bg-white p-6">
+    <a href={href} className="group bg-white p-6 transition-transform hover:-translate-y-1">
       <h3 className="text-xl font-bold text-[#0051A2]">{title}</h3>
       <p className="mt-3 text-sm text-[#003d7a]/75">{text}</p>
-    </article>
+      <span className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#0051A2] group-hover:text-[#FF46A2]">Conocer residencia <ArrowUpRight size={15} /></span>
+    </a>
   );
 }

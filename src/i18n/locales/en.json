@@ -98,7 +98,16 @@
         "description": "Six-week residencies with studio space, mentorship, and a collective closing exhibition."
       }
     ],
-    "viewAll": "View all programs"
+    "viewAll": "Go to D-Formación",
+    "learnMore": "See more"
+  },
+  "dFormacion": {
+    "label": "Education · art · technology",
+    "title": "D-Formación",
+    "description": "Learning, creation, and experimentation processes we build with Medellín communities.",
+    "preliminary": "Preliminary information",
+    "programsTitle": "Our processes",
+    "homeCta": "Back to the home page"
   },
   "residencies": {
     "label": "Residencies",
@@ -181,7 +190,8 @@
     "label": "Watch us",
     "title": "Platohedro in motion",
     "play": "Play video",
-    "videoTitle": "\"Platohedro: A year in the studio\" — Annual film 2024",
+    "aboutCta": "Learn about Platohedro",
+    "videoTitle": "\"Platohedro",
     "duration": "12 min"
   },
   "events": {
@@ -295,6 +305,16 @@
       "volunteer": {
         "title": "Volunteering:",
         "description": "join our processes with time, support or professional services."
+      },
+      "patreon": {
+        "title": "Patreon",
+        "description": "Support our work as a member of the community.",
+        "cta": "Support on Patreon"
+      },
+      "vaki": {
+        "title": "Platohedro Vaki",
+        "description": "You will soon be able to support our collective campaign.",
+        "cta": "Link coming soon"
       }
     },
     "securePaymentNote": "🔒 Secure payment · Platohedro, Medellín, Colombia",
