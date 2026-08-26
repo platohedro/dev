@@ -19,3 +19,18 @@ export async function saveNews(form: FormData) {
   revalidatePath("/admin/noticias");
   redirect("/admin/noticias?mensaje=guardada");
 }
+
+export async function deleteNews(form: FormData) {
+  const id = text(form, "id");
+  if (!id) throw new Error("Noticia inválida.");
+  const supabase = await createSupabaseServerClient();
+  await requireAdminRole(supabase, "is_news_admin");
+  const { data: item } = await supabase.from("news").select("slug").eq("id", id).maybeSingle();
+  if (!item) throw new Error("No fue posible encontrar la noticia para borrarla.");
+  const { error } = await supabase.from("news").delete().eq("id", id);
+  if (error) throw new Error(`No fue posible borrar la noticia: ${error.message}`);
+  revalidatePath("/noticias");
+  revalidatePath(`/noticias/${item.slug}`);
+  revalidatePath("/sitemap.xml");
+  redirect("/admin/noticias?mensaje=eliminada");
+}

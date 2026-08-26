@@ -112,6 +112,18 @@ export async function updateEvent(formData: FormData) {
   redirect("/admin/eventos?mensaje=evento-actualizado");
 }
 
+export async function deleteEvent(formData: FormData) {
+  const id = requiredText(formData, "id");
+  const supabase = await createSupabaseServerClient();
+  await requireAdminRole(supabase, "is_event_admin");
+  const { data: event } = await supabase.from("events").select("slug").eq("id", id).maybeSingle();
+  if (!event) throw new Error("No fue posible encontrar el evento para borrarlo.");
+  const { error } = await supabase.from("events").delete().eq("id", id);
+  if (error) throw new Error(`No fue posible borrar el evento: ${error.message}`);
+  revalidateEventContent(event.slug);
+  redirect("/admin/eventos?mensaje=evento-eliminado");
+}
+
 export async function signOut() {
   const supabase = await createSupabaseServerClient();
   await supabase.auth.signOut();
