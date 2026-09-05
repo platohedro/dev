@@ -18,9 +18,9 @@ import {
   Hammer,
   AlertCircle,
   Globe,
-  Monitor,
+  GraduationCap,
   Clapperboard,
-  Cpu,
+  Building2,
 } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { RenovationPopup } from "@/app/components/ui/renovation-popup";
@@ -220,19 +220,19 @@ const artsThoughts = [
 
 const techInitiatives = [
   {
-    Icon: Monitor,
-    title: "Laboratorio de Acceso Digital",
-    desc: "Acceso libre a computadores, Wi-Fi y talleres de alfabetización digital para integrantes de la comunidad.",
-  },
-  {
     Icon: Clapperboard,
-    title: "Estudio de Cine y Podcast",
-    desc: "Equipos de grabación de nivel profesional disponibles para residentes y participantes de programas.",
+    title: "Contenidos",
+    desc: "Creación y circulación de contenidos audiovisuales, sonoros y digitales para compartir saberes e historias de la comunidad.",
   },
   {
-    Icon: Cpu,
-    title: "Arte, IA y Conocimiento Libre",
-    desc: "Sesiones mensuales para explorar críticamente las tecnologías emergentes desde prácticas artísticas y el Buen Conocer.",
+    Icon: GraduationCap,
+    title: "Educación",
+    desc: "Espacios de aprendizaje y experimentación con arte y tecnología para construir conocimiento de forma colectiva.",
+  },
+  {
+    Icon: Building2,
+    title: "Infraestructura",
+    desc: "Espacios, equipos y conectividad para apoyar la creación, el encuentro y el desarrollo de proyectos comunitarios.",
   },
 ];
 
@@ -618,7 +618,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 </div>
               </div>
               <div className="p-4 flex-1 flex flex-col">
-                <h3 className="text-sm font-bold mb-2 leading-tight" style={{ fontFamily: "'DM Serif Display', serif" }}>
+                <h3 className="text-2xl font-bold mb-2 leading-tight" style={{ fontFamily: "'DM Serif Display', serif" }}>
                   {prog.title}
                 </h3>
                 <p className="text-xs text-[#0051A2]/80 leading-relaxed flex-1">{prog.desc}</p>
@@ -848,8 +848,8 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
               ))}
             </div>
 
-            <a href="#" className="mt-10 inline-flex items-center gap-2 px-6 py-3 border border-white text-white text-sm font-semibold hover:bg-white hover:text-[#FF46A2] transition-colors duration-200">
-              {t("technology.reserve")} <ExternalLink size={14} />
+            <a href="/tecnologia" className="mt-10 inline-flex items-center gap-2 px-6 py-3 border border-white text-white text-sm font-semibold hover:bg-white hover:text-[#FF46A2] transition-colors duration-200">
+              {t("technologyPage.cta")} <ArrowUpRight size={14} />
             </a>
           </div>
 

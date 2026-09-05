@@ -1,5 +1,19 @@
 # Operación de la plataforma
 
+## Página de Tecnología
+
+`/tecnologia` adapta editorialmente el contenido de la portada de
+https://web3wasi.platohedro.org/ consultada el 5 de septiembre de 2026.
+La extracción se hizo leyendo su HTML público; no hay scraping en ejecución.
+Los textos ES/EN están en `src/i18n/locales/`, bajo `technologyPage`.
+Conserva enlaces de origen a Web3 EsCool, infraestructura, glosario, bitácora,
+Spaces, RadioCypher y GitHub. No se importaron cifras históricas como métricas
+actuales ni imágenes con textos alternativos genéricos de la plantilla original.
+Usa ISR de una hora, metadata y canonical propios; está incluida en el sitemap
+y permitida por la regla pública `/` de robots. El JSON-LD de organización se
+hereda del layout. No requiere nuevas variables, tablas ni migraciones.
+Validar navegación, idiomas y enlaces externos en staging antes de producción.
+
 ## Observabilidad
 
 - Usar `GET /api/health` como health check externo.

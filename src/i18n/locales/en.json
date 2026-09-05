@@ -1,4 +1,27 @@
 {
+  "technologyPage": {
+    "title": "Technology for creating together",
+    "intro": "Web3Wasi connects Platohedro’s community work with Web3 exploration and the Cypherplatx study group.",
+    "sections": "Explore our areas",
+    "content": {
+      "title": "Content",
+      "description": "Listen to RadioCypher and Spaces conversations. Explore the blog for community processes and reflections."
+    },
+    "education": {
+      "title": "Education",
+      "description": "Web3 EsCool approaches Web3 and blockchain learning through a human, critical and community perspective."
+    },
+    "infrastructure": {
+      "title": "Infrastructure",
+      "description": "Explore Web3Wasi resources and Platohedro’s open repositories."
+    },
+    "pedagogy": "Critical pedagogy",
+    "blog": "Blog",
+    "glossary": "Glossary",
+    "resources": "Explore infrastructure",
+    "source": "Content adapted from the Web3Wasi homepage, a Platohedro initiative.",
+    "cta": "Explore Technology"
+  },
   "language": {
     "label": "Select language",
     "es": "Español",
@@ -157,16 +180,16 @@
     "description": "Access to creative technology cannot depend on economic income. Our digital labs and media studios are open to the entire community, freely and at no cost, under principles of Good Knowing.",
     "initiatives": [
       {
-        "title": "Digital Access Lab",
-        "description": "Free access to computers, Wi-Fi, and digital literacy workshops for community members."
+        "title": "Content",
+        "description": "Creating and sharing audiovisual, audio and digital content to exchange community knowledge and stories."
       },
       {
-        "title": "Film and Podcast Studio",
-        "description": "Professional-grade recording equipment available for residents and program participants."
+        "title": "Education",
+        "description": "Spaces for learning and experimenting with art and technology to build knowledge together."
       },
       {
-        "title": "Art, AI & Free Knowledge",
-        "description": "Monthly sessions to critically explore emerging technologies from artistic practices and Good Knowing."
+        "title": "Infrastructure",
+        "description": "Spaces, equipment and connectivity to support creativity, gatherings and community projects."
       }
     ],
     "reserve": "Reserve studio time",

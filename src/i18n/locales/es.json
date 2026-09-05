@@ -1,4 +1,27 @@
 {
+  "technologyPage": {
+    "title": "Tecnología para crear en comunidad",
+    "intro": "Web3Wasi conecta el trabajo comunitario de Platohedro con la exploración de Web3 y el grupo de estudio Cypherplatx.",
+    "sections": "Explora nuestros ejes",
+    "content": {
+      "title": "Contenidos",
+      "description": "Escucha RadioCypher y las conversaciones de Spaces. Explora la bitácora para conocer procesos y reflexiones de la comunidad."
+    },
+    "education": {
+      "title": "Educación",
+      "description": "Web3 EsCool propone aprender sobre Web3 y blockchain desde una mirada humana, crítica y comunitaria."
+    },
+    "infrastructure": {
+      "title": "Infraestructura",
+      "description": "Explora los recursos de Web3Wasi y los repositorios abiertos de Platohedro."
+    },
+    "pedagogy": "Pedagogía crítica",
+    "blog": "Bitácora",
+    "glossary": "Glosario",
+    "resources": "Explorar infraestructura",
+    "source": "Contenido adaptado de la portada de Web3Wasi, una iniciativa de Platohedro.",
+    "cta": "Explorar Tecnología"
+  },
   "language": {
     "label": "Seleccionar idioma",
     "es": "Español",
@@ -157,16 +180,16 @@
     "description": "El acceso a la tecnología creativa no puede depender del ingreso económico. Nuestros laboratorios digitales y estudios de medios están abiertos a toda la comunidad, de forma libre y gratuita, bajo principios de Buen Conocer.",
     "initiatives": [
       {
-        "title": "Laboratorio de Acceso Digital",
-        "description": "Acceso libre a computadores, Wi-Fi y talleres de alfabetización digital para integrantes de la comunidad."
+        "title": "Contenidos",
+        "description": "Creación y circulación de contenidos audiovisuales, sonoros y digitales para compartir saberes e historias de la comunidad."
       },
       {
-        "title": "Estudio de Cine y Podcast",
-        "description": "Equipos de grabación de nivel profesional disponibles para residentes y participantes de programas."
+        "title": "Educación",
+        "description": "Espacios de aprendizaje y experimentación con arte y tecnología para construir conocimiento de forma colectiva."
       },
       {
-        "title": "Arte, IA y Conocimiento Libre",
-        "description": "Sesiones mensuales para explorar críticamente las tecnologías emergentes desde prácticas artísticas y el Buen Conocer."
+        "title": "Infraestructura",
+        "description": "Espacios, equipos y conectividad para apoyar la creación, el encuentro y el desarrollo de proyectos comunitarios."
       }
     ],
     "reserve": "Reservar tiempo en estudio",
@@ -190,6 +213,7 @@
     "label": "Míranos",
     "title": "Platohedro en movimiento",
     "play": "Ver video",
+    "aboutCta": "Conoce Platohedro",
     "videoTitle": "ventos Platohedro",
     "duration": "12 min"
   },
@@ -304,6 +328,16 @@
       "volunteer": {
         "title": "Voluntariado:",
         "description": "únete a nuestros procesos con tiempo, apoyo o servicios profesionales."
+      },
+      "patreon": {
+        "title": "Patreon",
+        "description": "Apoya nuestros procesos como parte de la comunidad.",
+        "cta": "Apoyar en Patreon"
+      },
+      "vaki": {
+        "title": "Vaki de Platohedro",
+        "description": "Pronto podrás aportar a nuestra campaña colectiva.",
+        "cta": "Próximamente"
       }
     },
     "securePaymentNote": "🔒 Pago seguro · Platohedro, Medellín, Colombia",

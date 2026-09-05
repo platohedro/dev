@@ -29,4 +29,16 @@ assert.match(await read("src/app/tienda/[slug]/page.tsx"), /application\/ld\+jso
 assert.match(await read("src/app/noticias/[slug]/page.tsx"), /generateMetadata/);
 assert.match(await read("src/app/sitemap.ts"), /noticias/);
 
+const technologyPage = await read("src/app/tecnologia/page.tsx");
+assert.match(technologyPage, /canonical: "\/tecnologia"/);
+assert.match(technologyPage, /openGraph/);
+assert.match(technologyPage, /revalidate = 3600/);
+assert.match(await read("src/app/sitemap.ts"), /absoluteUrl\("\/tecnologia"\)/);
+assert.match(await read("src/app/components/SiteHeader.tsx"), /"\/tecnologia"/);
+for (const lang of ["es", "en"]) {
+  const translations = JSON.parse(await read(`src/i18n/locales/${lang}.json`)).technologyPage;
+  for (const key of ["content", "education", "infrastructure"]) {
+    assert.ok(translations[key].title && translations[key].description);
+  }
+}
 console.log("SEO OK: indexación, metadata, sitemap y datos estructurados validados.");
