@@ -433,6 +433,9 @@
     "contact": "Contact us"
   },
   "eventosPage": {
+    "upcoming": "Upcoming and ongoing events",
+    "history": "Past events",
+    "historyEmpty": "There are no published past events yet.",
     "eyebrow": "Agenda",
     "title": "Events and calendar",
     "subtitle": "Find workshops, exhibitions, gatherings and Platohedro activities.",

@@ -7,6 +7,20 @@
 - Monitorizar errores de Netlify, consultas de Supabase y logs del webhook.
 - No registrar secretos, cookies, tokens ni payloads completos de usuarios.
 
+## Agenda e historial de eventos
+
+`/eventos` muestra únicamente eventos publicados, separados en próximos/en curso
+e historial. La clasificación usa `ends_at` y, cuando no existe, `starts_at`;
+una fecha igual a la hora de consulta permanece en la agenda. Los próximos se
+ordenan por inicio ascendente y los pasados por inicio descendente, con un límite
+de 100 por sección. Las tarjetas del historial conservan el enlace al detalle y
+ocultan la inscripción. La página conserva ISR de 300 segundos y la invalidación
+al guardar desde administración. No requiere migraciones ni variables nuevas.
+La portada mantiene su consulta independiente en `/api/events`.
+
+Validar en staging eventos futuros, en curso, finalizados y sin fecha de fin,
+además de borradores y estados vacíos, antes de promover a producción.
+
 ## Backups
 
 Los backups no se configuran desde el código. En cada proyecto Supabase:
