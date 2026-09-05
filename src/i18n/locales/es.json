@@ -380,6 +380,9 @@
     "contact": "Contáctanos"
   },
   "eventosPage": {
+    "upcoming": "Próximos eventos y en curso",
+    "history": "Historial de eventos",
+    "historyEmpty": "Aún no hay eventos pasados publicados.",
     "eyebrow": "Agenda",
     "title": "Eventos y calendario",
     "subtitle": "Encuentra talleres, exposiciones, encuentros y actividades de Platohedro.",

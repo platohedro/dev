@@ -545,14 +545,14 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
               { value: 287, label: t("hero.stats.residencies") },
               { value: 22, suffix: " años", label: t("hero.stats.years") },
             ].map(({ value, suffix, label }) => (
-              <div key={label} className="bg-background/80 backdrop-blur-sm px-6 py-5">
+              <div key={label} className="bg-[#003d7a] px-6 py-5 backdrop-blur-sm dark:bg-white">
                 <div
-                  className="text-2xl md:text-3xl font-bold text-primary mb-1"
+                  className="mb-1 text-2xl font-bold text-primary dark:text-[#003d7a] md:text-3xl"
                   style={{ fontFamily: "'DM Serif Display', serif" }}
                 >
                   <AnimatedStat value={value} suffix={suffix} />
                 </div>
-                <div className="text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>
+                <div className="text-xs text-white/70 dark:text-[#003d7a]/70" style={{ fontFamily: "'DM Mono', monospace" }}>
                   {label}
                 </div>
               </div>
@@ -691,14 +691,14 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           <div className="relative min-h-[160px] flex flex-col items-center justify-center">
             <blockquote
               key={quoteIndex}
-              className="text-xl md:text-2xl text-white leading-relaxed italic mb-8"
+              className="mb-8 text-3xl leading-relaxed italic text-white md:text-4xl"
               style={{ fontFamily: "'DM Serif Display', serif" }}
             >
               "{quotes[quoteIndex].text}"
             </blockquote>
             <div>
-              <div className="text-sm font-semibold text-white">{quotes[quoteIndex].author}</div>
-              <div className="text-xs text-white/70 mt-1" style={{ fontFamily: "'DM Mono', monospace" }}>
+              <div className="text-xl font-semibold text-white md:text-2xl">{quotes[quoteIndex].author}</div>
+              <div className="mt-1 text-base text-white/70 md:text-lg" style={{ fontFamily: "'DM Mono', monospace" }}>
                 {quotes[quoteIndex].role}
               </div>
             </div>
