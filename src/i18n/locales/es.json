@@ -283,15 +283,32 @@
       "Confirmar"
     ],
     "tiers": {
-      "label": "ELIGE UN NIVEL DE APOYO (COP)",
+      "label": "ELIGE UN PLAN MENSUAL (USD)",
       "items": [
-        { "amount": "$50k", "label": "Semilla", "perks": "boletín, actualizaciones de eventos" },
-        { "amount": "$150k", "label": "Raíz", "perks": "Todo lo anterior + 2 entradas a eventos" },
-        { "amount": "$300k", "label": "Árbol", "perks": "Todo lo anterior + catálogo anual" },
-        { "amount": "$1M", "label": "Bosque", "perks": "Todo lo anterior + visita al estudio y encuentro con artistas" }
+        {
+          "amount": "$3 USD/mes",
+          "label": "Semilla"
+        },
+        {
+          "amount": "$5 USD/mes",
+          "label": "Raíz"
+        },
+        {
+          "amount": "$10 USD/mes",
+          "label": "Árbol"
+        },
+        {
+          "amount": "$20 USD/mes",
+          "label": "Fruto"
+        },
+        {
+          "amount": "$70 USD/mes",
+          "label": "Bosque"
+        }
       ],
       "custom": "O INGRESA UN MONTO PERSONALIZADO (COP)",
-      "placeholder": "Otro monto"
+      "placeholder": "Otro monto",
+      "paymentPending": "Estos planes son mensuales en USD. El pago en dólares estará disponible próximamente. También puedes hacer un aporte personalizado en COP."
     },
     "frequency": {
       "label": "FRECUENCIA",
@@ -300,10 +317,11 @@
     "impact": {
       "title": "¿Qué hace posible tu aporte?",
       "items": [
-        "$50k cubre materiales para un niñe durante un mes",
-        "$150k financia una sesión de taller para 8 jóvenes",
-        "$300k sostiene una semana de residencia artística",
-        "$1M patrocina una beca de residencia completa"
+        "Semilla · $3 USD/mes: contribuye a materiales para los procesos creativos",
+        "Raíz · $5 USD/mes: apoya los talleres con jóvenes",
+        "Árbol · $10 USD/mes: contribuye a las residencias artísticas",
+        "Fruto · $20 USD/mes: apoya los programas y laboratorios de creación",
+        "Bosque · $70 USD/mes: contribuye a sostener los procesos de Platohedro"
       ]
     },
     "howTo": {

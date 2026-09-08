@@ -5,6 +5,7 @@ import { ArrowUpRight, Lightbulb, MapPin, Users } from "lucide-react";
 import { SiteHeader } from "@/app/components/SiteHeader";
 import { ResidentsDirectory } from "@/app/components/ResidentsDirectory";
 import { ResidentsMapClient } from "@/app/components/ResidentsMapClient";
+import { RESIDENCY_APPLICATION_URL } from "@/lib/residencies";
 
 type Resident = {
   id: string;
@@ -75,7 +76,7 @@ export function ResidenciasPageClient({ residents, loadError }: { residents: Res
       <section className="mx-auto max-w-7xl px-6 py-16 md:px-10">
         <h2 className="text-3xl font-bold">{t("residenciasPage.propose.title")}</h2>
         <p className="mt-4 text-muted-foreground">{t("residenciasPage.propose.description")}</p>
-        <a href="mailto:info@platohedro.org?subject=Propuesta%20de%20residencia" className="mt-7 inline-flex items-center gap-2 bg-[#0051A2] px-5 py-3 font-bold text-white">
+        <a href={RESIDENCY_APPLICATION_URL} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 bg-[#0051A2] px-5 py-3 font-bold text-white">
           {t("residenciasPage.propose.cta")} <ArrowUpRight size={17} />
         </a>
       </section>

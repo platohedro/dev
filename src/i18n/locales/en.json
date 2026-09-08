@@ -283,15 +283,32 @@
       "Confirm"
     ],
     "tiers": {
-      "label": "CHOOSE A SUPPORT LEVEL (COP)",
+      "label": "CHOOSE A MONTHLY PLAN (USD)",
       "items": [
-        { "amount": "$50k", "label": "Seed", "perks": "newsletter, event updates" },
-        { "amount": "$150k", "label": "Root", "perks": "All above + 2 event tickets" },
-        { "amount": "$300k", "label": "Tree", "perks": "All above + annual catalog" },
-        { "amount": "$1M", "label": "Forest", "perks": "All above + studio visit and artist meetup" }
+        {
+          "amount": "$3 USD/month",
+          "label": "Semilla"
+        },
+        {
+          "amount": "$5 USD/month",
+          "label": "Raíz"
+        },
+        {
+          "amount": "$10 USD/month",
+          "label": "Árbol"
+        },
+        {
+          "amount": "$20 USD/month",
+          "label": "Fruto"
+        },
+        {
+          "amount": "$70 USD/month",
+          "label": "Bosque"
+        }
       ],
       "custom": "OR ENTER A CUSTOM AMOUNT (COP)",
-      "placeholder": "Other amount"
+      "placeholder": "Other amount",
+      "paymentPending": "These plans are monthly in USD. Dollar payments will be available soon. You can also make a custom contribution in COP."
     },
     "frequency": {
       "label": "FREQUENCY",
@@ -300,10 +317,11 @@
     "impact": {
       "title": "What your support makes possible",
       "items": [
-        "$50k covers supplies for one child for a month",
-        "$150k funds a workshop session for 8 young people",
-        "$300k sustains a week of an art residency",
-        "$1M sponsors a full residency scholarship"
+        "Semilla · $3 USD/month: contributes to materials for creative projects",
+        "Raíz · $5 USD/month: supports workshops with young people",
+        "Árbol · $10 USD/month: contributes to artistic residencies",
+        "Fruto · $20 USD/month: supports programs and creative labs",
+        "Bosque · $70 USD/month: helps sustain Platohedro’s work"
       ]
     },
     "howTo": {

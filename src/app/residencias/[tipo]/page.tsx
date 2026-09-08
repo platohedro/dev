@@ -67,7 +67,7 @@ export default async function ResidencyApplicationPage({ params }: { params: Pro
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF46A2]">Postulación</p>
           <h2 className="mt-3 text-4xl font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>Aplica a esta residencia</h2>
-          <p className="mt-5 leading-relaxed text-[#0051A2]/75">Este es un formulario temporal para visualizar el proceso de postulación. Aún no envía ni almacena información.</p>
+          <p className="mt-5 leading-relaxed text-[#0051A2]/75">Por ahora, las postulaciones para todas las modalidades de residencia se reciben a través del mismo formulario de Google Forms.</p>
           <a href="/residencias" className="mt-7 inline-flex text-sm font-bold text-[#0051A2] hover:text-[#FF46A2]">← Volver a Residencias</a>
         </div>
 

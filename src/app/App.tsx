@@ -30,7 +30,6 @@ import { SiteHeader } from "@/app/components/SiteHeader";
 import { EVENT_TIME_ZONE, type PublicEvent } from "@/lib/events";
 
 const lightLogo = "/logos/ph_blanco.png";
-const donationAmounts = [50_000, 150_000, 300_000, 1_000_000];
 
 type CardBrand = "visa" | "mastercard" | "amex" | "discover" | "diners" | "unknown";
 
@@ -275,7 +274,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [selectedTier, setSelectedTier] = useState(1);
   const [customAmount, setCustomAmount] = useState("");
-  const [donationFrequency, setDonationFrequency] = useState<"one_time" | "monthly" | "annual">("one_time");
+  const [donationFrequency, setDonationFrequency] = useState<"one_time" | "monthly" | "annual">("monthly");
   const [donorEmail, setDonorEmail] = useState("");
   const [donorName, setDonorName] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -295,9 +294,9 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
   const [publishedProducts, setPublishedProducts] = useState<Array<{ id: string; slug: string; name: string; image_url: string | null; price_cop: number }>>([]);
 
   useEffect(() => {
-    if (donationFrequency === "one_time") { setAcceptance(null); return; }
+    if (selectedTier >= 0 || donationFrequency === "one_time") { setAcceptance(null); return; }
     fetch("/api/wompi/acceptance").then((response) => response.ok ? response.json() : Promise.reject(new Error("No fue posible cargar los términos de Wompi."))).then(setAcceptance).catch((error) => setDonationError(error instanceof Error ? error.message : "No fue posible cargar los términos de Wompi."));
-  }, [donationFrequency]);
+  }, [donationFrequency, selectedTier]);
 
   const quotes = t("testimonials.quotes", { returnObjects: true }) as Array<{ text: string; author: string; role: string }>;
   const programsData = programs.map((prog) => ({
@@ -321,7 +320,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
     description: t(`technology.initiatives.${index}.description`),
   }));
   const donateSteps = t("donate.steps", { returnObjects: true }) as string[];
-  const donateTiersData = t("donate.tiers.items", { returnObjects: true }) as Array<{ amount: string; label: string; perks: string }>;
+  const donateTiersData = t("donate.tiers.items", { returnObjects: true }) as Array<{ amount: string; label: string }>;
   const donateBadge = t("donate.badge");
   const donateTitlePart1 = t("donate.title.part1");
   const donateTitlePart2 = t("donate.title.part2");
@@ -382,7 +381,8 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
   const nextQuote = () => setQuoteIndex((i) => (i === quotes.length - 1 ? 0 : i + 1));
 
   const startWompiCheckout = async () => {
-    const amount = selectedTier >= 0 ? donationAmounts[selectedTier] ?? 0 : Number(customAmount);
+    if (selectedTier >= 0) { setDonationError(t("donate.tiers.paymentPending")); return; }
+    const amount = Number(customAmount);
     if (!Number.isSafeInteger(amount) || amount < 1_000) {
       setDonationError("Ingresa un aporte válido de al menos $1.000 COP.");
       return;
@@ -422,7 +422,8 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
 
   const startRecurringDonation = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const amount = selectedTier >= 0 ? donationAmounts[selectedTier] ?? 0 : Number(customAmount);
+    if (selectedTier >= 0) { setDonationError(t("donate.tiers.paymentPending")); return; }
+    const amount = Number(customAmount);
     const number = cardNumber.replace(/\s+/g, "");
     const apiBase = process.env.NEXT_PUBLIC_WOMPI_API_BASE_URL || "https://api-sandbox.wompi.co/v1";
     if (!acceptance || !acceptTerms || !acceptPersonalData || !donorName || !donorEmail || !Number.isSafeInteger(amount) || amount < 1_000 || !/^\d{13,19}$/.test(number) || !/^\d{3,4}$/.test(cardCvc) || !/^\d{2}$/.test(cardExpMonth) || !/^\d{2}$/.test(cardExpYear) || !cardHolder.trim()) {
@@ -1098,7 +1099,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 {donateTiersData.map((tier, i) => (
                   <button
                     key={tier.label}
-                    onClick={() => { setSelectedTier(i); setCustomAmount(""); }}
+                    onClick={() => { setSelectedTier(i); setCustomAmount(""); setDonationFrequency("monthly"); setDonationError(""); }}
                     className="text-left p-4 border transition-all duration-200"
                     style={{
                       borderColor: selectedTier === i ? "#d4f500" : "rgba(212,245,0,0.12)",
@@ -1107,10 +1108,11 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                   >
                     <div className="text-xl font-bold text-primary mb-0.5" style={{ fontFamily: "'DM Serif Display', serif" }}>{tier.amount}</div>
                     <div className="text-xs font-bold mb-1">{tier.label}</div>
-                    <div className="text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>{tier.perks}</div>
                   </button>
                 ))}
               </div>
+
+              {selectedTier >= 0 && <p role="status" className="mb-6 text-sm text-muted-foreground">{t("donate.tiers.paymentPending")}</p>}
 
               <div className="mb-6">
                 <label className="block text-xs text-muted-foreground mb-2" style={{ fontFamily: "'DM Mono', monospace" }}>
@@ -1122,7 +1124,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                     type="number"
                     placeholder={donatePlaceholder}
                     value={customAmount}
-                    onChange={(e) => { setCustomAmount(e.target.value); setSelectedTier(-1); }}
+                    onChange={(e) => { setCustomAmount(e.target.value); setSelectedTier(-1); setDonationError(""); }}
                     className="flex-1 bg-transparent py-3 pr-4 text-foreground text-sm focus:outline-none placeholder-muted-foreground"
                   />
                 </div>
@@ -1137,6 +1139,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                     <button
                       key={freq}
                       type="button"
+                      disabled={selectedTier >= 0}
                       onClick={() => setDonationFrequency(i === 0 ? "one_time" : i === 1 ? "monthly" : "annual")}
                       className="flex-1 py-2.5 text-xs font-semibold border-y border-r first:border-l transition-colors"
                       style={{
@@ -1152,7 +1155,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 </div>
               </div>
 
-              {donationFrequency !== "one_time" && <div className="mb-6 grid gap-3">
+              {selectedTier < 0 && donationFrequency !== "one_time" && <div className="mb-6 grid gap-3">
                 <input required value={donorName} onChange={(event) => setDonorName(event.target.value)} placeholder="Nombre completo" className="border border-[#0051A2]/20 bg-white p-3 text-sm text-[#0051A2] placeholder:text-[#0051A2]/50" />
                 <input required type="email" value={donorEmail} onChange={(event) => setDonorEmail(event.target.value)} placeholder="Correo electrónico" className="border border-[#0051A2]/20 bg-white p-3 text-sm text-[#0051A2] placeholder:text-[#0051A2]/50" />
                 {acceptance && <div className="grid gap-2 text-xs text-[#0051A2]/80"><label><input type="checkbox" checked={acceptTerms} onChange={(event) => setAcceptTerms(event.target.checked)} className="mr-2" />Acepto los <a className="underline" target="_blank" rel="noreferrer" href={acceptance.acceptance.permalink}>términos de Wompi</a>.</label><label><input type="checkbox" checked={acceptPersonalData} onChange={(event) => setAcceptPersonalData(event.target.checked)} className="mr-2" />Acepto la <a className="underline" target="_blank" rel="noreferrer" href={acceptance.personalAuth.permalink}>autorización de datos personales</a>.</label></div>}
@@ -1185,7 +1188,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 </form>}
               </div>}
 
-              {donationFrequency === "one_time" && <button
+              {selectedTier < 0 && donationFrequency === "one_time" && <button
                 onClick={startWompiCheckout}
                 disabled={isCreatingCheckout}
                 className="group w-full flex items-center justify-between px-6 py-4 bg-primary text-primary-foreground font-bold hover:bg-foreground transition-colors duration-200 disabled:cursor-wait disabled:opacity-70"
@@ -1216,7 +1219,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                       className="flex items-start gap-3 text-sm text-muted-foreground"
                       style={{ opacity: selectedTier >= i || selectedTier === -1 ? 1 : 0.4, transition: "opacity 0.3s" }}
                     >
-                      <span className="text-primary mt-0.5 shrink-0">{[<Users size={14} />, <CheckCircle size={14} />, <Heart size={14} />, <ArrowUpRight size={14} />][i]}</span>
+                      <span className="text-primary mt-0.5 shrink-0">{[<Users size={14} />, <CheckCircle size={14} />, <Heart size={14} />, <ArrowUpRight size={14} />, <Globe size={14} />][i]}</span>
                       {text}
                     </div>
                   ))}

@@ -140,3 +140,5 @@ https://platohedro.org/api/wompi/webhook
 El flujo de órdenes utiliza las tablas `orders`, `order_items` y `payment_transactions`. El webhook valida el checksum y llama a `finalize_wompi_order`, que verifica referencia, monto y moneda, registra la transacción y descuenta stock una sola vez cuando el estado pasa a `APPROVED`.
 
 Antes de activar producción se deben probar en Sandbox pagos aprobados, pendientes, rechazados, con error, eventos duplicados, checksum inválido y competencia por la última unidad de inventario.
+
+Los planes mensuales publicados son Semilla (3 USD), Raíz (5 USD), Árbol (10 USD), Fruto (20 USD) y Bosque (70 USD). Su cobro queda pendiente de configurar un proveedor en USD o una conversión explícita a COP. Seleccionar un plan no inicia pagos ni solicita datos de tarjeta. Los aportes personalizados siguen usando COP con Wompi; nunca se envían los valores nominales en USD como montos en COP. Validar el proveedor o la conversión en staging antes de habilitar estos planes en producción.
