@@ -1,3 +1,4 @@
+import { mediaUrl } from "@/lib/media";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -85,7 +86,7 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
           {resident.profile_url && <a href={resident.profile_url} target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center gap-2 font-bold text-[#0051A2] underline decoration-[#FF46A2] underline-offset-4">Ver página de referencia <ExternalLink size={16} /></a>}
         </article>
         <aside className="border border-[#0051A2]/20 bg-[#eaf4fb] p-4">
-          {image ? <img src={image} alt={`Imagen de ${resident.name}`} className="aspect-[4/3] w-full object-cover" /> : <div className="grid aspect-[4/3] place-items-center bg-[#d7eafa] text-center text-[#0051A2]"><div><ImageIcon className="mx-auto mb-3" size={38} /><p className="font-bold">Imagen próximamente</p><p className="mt-1 text-sm">Este espacio está reservado para una imagen del artista o su proceso.</p></div></div>}
+          {image ? <img src={mediaUrl(image)} alt={`Imagen de ${resident.name}`} className="aspect-[4/3] w-full object-cover" /> : <div className="grid aspect-[4/3] place-items-center bg-[#d7eafa] text-center text-[#0051A2]"><div><ImageIcon className="mx-auto mb-3" size={38} /><p className="font-bold">Imagen próximamente</p><p className="mt-1 text-sm">Este espacio está reservado para una imagen del artista o su proceso.</p></div></div>}
           <div className="mt-4 flex items-center gap-2 border-t border-[#0051A2]/15 pt-4 text-sm text-[#003d7a]"><MapPin size={16} /> {resident.country || "País por confirmar"}</div>
         </aside>
       </section>

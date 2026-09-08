@@ -9,6 +9,8 @@
     "typecheck": "tsc --noEmit",
     "test:migrations": "node scripts/test-migrations.mjs",
     "test:seo": "node scripts/test-seo.mjs",
+    "test:events": "node scripts/test-event-timezone.mjs && node scripts/test-event-history.mjs",
+    "test:media": "node scripts/test-media.mjs",
     "dev": "next dev",
     "preview": "next start",
     "audit": "pnpm audit --audit-level=moderate",

@@ -46,6 +46,12 @@ jobs:
       - name: Validate SEO configuration
         run: pnpm test:seo
 
+      - name: Validate event times and history
+        run: pnpm test:events
+
+      - name: Validate bundled media
+        run: pnpm test:media
+
       - name: Build production bundle
         run: pnpm build
 

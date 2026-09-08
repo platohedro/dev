@@ -14,6 +14,29 @@ y permitida por la regla pública `/` de robots. El JSON-LD de organización se
 hereda del layout. No requiere nuevas variables, tablas ni migraciones.
 Validar navegación, idiomas y enlaces externos en staging antes de producción.
 
+## Imágenes y video institucionales
+
+El 8 de septiembre de 2026 se verificó que `backup.platohedro.org` entregaba
+un certificado HTTPS autofirmado. Los archivos seguían disponibles, pero el
+navegador rechazaba las imágenes referenciadas desde ese dominio.
+
+Las 47 imágenes y el video institucional se recuperaron sin transformar y se
+incluyen en `public/media/`, conservando las carpetas por año y mes. Portada,
+D-Formación, Acerca y residencias ahora usan `/media/` con el HTTPS del sitio.
+`docs/media-manifest.json` registra origen, tamaño y SHA-256 de cada archivo.
+Las imágenes de catálogo, eventos, noticias y residentes que conservan una URL
+del archivo se resuelven a la copia local únicamente si figura en ese inventario.
+Los registros de Supabase permanecen intactos.
+La excepción TLS se usó solo en la recuperación puntual de archivos públicos;
+la aplicación y el despliegue no desactivan la validación de certificados.
+
+Ejecutar `pnpm test:media` para detectar pérdidas, modificaciones o referencias
+al servidor histórico. Al reemplazar un archivo, actualizar también su registro.
+El CI valida estos recursos y las pruebas de horarios de eventos.
+Comprobar las imágenes en staging y producción tras cada despliegue.
+No requiere variables nuevas ni migraciones. Los enlaces a perfiles históricos
+siguen dependiendo del archivo; su administrador debe reparar el certificado.
+
 ## Observabilidad
 
 - Usar `GET /api/health` como health check externo.
@@ -34,6 +57,20 @@ La portada mantiene su consulta independiente en `/api/events`.
 
 Validar en staging eventos futuros, en curso, finalizados y sin fecha de fin,
 además de borradores y estados vacíos, antes de promover a producción.
+
+## Hora de los eventos
+
+El panel interpreta inicio y finalización como hora de Colombia
+(`America/Bogota`, UTC-05:00) y guarda instantes UTC en Supabase. Al editar,
+convierte nuevamente a hora de Colombia. Portada, agenda, detalle e historial
+administrativo muestran esa misma zona, independientemente del servidor o navegador.
+Validar con `pnpm test:events` y crear/editar un evento a las 10:00 en staging.
+No requiere variables ni migraciones nuevas.
+
+Los eventos guardados antes de esta corrección pueden tener horas desplazadas.
+Revisar cada horario contra la programación original y corregir inicio y fin
+desde el panel después del despliegue. No sumar cinco horas de forma masiva:
+puede haber registros que ya tengan el instante correcto.
 
 ## Backups
 

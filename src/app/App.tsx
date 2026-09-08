@@ -1,5 +1,6 @@
 "use client";
 
+import { mediaUrl } from "@/lib/media";
 import { useState, useEffect, useRef, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -26,7 +27,7 @@ import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { RenovationPopup } from "@/app/components/ui/renovation-popup";
 import { AboutPage } from "@/app/components/AboutPage";
 import { SiteHeader } from "@/app/components/SiteHeader";
-import type { PublicEvent } from "@/lib/events";
+import { EVENT_TIME_ZONE, type PublicEvent } from "@/lib/events";
 
 const lightLogo = "/logos/ph_blanco.png";
 const donationAmounts = [50_000, 150_000, 300_000, 1_000_000];
@@ -77,7 +78,7 @@ const programs = [
     titleKey: "programs.items.0.title",
     tagKey: "programs.items.0.tag",
     descKey: "programs.items.0.description",
-    image: "https://backup.platohedro.org/wp-content/uploads/2022/04/c_buenvivir.jpg",
+    image: "/media/2022/04/c_buenvivir.jpg",
     color: "#d4f500",
   },
   {
@@ -85,7 +86,7 @@ const programs = [
     titleKey: "programs.items.1.title",
     tagKey: "programs.items.1.tag",
     descKey: "programs.items.1.description",
-    image: "https://backup.platohedro.org/wp-content/uploads/2022/05/lifepatch2.jpg",
+    image: "/media/2022/05/lifepatch2.jpg",
     color: "#ff3366",
   },
   {
@@ -93,7 +94,7 @@ const programs = [
     titleKey: "programs.items.2.title",
     tagKey: "programs.items.2.tag",
     descKey: "programs.items.2.description",
-    image: "https://backup.platohedro.org/wp-content/uploads/2023/10/ideatorio.jpg",
+    image: "/media/2023/10/ideatorio.jpg",
     color: "#a78bfa",
   },
   {
@@ -101,7 +102,7 @@ const programs = [
     titleKey: "programs.items.3.title",
     tagKey: "programs.items.3.tag",
     descKey: "programs.items.3.description",
-    image: "https://backup.platohedro.org/wp-content/uploads/2023/10/amapolas.jpg",
+    image: "/media/2023/10/amapolas.jpg",
     color: "#fb923c",
   },
   {
@@ -109,7 +110,7 @@ const programs = [
     titleKey: "programs.items.4.title",
     tagKey: "programs.items.4.tag",
     descKey: "programs.items.4.description",
-    image: "https://backup.platohedro.org/wp-content/uploads/2023/11/1697073676568-scaled.jpg",
+    image: "/media/2023/11/1697073676568-scaled.jpg",
     color: "#34d399",
   },
 ];
@@ -149,9 +150,9 @@ const events = [
 ];
 
 const sponsors = [
-  { name: "Arts Collaboratory", full: "Arts Collaboratory", image: "https://backup.platohedro.org/wp-content/uploads/2022/04/ac_.png" },
-  { name: "TDH", full: "TDH", image: "https://backup.platohedro.org/wp-content/uploads/2022/02/TDH-1.png" },
-  { name: "Exploratorio", full: "Exploratorio", image: "https://backup.platohedro.org/wp-content/uploads/2022/04/LOGO_EXPLORATORIO-1.png" },
+  { name: "Arts Collaboratory", full: "Arts Collaboratory", image: "/media/2022/04/ac_.png" },
+  { name: "TDH", full: "TDH", image: "/media/2022/02/TDH-1.png" },
+  { name: "Exploratorio", full: "Exploratorio", image: "/media/2022/04/LOGO_EXPLORATORIO-1.png" },
   { name: "Ministerio de Cultura", full: "Ministerio de Cultura de Colombia" },
   { name: "Alcaldía de Medellín", full: "Alcaldía de Medellín" },
   { name: "Idartes", full: "Instituto Distrital de las Artes" },
@@ -239,15 +240,15 @@ const techInitiatives = [
 const residencyTypeAssets = [
   {
     color: "#0051A2",
-    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/on.jpg",
+    image: "/media/2025/07/on.jpg",
   },
   {
     color: "#FF46A2",
-    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/IMG_4154-1024x768-1.jpg",
+    image: "/media/2025/07/IMG_4154-1024x768-1.jpg",
   },
   {
     color: "#99CC33",
-    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/Lokakarya_Squaresynth_01.jpg",
+    image: "/media/2025/07/Lokakarya_Squaresynth_01.jpg",
   },
 ];
 
@@ -756,7 +757,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-[#0051A2]/30 mb-8">
             <div className="relative overflow-hidden aspect-[4/3] bg-[#003d7a]">
               <img
-                src="https://backup.platohedro.org/wp-content/uploads/2023/10/becomingfungal.jpg"
+                src="/media/2023/10/becomingfungal.jpg"
                 alt="Artista en residencia trabajando en el estudio de Platohedro"
                 className="w-full h-full object-cover"
               />
@@ -856,7 +857,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           <div className="relative">
             <div className="aspect-square overflow-hidden border border-white/30 bg-[#003d7a]">
               <img
-                src="https://backup.platohedro.org/wp-content/uploads/2022/04/IMG_1870.jpg"
+                src="/media/2022/04/IMG_1870.jpg"
                 alt="Jóvenes usando computadores y software creativo en el laboratorio digital de Platohedro"
                 className="w-full h-full object-cover"
               />
@@ -893,7 +894,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
             {publishedProducts.map((item) => (
               <a href={`/tienda/${item.slug}`} key={item.id} className="group cursor-pointer">
                 <div className="overflow-hidden aspect-[5/6] bg-[#003d7a] border border-[#0051A2]/30 mb-3">
-                  {item.image_url && <img src={item.image_url} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />}
+                  {item.image_url && <img src={mediaUrl(item.image_url)} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />}
                 </div>
                 <div className="flex items-start justify-between">
                   <div>
@@ -926,7 +927,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
 
           <div className="relative aspect-video bg-muted border border-border overflow-hidden max-w-4xl mx-auto group cursor-pointer">
             <video autoPlay muted loop playsInline preload="metadata" className="h-full w-full object-cover" aria-label="Platohedro en movimiento">
-              <source src="https://backup.platohedro.org/wp-content/uploads/2022/02/intro.mp4" type="video/mp4" />
+              <source src="/media/2022/02/intro.mp4" type="video/mp4" />
               Tu navegador no puede reproducir este video.
             </video>
             <div className="absolute bottom-6 left-6 right-6">
@@ -968,9 +969,9 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           <div className="divide-y divide-border border-t border-b border-border">
             {publishedEvents.map((event) => {
               const date = new Date(event.starts_at);
-              const month = new Intl.DateTimeFormat("es-CO", { month: "short" }).format(date).replace(".", "").toUpperCase();
-              const day = new Intl.DateTimeFormat("es-CO", { day: "2-digit" }).format(date);
-              const time = new Intl.DateTimeFormat("es-CO", { hour: "numeric", minute: "2-digit" }).format(date);
+              const month = new Intl.DateTimeFormat("es-CO", { month: "short", timeZone: EVENT_TIME_ZONE }).format(date).replace(".", "").toUpperCase();
+              const day = new Intl.DateTimeFormat("es-CO", { day: "2-digit", timeZone: EVENT_TIME_ZONE }).format(date);
+              const time = new Intl.DateTimeFormat("es-CO", { hour: "numeric", minute: "2-digit", timeZone: EVENT_TIME_ZONE }).format(date);
               return <a
                 key={event.id}
                 href={`/eventos/${event.slug}`}

@@ -5,11 +5,11 @@ import { useTranslation } from "react-i18next";
 import { SiteHeader } from "@/app/components/SiteHeader";
 
 const programImages = [
-  "https://backup.platohedro.org/wp-content/uploads/2022/04/c_buenvivir.jpg",
-  "https://backup.platohedro.org/wp-content/uploads/2023/10/ideatorio.jpg",
-  "https://backup.platohedro.org/wp-content/uploads/2023/10/amapolas.jpg",
-  "https://backup.platohedro.org/wp-content/uploads/2022/05/lifepatch2.jpg",
-  "https://backup.platohedro.org/wp-content/uploads/2023/11/1697073676568-scaled.jpg",
+  "/media/2022/04/c_buenvivir.jpg",
+  "/media/2023/10/ideatorio.jpg",
+  "/media/2023/10/amapolas.jpg",
+  "/media/2022/05/lifepatch2.jpg",
+  "/media/2023/11/1697073676568-scaled.jpg",
 ];
 
 type Program = { id: number; title: string; tag: string; description: string };

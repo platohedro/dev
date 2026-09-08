@@ -7,17 +7,17 @@ const residencies = {
   "residencia-artistica": {
     title: "Residencia artística",
     description: "Un espacio preliminar para desarrollar procesos de creación, experimentación y diálogo con las comunidades de Platohedro.",
-    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/on.jpg",
+    image: "/media/2025/07/on.jpg",
   },
   "residencia-de-investigacion": {
     title: "Residencia de investigación",
     description: "Una propuesta preliminar para investigar prácticas artísticas, territorio y pensamiento crítico en conversación con Medellín.",
-    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/IMG_4154-1024x768-1.jpg",
+    image: "/media/2025/07/IMG_4154-1024x768-1.jpg",
   },
   "residencia-tecnologica": {
     title: "Residencia tecnológica",
     description: "Un espacio preliminar para explorar arte, tecnología y conocimiento libre desde la experimentación colectiva.",
-    image: "https://backup.platohedro.org/wp-content/uploads/2025/07/Lokakarya_Squaresynth_01.jpg",
+    image: "/media/2025/07/Lokakarya_Squaresynth_01.jpg",
   },
 } as const;
 
