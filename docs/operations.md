@@ -20,7 +20,7 @@ El 8 de septiembre de 2026 se verificó que `backup.platohedro.org` entregaba
 un certificado HTTPS autofirmado. Los archivos seguían disponibles, pero el
 navegador rechazaba las imágenes referenciadas desde ese dominio.
 
-Las 59 imágenes y el video institucional se recuperaron sin transformar y se
+Las 61 imágenes y el video institucional se recuperaron sin transformar y se
 incluyen en `public/media/`, conservando las carpetas por año y mes. Portada,
 D-Formación, Acerca y residencias ahora usan `/media/` con el HTTPS del sitio.
 `docs/media-manifest.json` registra origen, tamaño y SHA-256 de cada archivo.
@@ -28,7 +28,7 @@ Las imágenes de catálogo, eventos, noticias y residentes que conservan una URL
 del archivo se resuelven a la copia local únicamente si figura en ese inventario.
 Los registros de Supabase permanecen intactos.
 El inventario incluye las portadas de eventos y las galerías de productos
-encontradas al recorrer 25 páginas y endpoints públicos de producción.
+encontradas al recorrer 25 páginas y endpoints públicos de producción y 20 de staging.
 La excepción TLS se usó solo en la recuperación puntual de archivos públicos;
 la aplicación y el despliegue no desactivan la validación de certificados.
 

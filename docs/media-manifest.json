@@ -1,5 +1,17 @@
 [
   {
+    "source": "https://backup.platohedro.org/wp-content/uploads/2022/05/PLATO_JPG_ALTA-26-scaled.jpg",
+    "path": "/media/2022/05/PLATO_JPG_ALTA-26-scaled.jpg",
+    "bytes": 711801,
+    "sha256": "1dfaf8f135e462e763e830d186427e78cbd31788e9cc065053019b5b3f943176"
+  },
+  {
+    "source": "https://backup.platohedro.org/wp-content/uploads/2025/07/artworks-F5RzAcweNSP7PU3n-30XZCQ-t500x500.jpg",
+    "path": "/media/2025/07/artworks-F5RzAcweNSP7PU3n-30XZCQ-t500x500.jpg",
+    "bytes": 105562,
+    "sha256": "7f1e84cb66925deeb7b9a62c5c4eeddedd4422968073e5f464775c634cd4aa80"
+  },
+  {
     "source": "https://backup.platohedro.org/wp-content/uploads/2022/05/PLATO_JPG_ALTA-21-scaled.jpg",
     "path": "/media/2022/05/PLATO_JPG_ALTA-21-scaled.jpg",
     "bytes": 435226,
