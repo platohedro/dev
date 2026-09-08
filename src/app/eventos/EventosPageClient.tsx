@@ -1,5 +1,6 @@
 "use client";
 
+import { mediaUrl } from "@/lib/media";
 import { useTranslation } from "react-i18next";
 import { CalendarDays, MapPin, ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/app/components/SiteHeader";
@@ -46,7 +47,7 @@ export function EventosPageClient({
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {items.map((event) => (
             <article key={event.id} className="overflow-hidden border border-border bg-card shadow-sm">
-              {event.cover_image_url && <img src={event.cover_image_url} alt={`Imagen del evento ${event.title}`} className="h-52 w-full object-cover" />}
+              {event.cover_image_url && <img src={mediaUrl(event.cover_image_url)} alt={`Imagen del evento ${event.title}`} className="h-52 w-full object-cover" />}
               <div className="p-6">
                 {event.category && <p className="mb-3 text-xs font-bold tracking-widest text-[#0051A2] uppercase">{event.category}</p>}
                 <h3 className="text-2xl font-bold"><a href={`/eventos/${event.slug}`} className="hover:text-[#FF46A2]">{event.title}</a></h3>

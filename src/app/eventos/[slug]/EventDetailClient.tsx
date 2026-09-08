@@ -1,5 +1,6 @@
 "use client";
 
+import { mediaUrl } from "@/lib/media";
 import { useTranslation } from "react-i18next";
 import { CalendarDays, MapPin, ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/app/components/SiteHeader";
@@ -21,7 +22,7 @@ export function EventDetailClient({ event }: { event: PublicEvent }) {
         </section>
         <div className="mx-auto grid max-w-4xl gap-10 px-6 py-12 md:grid-cols-[1fr_18rem] md:px-10">
           <div>
-            {event.cover_image_url && <img src={event.cover_image_url} alt={`Imagen del evento ${event.title}`} className="mb-8 w-full object-cover" />}
+            {event.cover_image_url && <img src={mediaUrl(event.cover_image_url)} alt={`Imagen del evento ${event.title}`} className="mb-8 w-full object-cover" />}
             <div className="whitespace-pre-line leading-relaxed text-muted-foreground">
               {event.content || event.summary || t("eventosPage.detail.fallbackContent")}
             </div>

@@ -1,5 +1,6 @@
 "use server";
 
+import { eventDateTimeToIso } from "@/lib/events";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -48,8 +49,8 @@ export async function createEvent(formData: FormData) {
     title,
     summary: String(formData.get("summary") ?? "").trim() || null,
     content: String(formData.get("content") ?? "").trim() || null,
-    starts_at: new Date(startsAt).toISOString(),
-    ends_at: endsAt ? new Date(endsAt).toISOString() : null,
+    starts_at: eventDateTimeToIso(startsAt),
+    ends_at: endsAt ? eventDateTimeToIso(endsAt) : null,
     venue: String(formData.get("venue") ?? "").trim() || null,
     address: String(formData.get("address") ?? "").trim() || null,
     city: String(formData.get("city") ?? "Medellín").trim() || "Medellín",
@@ -96,8 +97,8 @@ export async function updateEvent(formData: FormData) {
     title,
     summary: String(formData.get("summary") ?? "").trim() || null,
     content: String(formData.get("content") ?? "").trim() || null,
-    starts_at: new Date(startsAt).toISOString(),
-    ends_at: endsAt ? new Date(endsAt).toISOString() : null,
+    starts_at: eventDateTimeToIso(startsAt),
+    ends_at: endsAt ? eventDateTimeToIso(endsAt) : null,
     venue: String(formData.get("venue") ?? "").trim() || null,
     address: String(formData.get("address") ?? "").trim() || null,
     city: String(formData.get("city") ?? "Medellín").trim() || "Medellín",
