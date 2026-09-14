@@ -1,24 +1,41 @@
 {
   "technologyPage": {
-    "title": "Tecnología para crear en comunidad",
-    "intro": "Web3Wasi conecta el trabajo comunitario de Platohedro con la exploración de Web3 y el grupo de estudio Cypherplatx.",
+    "title": "Web3Wasi",
+    "web3": {
+      "title": "Web3",
+      "description": "La Web3 (o Web 3.0) es la siguiente evolución de internet que busca descentralizar el control de los datos, las aplicaciones y la propiedad digital."
+    },
+    "wasi": {
+      "title": "Wasi",
+      "description": "La palabra wasi en quechua significa casa, hogar, morada o refugio."
+    },
+    "intro": "Web3Wasi es un espacio de Platohedro donde exploramos las tecnologías digitales desde una mirada comunitaria, crítica y creativa. Aquí investigamos, aprendemos y experimentamos juntxs para imaginar nuevas formas de usar, comprender y construir tecnologías en relación con nuestras comunidades y territorios.",
     "sections": "Explora nuestros ejes",
     "content": {
       "title": "Contenidos",
-      "description": "Escucha RadioCypher y las conversaciones de Spaces. Explora la bitácora para conocer procesos y reflexiones de la comunidad."
+      "description": "Conversaciones e ideas para explorar la tecnología. Escucha conversaciones, entrevistas y encuentros sobre tecnología, cultura y comunidad. También puedes explorar nuestra bitácora y conocer las ideas, preguntas y procesos que surgen en Web3Wasi."
     },
     "education": {
       "title": "Educación",
-      "description": "Web3 EsCool propone aprender sobre Web3 y blockchain desde una mirada humana, crítica y comunitaria."
+      "description": "En Web3 EsCool aprendemos sobre tecnologías como blockchain y Web3 de una manera cercana, crítica y comunitaria. Partimos de preguntas y experiencias cotidianas para entender cómo estas herramientas pueden relacionarse con nuestros territorios, comunidades y formas de organizarnos."
     },
     "infrastructure": {
       "title": "Infraestructura",
-      "description": "Explora los recursos de Web3Wasi y los repositorios abiertos de Platohedro."
+      "description": "Aquí compartimos las herramientas, proyectos y recursos tecnológicos que desarrollamos y utilizamos en nuestros procesos. Puedes explorar nuestras iniciativas y acceder a materiales abiertos para aprender, experimentar y crear."
     },
-    "pedagogy": "Pedagogía crítica",
-    "blog": "Bitácora",
+    "educationTopics": {
+      "firstSteps": { "title": "Primeros pasos", "description": "Para comenzar a explorar el mundo Web3." },
+      "pedagogy": { "title": "Pedagogía crítica", "description": "Para pensar la tecnología desde nuestras realidades y territorios." },
+      "blockchain": { "title": "Blockchain al Barrio", "description": "Acercamientos comunitarios a las tecnologías descentralizadas." },
+      "privacy": { "title": "Privacy Love Company", "description": "Exploraciones sobre privacidad, autonomía y cuidado en los entornos digitales." }
+    },
+    "cypherRadio": "Escuchar Cypher Radio",
+    "spaces": "Explorar conversaciones y Spaces",
+    "blog": "Leer la bitácora",
+    "firstSteps": "Primeros pasos",
     "glossary": "Glosario",
-    "resources": "Explorar infraestructura",
+    "resources": "Explorar herramientas y recursos",
+    "github": "Conocer nuestros proyectos en GitHub",
     "source": "Contenido adaptado de la portada de Web3Wasi, una iniciativa de Platohedro.",
     "cta": "Explorar Tecnología"
   },
@@ -93,32 +110,32 @@
       {
         "id": 1,
         "title": "Matinée",
-        "tag": "Niñxs 6 - 14 años",
-        "description": "Somos un grupo de niñxs curiosxs y divertidxs, jugamos, aprendemos y experimentamos con arte y tecnología cada sábado en el barrio El Faro y en el barrio Buenos Aires."
+        "tag": "Niñas y niños · 5–13 años",
+        "description": "Arte y tecnología para desarrollar habilidades psicosociales, comunicativas y prevenir violencias."
       },
       {
         "id": 2,
-        "title": "La Jaquer EsCool",
-        "tag": "Todas las edades",
-        "description": "La Jaquer Escool es un espacio de aprendizaje y creación abierto para jóvenes de todas las edades."
+        "title": "Jaquer EsCool",
+        "tag": "Jóvenes y público abierto",
+        "description": "Experimentación y aprendizaje sobre tecnología, ambiente, artes, política, memoria y territorio."
       },
       {
         "id": 3,
         "title": "Ideatorio",
-        "tag": "Jóvenes y adultxs",
-        "description": "Es un espacio de reunión para adolescentes, donde compartimos saberes y creamos colectivamente y con ritmo propio."
+        "tag": "Adolescentes · 14–18 años",
+        "description": "Habilidades socioemocionales, artísticas y tecnológicas para la convivencia y la paz."
       },
       {
         "id": 4,
         "title": "Amapolas",
         "tag": "Madres cabeza de familia",
-        "description": "Somos un grupo de mujeres cabeza de hogar que vivimos en los barrios el Faro y Buenos Aires. "
+        "description": "Acompañamiento para fortalecer habilidades, autonomía y proyectos de vida de mujeres y madres cabeza de hogar."
       },
       {
         "id": 5,
         "title": "Comunidad",
         "tag": "Trabajo comunitario",
-        "description": "Residencias de seis semanas con espacio de estudio, mentoría y exposición colectiva de cierre."
+        "description": "Encuentros y acciones colectivas que fortalecen vínculos, territorio y transformación social."
       }
     ],
     "viewAll": "Ir a D-Formación",
@@ -127,8 +144,9 @@
   "dFormacion": {
     "label": "Educación · arte · tecnología",
     "title": "D-Formación",
-    "description": "Procesos de aprendizaje, creación y experimentación que construimos con las comunidades de Medellín.",
-    "preliminary": "Información preliminar",
+    "description": "El programa de Educación (D-Formación) busca contribuir a la transformación de las realidades de las comunidades con las que trabajamos, promoviendo que niñas, niños, adolescentes, jóvenes y mujeres participen en la construcción de sociedades más justas, colaborativas y conscientes.",
+    "approach": "A través del arte, la tecnología y diferentes herramientas pedagógicas, desarrollamos capacidades que favorecen la expresión, la participación, el fortalecimiento de habilidades psicosociales y la prevención y transformación de violencias y conflictos desde enfoques no violentos.",
+    "preliminary": "Nuestros procesos",
     "programsTitle": "Nuestros procesos",
     "homeCta": "Volver a la página principal"
   },

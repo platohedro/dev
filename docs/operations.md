@@ -1,11 +1,31 @@
 # Operación de la plataforma
 
+## D-Formación
+
+`/d-formacion` presenta el programa de Educación y enlaza cinco páginas estáticas:
+`/d-formacion/matinee`, `/d-formacion/ideatorio`,
+`/d-formacion/jaquer-escool`, `/d-formacion/amapolas` y
+`/d-formacion/comunidad`. Cada una incluye metadata, canonical y Open Graph
+propios, y figura en el sitemap. La variante sin guion (`/dformacion/{proyecto}`)
+se conserva únicamente como redirección permanente hacia la URL canónica.
+
+El contenido editorial de cada proyecto reside en
+`src/app/d-formacion/[programa]/page.tsx`; las descripciones cortas de las
+tarjetas se encuentran en `src/i18n/locales/es.json`. No requiere variables,
+tablas ni migraciones. Validar en staging las cinco rutas canónicas, sus
+redirecciones de compatibilidad, enlaces desde la portada y las imágenes antes
+de promover a producción.
+
 ## Página de Tecnología
 
 `/tecnologia` adapta editorialmente el contenido de la portada de
 https://web3wasi.platohedro.org/ consultada el 5 de septiembre de 2026.
 La extracción se hizo leyendo su HTML público; no hay scraping en ejecución.
 Los textos ES/EN están en `src/i18n/locales/`, bajo `technologyPage`.
+La cabecera presenta las definiciones de Web3 y Wasi, seguida de la descripción
+editorial de Web3Wasi. Contenidos, Educación e Infraestructura conservan sus
+llamados externos; Educación además explica los ejes Primeros pasos,
+Pedagogía crítica, Blockchain al Barrio y Privacy Love Company.
 Conserva enlaces de origen a Web3 EsCool, infraestructura, glosario, bitácora,
 Spaces, RadioCypher y GitHub. No se importaron cifras históricas como métricas
 actuales ni imágenes con textos alternativos genéricos de la plantilla original.

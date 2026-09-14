@@ -77,6 +77,7 @@ const programs = [
     titleKey: "programs.items.0.title",
     tagKey: "programs.items.0.tag",
     descKey: "programs.items.0.description",
+    slug: "matinee",
     image: "/media/2022/04/c_buenvivir.jpg",
     color: "#d4f500",
   },
@@ -85,6 +86,7 @@ const programs = [
     titleKey: "programs.items.1.title",
     tagKey: "programs.items.1.tag",
     descKey: "programs.items.1.description",
+    slug: "jaquer-escool",
     image: "/media/2022/05/lifepatch2.jpg",
     color: "#ff3366",
   },
@@ -93,6 +95,7 @@ const programs = [
     titleKey: "programs.items.2.title",
     tagKey: "programs.items.2.tag",
     descKey: "programs.items.2.description",
+    slug: "ideatorio",
     image: "/media/2023/10/ideatorio.jpg",
     color: "#a78bfa",
   },
@@ -101,6 +104,7 @@ const programs = [
     titleKey: "programs.items.3.title",
     tagKey: "programs.items.3.tag",
     descKey: "programs.items.3.description",
+    slug: "amapolas",
     image: "/media/2023/10/amapolas.jpg",
     color: "#fb923c",
   },
@@ -109,6 +113,7 @@ const programs = [
     titleKey: "programs.items.4.title",
     tagKey: "programs.items.4.tag",
     descKey: "programs.items.4.description",
+    slug: "comunidad",
     image: "/media/2023/11/1697073676568-scaled.jpg",
     color: "#34d399",
   },
@@ -624,9 +629,9 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                   {prog.title}
                 </h3>
                 <p className="text-xs text-[#0051A2]/80 leading-relaxed flex-1">{prog.desc}</p>
-                <button className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#0051A2] transition-colors hover:text-[#FF46A2]">
+                <a href={`/d-formacion/${prog.slug}`} onClick={(event) => event.stopPropagation()} className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#0051A2] transition-colors hover:text-[#FF46A2]">
                   {t("programs.learnMore")} <ArrowUpRight size={12} />
-                </button>
+                </a>
               </div>
             </div>
           ))}
@@ -654,9 +659,9 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 {programsData[carouselIndex].title}
               </h3>
               <p className="text-sm text-[#0051A2]/80 leading-relaxed">{programsData[carouselIndex].desc}</p>
-              <button className="mt-4 flex items-center gap-1 text-sm font-semibold text-[#0051A2] transition-colors hover:text-[#FF46A2]">
+              <a href={`/d-formacion/${programsData[carouselIndex].slug}`} className="mt-4 flex items-center gap-1 text-sm font-semibold text-[#0051A2] transition-colors hover:text-[#FF46A2]">
                 {t("programs.learnMore")} <ArrowUpRight size={14} />
-              </button>
+              </a>
             </div>
           </div>
           <div className="flex gap-2 justify-center mt-4">
