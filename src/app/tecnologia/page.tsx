@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { TecnologiaPageClient } from "./TecnologiaPageClient";
 
 export const metadata: Metadata = {
-  title: "Tecnología | Platohedro",
-  description: "Explora Web3Wasi: contenidos, educación e infraestructura para aprender y crear en comunidad con Platohedro.",
+  title: "Web3Wasi | Tecnología | Platohedro",
+  description: "Web3Wasi explora tecnologías digitales desde una mirada comunitaria, crítica y creativa.",
   alternates: { canonical: "/tecnologia" },
   openGraph: {
-    title: "Tecnología | Platohedro",
-    description: "Web3Wasi: tecnología y aprendizaje en comunidad.",
+    title: "Web3Wasi | Tecnología | Platohedro",
+    description: "Tecnología, aprendizaje y creación en comunidad con Platohedro.",
     url: "/tecnologia",
   },
 };

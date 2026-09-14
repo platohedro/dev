@@ -7,19 +7,21 @@ import { SiteHeader } from "@/app/components/SiteHeader";
 const source = "https://web3wasi.platohedro.org";
 const sections = [
   { key: "content", Icon: Clapperboard, links: [
-    { label: "RadioCypher", href: "https://podcast.platohedro.org/radiocypher" },
-    { label: "Spaces × Platohedro", href: `${source}/spaces` },
+    { key: "cypherRadio", href: "https://podcast.platohedro.org/radiocypher" },
+    { key: "spaces", href: `${source}/spaces` },
     { key: "blog", href: `${source}/blog` },
   ] },
   { key: "education", Icon: GraduationCap, links: [
-    { label: "Web3 EsCool", href: `${source}/products` },
+    { key: "firstSteps", href: `${source}/products` },
     { key: "glossary", href: `${source}/glosario` },
   ] },
   { key: "infrastructure", Icon: Building2, links: [
     { key: "resources", href: `${source}/services` },
-    { label: "GitHub", href: "https://github.com/platohedro" },
+    { key: "github", href: "https://github.com/platohedro" },
   ] },
 ];
+
+const educationTopics = ["firstSteps", "pedagogy", "blockchain", "privacy"] as const;
 
 export function TecnologiaPageClient() {
   const { t } = useTranslation();
@@ -30,6 +32,14 @@ export function TecnologiaPageClient() {
         <div className="mx-auto max-w-7xl">
           <p className="mb-5 text-sm font-bold uppercase tracking-[0.2em] dark:text-primary" style={{ fontFamily: "'DM Mono', monospace" }}>{t("nav.technology")} · Web3Wasi</p>
           <h1 className="max-w-4xl font-sans text-5xl font-bold md:text-7xl">{t("technologyPage.title")}</h1>
+          <dl className="mt-8 grid max-w-4xl gap-4 md:grid-cols-2">
+            {(["web3", "wasi"] as const).map((term) => (
+              <div key={term} className="border-l-4 border-[#0051A2] pl-4">
+                <dt className="font-bold">{t(`technologyPage.${term}.title`)}</dt>
+                <dd className="mt-1 leading-relaxed">{t(`technologyPage.${term}.description`)}</dd>
+              </div>
+            ))}
+          </dl>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed">{t("technologyPage.intro")}</p>
           <nav aria-label={t("technologyPage.sections")} className="mt-10 flex flex-wrap gap-3">
             {sections.map(({ key }) => <a key={key} href={`#${key}`} className="border border-current px-5 py-3 font-bold transition-colors hover:bg-[#0051A2] hover:text-white dark:hover:bg-primary dark:hover:text-primary-foreground">{t(`technologyPage.${key}.title`)}</a>)}
@@ -47,9 +57,9 @@ export function TecnologiaPageClient() {
             </div>
             <div>
               <p className="max-w-2xl text-lg leading-relaxed">{t(`technologyPage.${key}.description`)}</p>
-              {key === "education" && <ul className="mt-6 grid gap-3 sm:grid-cols-2">{["Onboarding", t("technologyPage.pedagogy"), "Blockchain al Barrio", "Privacy Love Company"].map(label => <li key={label} className="border-l-4 border-[#99CC33] py-2 pl-4 font-semibold">{label}</li>)}</ul>}
+              {key === "education" && <dl className="mt-6 grid gap-4 sm:grid-cols-2">{educationTopics.map((topic) => <div key={topic} className="border-l-4 border-[#99CC33] py-2 pl-4"><dt className="font-semibold">{t(`technologyPage.educationTopics.${topic}.title`)}</dt><dd className="mt-1 text-sm leading-relaxed text-muted-foreground">{t(`technologyPage.educationTopics.${topic}.description`)}</dd></div>)}</dl>}
               <div className="mt-8 flex flex-wrap gap-3">
-                {links.map(link => <a key={link.href} href={link.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-[#0051A2] px-5 py-3 font-bold text-white transition-colors hover:bg-[#003d7a] dark:bg-primary dark:text-primary-foreground dark:hover:bg-white">{"label" in link ? link.label : t(`technologyPage.${link.key}`)} <ArrowUpRight size={18} aria-hidden="true" /></a>)}
+                {links.map(link => <a key={link.href} href={link.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-[#0051A2] px-5 py-3 font-bold text-white transition-colors hover:bg-[#003d7a] dark:bg-primary dark:text-primary-foreground dark:hover:bg-white">{t(`technologyPage.${link.key}`)} <ArrowUpRight size={18} aria-hidden="true" /></a>)}
               </div>
             </div>
           </section>

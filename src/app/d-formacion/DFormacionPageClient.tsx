@@ -1,15 +1,16 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { SiteHeader } from "@/app/components/SiteHeader";
 
-const programImages = [
-  "/media/2022/04/c_buenvivir.jpg",
-  "/media/2023/10/ideatorio.jpg",
-  "/media/2023/10/amapolas.jpg",
-  "/media/2022/05/lifepatch2.jpg",
-  "/media/2023/11/1697073676568-scaled.jpg",
+const programDetails = [
+  { slug: "matinee", image: "/media/2022/03/matinee.jpg" },
+  { slug: "jaquer-escool", image: "/media/2022/03/la-jaquer.jpg" },
+  { slug: "ideatorio", image: "/media/2023/10/ideatorio.jpg" },
+  { slug: "amapolas", image: "/media/2023/10/amapolas.jpg" },
+  { slug: "comunidad", image: "/media/2023/11/1697073676568-scaled.jpg" },
 ];
 
 type Program = { id: number; title: string; tag: string; description: string };
@@ -26,6 +27,7 @@ export function DFormacionPageClient() {
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em]" style={{ fontFamily: "'DM Mono', monospace" }}>{t("dFormacion.label")}</p>
           <h1 className="max-w-3xl text-5xl font-bold leading-none md:text-7xl" style={{ fontFamily: "'DM Serif Display', serif" }}>{t("dFormacion.title")}</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#0051A2]/75">{t("dFormacion.description")}</p>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[#0051A2]/75">{t("dFormacion.approach")}</p>
         </div>
       </section>
 
@@ -40,12 +42,13 @@ export function DFormacionPageClient() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {programs.map((program, index) => (
-            <article key={program.id} className="overflow-hidden border border-[#0051A2]/20 bg-white">
-              <img src={programImages[index]} alt={`Participantes de ${program.title} en Platohedro`} className="aspect-[4/3] w-full object-cover" />
+            <article key={program.id} className="overflow-hidden border border-[#0051A2]/20 bg-white transition-shadow hover:shadow-lg">
+              <img src={programDetails[index].image} alt={`Participantes de ${program.title} en Platohedro`} className="aspect-[4/3] w-full object-cover" />
               <div className="p-6">
                 <p className="mb-3 inline-flex bg-[#99CC33] px-2 py-1 text-xs font-bold text-[#0051A2]" style={{ fontFamily: "'DM Mono', monospace" }}>{program.tag}</p>
                 <h3 className="text-2xl font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>{program.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-[#0051A2]/75">{program.description}</p>
+                <Link href={`/d-formacion/${programDetails[index].slug}`} className="mt-5 inline-flex items-center gap-2 text-sm font-bold hover:text-[#FF46A2]">{t("programs.learnMore")} <ArrowUpRight size={16} aria-hidden="true" /></Link>
               </div>
             </article>
           ))}

@@ -1,24 +1,41 @@
 {
   "technologyPage": {
-    "title": "Technology for creating together",
-    "intro": "Web3Wasi connects Platohedro’s community work with Web3 exploration and the Cypherplatx study group.",
+    "title": "Web3Wasi",
+    "web3": {
+      "title": "Web3",
+      "description": "Web3 (or Web 3.0) is the next evolution of the internet, seeking to decentralize control of data, applications, and digital ownership."
+    },
+    "wasi": {
+      "title": "Wasi",
+      "description": "The Quechua word wasi means house, home, dwelling, or refuge."
+    },
+    "intro": "Web3Wasi is a Platohedro space where we explore digital technologies through a community-based, critical, and creative lens. Here we research, learn, and experiment together to imagine new ways to use, understand, and build technologies in relation to our communities and territories.",
     "sections": "Explore our areas",
     "content": {
       "title": "Content",
-      "description": "Listen to RadioCypher and Spaces conversations. Explore the blog for community processes and reflections."
+      "description": "Conversations and ideas for exploring technology. Listen to conversations, interviews, and gatherings about technology, culture, and community. You can also explore our logbook and learn about the ideas, questions, and processes that emerge in Web3Wasi."
     },
     "education": {
       "title": "Education",
-      "description": "Web3 EsCool approaches Web3 and blockchain learning through a human, critical and community perspective."
+      "description": "At Web3 EsCool, we learn about technologies such as blockchain and Web3 in an approachable, critical, and community-based way. We start from everyday questions and experiences to understand how these tools can relate to our territories, communities, and ways of organizing."
     },
     "infrastructure": {
       "title": "Infrastructure",
-      "description": "Explore Web3Wasi resources and Platohedro’s open repositories."
+      "description": "Here we share the technological tools, projects, and resources we develop and use in our processes. Explore our initiatives and access open materials to learn, experiment, and create."
     },
-    "pedagogy": "Critical pedagogy",
-    "blog": "Blog",
+    "educationTopics": {
+      "firstSteps": { "title": "First steps", "description": "To start exploring the Web3 world." },
+      "pedagogy": { "title": "Critical pedagogy", "description": "To think about technology from our realities and territories." },
+      "blockchain": { "title": "Blockchain al Barrio", "description": "Community approaches to decentralized technologies." },
+      "privacy": { "title": "Privacy Love Company", "description": "Explorations of privacy, autonomy, and care in digital environments." }
+    },
+    "cypherRadio": "Listen to Cypher Radio",
+    "spaces": "Explore conversations and Spaces",
+    "blog": "Read the logbook",
+    "firstSteps": "First steps",
     "glossary": "Glossary",
-    "resources": "Explore infrastructure",
+    "resources": "Explore tools and resources",
+    "github": "See our projects on GitHub",
     "source": "Content adapted from the Web3Wasi homepage, a Platohedro initiative.",
     "cta": "Explore Technology"
   },
@@ -128,6 +145,7 @@
     "label": "Education · art · technology",
     "title": "D-Formación",
     "description": "Learning, creation, and experimentation processes we build with Medellín communities.",
+    "approach": "Through art, technology, and diverse pedagogical tools, we develop skills that foster expression, participation, psychosocial development, and the non-violent prevention and transformation of violence and conflict.",
     "preliminary": "Preliminary information",
     "programsTitle": "Our processes",
     "homeCta": "Back to the home page"
@@ -283,15 +301,32 @@
       "Confirm"
     ],
     "tiers": {
-      "label": "CHOOSE A SUPPORT LEVEL (COP)",
+      "label": "CHOOSE A MONTHLY PLAN (USD)",
       "items": [
-        { "amount": "$50k", "label": "Seed", "perks": "newsletter, event updates" },
-        { "amount": "$150k", "label": "Root", "perks": "All above + 2 event tickets" },
-        { "amount": "$300k", "label": "Tree", "perks": "All above + annual catalog" },
-        { "amount": "$1M", "label": "Forest", "perks": "All above + studio visit and artist meetup" }
+        {
+          "amount": "$3 USD/month",
+          "label": "Semilla"
+        },
+        {
+          "amount": "$5 USD/month",
+          "label": "Raíz"
+        },
+        {
+          "amount": "$10 USD/month",
+          "label": "Árbol"
+        },
+        {
+          "amount": "$20 USD/month",
+          "label": "Fruto"
+        },
+        {
+          "amount": "$70 USD/month",
+          "label": "Bosque"
+        }
       ],
       "custom": "OR ENTER A CUSTOM AMOUNT (COP)",
-      "placeholder": "Other amount"
+      "placeholder": "Other amount",
+      "paymentPending": "These plans are monthly in USD. Dollar payments will be available soon. You can also make a custom contribution in COP."
     },
     "frequency": {
       "label": "FREQUENCY",
@@ -300,10 +335,11 @@
     "impact": {
       "title": "What your support makes possible",
       "items": [
-        "$50k covers supplies for one child for a month",
-        "$150k funds a workshop session for 8 young people",
-        "$300k sustains a week of an art residency",
-        "$1M sponsors a full residency scholarship"
+        "Semilla · $3 USD/month: contributes to materials for creative projects",
+        "Raíz · $5 USD/month: supports workshops with young people",
+        "Árbol · $10 USD/month: contributes to artistic residencies",
+        "Fruto · $20 USD/month: supports programs and creative labs",
+        "Bosque · $70 USD/month: helps sustain Platohedro’s work"
       ]
     },
     "howTo": {

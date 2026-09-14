@@ -1,11 +1,31 @@
 # Operación de la plataforma
 
+## D-Formación
+
+`/d-formacion` presenta el programa de Educación y enlaza cinco páginas estáticas:
+`/d-formacion/matinee`, `/d-formacion/ideatorio`,
+`/d-formacion/jaquer-escool`, `/d-formacion/amapolas` y
+`/d-formacion/comunidad`. Cada una incluye metadata, canonical y Open Graph
+propios, y figura en el sitemap. La variante sin guion (`/dformacion/{proyecto}`)
+se conserva únicamente como redirección permanente hacia la URL canónica.
+
+El contenido editorial de cada proyecto reside en
+`src/app/d-formacion/[programa]/page.tsx`; las descripciones cortas de las
+tarjetas se encuentran en `src/i18n/locales/es.json`. No requiere variables,
+tablas ni migraciones. Validar en staging las cinco rutas canónicas, sus
+redirecciones de compatibilidad, enlaces desde la portada y las imágenes antes
+de promover a producción.
+
 ## Página de Tecnología
 
 `/tecnologia` adapta editorialmente el contenido de la portada de
 https://web3wasi.platohedro.org/ consultada el 5 de septiembre de 2026.
 La extracción se hizo leyendo su HTML público; no hay scraping en ejecución.
 Los textos ES/EN están en `src/i18n/locales/`, bajo `technologyPage`.
+La cabecera presenta las definiciones de Web3 y Wasi, seguida de la descripción
+editorial de Web3Wasi. Contenidos, Educación e Infraestructura conservan sus
+llamados externos; Educación además explica los ejes Primeros pasos,
+Pedagogía crítica, Blockchain al Barrio y Privacy Love Company.
 Conserva enlaces de origen a Web3 EsCool, infraestructura, glosario, bitácora,
 Spaces, RadioCypher y GitHub. No se importaron cifras históricas como métricas
 actuales ni imágenes con textos alternativos genéricos de la plantilla original.
@@ -140,3 +160,5 @@ https://platohedro.org/api/wompi/webhook
 El flujo de órdenes utiliza las tablas `orders`, `order_items` y `payment_transactions`. El webhook valida el checksum y llama a `finalize_wompi_order`, que verifica referencia, monto y moneda, registra la transacción y descuenta stock una sola vez cuando el estado pasa a `APPROVED`.
 
 Antes de activar producción se deben probar en Sandbox pagos aprobados, pendientes, rechazados, con error, eventos duplicados, checksum inválido y competencia por la última unidad de inventario.
+
+Los planes mensuales publicados son Semilla (3 USD), Raíz (5 USD), Árbol (10 USD), Fruto (20 USD) y Bosque (70 USD). Su cobro queda pendiente de configurar un proveedor en USD o una conversión explícita a COP. Seleccionar un plan no inicia pagos ni solicita datos de tarjeta. Los aportes personalizados siguen usando COP con Wompi; nunca se envían los valores nominales en USD como montos en COP. Validar el proveedor o la conversión en staging antes de habilitar estos planes en producción.
