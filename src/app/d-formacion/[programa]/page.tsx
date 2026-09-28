@@ -41,6 +41,8 @@ const programs = {
   },
 } as const;
 
+const matineeGallery = ["photo_4992511006559284941_y.jpg", "photo_4963045293230763216_y.jpg", "photo_4963045293230763215_y.jpg", "photo_4952179249310182880_y-1.jpg", "photo_4952179249310182868_y1.jpg", "photo_4952179249310182865_y.jpg", "photo_4951892173696118328_y.jpg", "photo_4951892173696118327_y.jpg", "photo_4951892173696118324_y.jpg", "photo_2025-10-20_21-25-52-7.jpg", "photo_2025-10-20_21-22-30-6.jpg", "photo_2025-10-01_10-19-16.jpg", "photo_2025-08-16_15-00-54.jpg", "photo_2025-08-16_15-00-51-2.jpg", "photo_2025-08-16_15-00-01.jpg", "photo_2025-08-02_15-18-45.jpg", "photo_2025-08-02_15-18-44.jpg", "photo_2025-07-21_11-56-52-2-1.jpg", "photo_2025-07-21_11-56-41.jpg", "photo_2025-07-21_11-56-40-2.jpg", "photo_2025-07-21_11-56-40-1.jpg", "photo_2025-07-21_11-56-39.jpg", "IMG_20240909_190329_451.jpg", "IMG_20240829_180711.jpg"].map((filename) => `https://backup.platohedro.org/wp-content/uploads/2026/09/${filename}`);
+
 type ProgramSlug = keyof typeof programs;
 
 function getProgram(slug: string) {
@@ -89,6 +91,19 @@ export default async function ProgramPage({ params }: { params: Promise<{ progra
           <Link href="/d-formacion" className="mt-10 inline-flex items-center gap-2 border border-[#0051A2] px-5 py-3 text-sm font-bold transition-colors hover:bg-[#0051A2] hover:text-white">← Volver a D-Formación</Link>
         </div>
       </section>
+      {programa === "matinee" && (
+        <section aria-labelledby="matinee-gallery-title" className="mx-auto max-w-7xl px-6 pb-16 md:px-10 md:pb-24">
+          <h2 id="matinee-gallery-title" className="text-3xl font-bold md:text-4xl" style={{ fontFamily: "'DM Serif Display', serif" }}>Galería de Matinée</h2>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[#0051A2]/75">Imágenes de los talleres, encuentros y procesos de Matinée.</p>
+          <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 md:gap-5">
+            {matineeGallery.map((url, index) => (
+              <a key={url} href={url} target="_blank" rel="noreferrer" className="group block overflow-hidden bg-[#99CC33]/20 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#0051A2]" aria-label={`Abrir imagen ${index + 1} de la galería de Matinée`}>
+                <img src={url} alt={`Registro visual de Matinée, imagen ${index + 1}`} loading="lazy" decoding="async" className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }
