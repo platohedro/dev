@@ -59,6 +59,15 @@ Comprobar las imágenes en staging y producción tras cada despliegue.
 No requiere variables nuevas ni migraciones. Los enlaces a perfiles históricos
 siguen dependiendo del archivo; su administrador debe reparar el certificado.
 
+El 29 de septiembre de 2026 se incorporaron otras 62 fotografías originales de
+las galerías de Matinée (24), Amapolas (10), Ideatorio (10), Tecnología (11) y
+Residencias (7), publicadas en el archivo bajo `2026/09`. Se sirven desde
+`public/media/2026/09/` y están registradas con tamaño y SHA-256 en el manifiesto.
+Esto corrige el fallo de CI en `Validate bundled media` causado por referencias
+remotas reintroducidas en las galerías. Las miniaturas y sus enlaces al original
+usan el HTTPS del sitio. Para añadir fotos, incorporar los archivos locales y
+sus entradas de manifiesto junto con las rutas explícitas en la galería.
+
 ## Observabilidad
 
 - Usar `GET /api/health` como health check externo.

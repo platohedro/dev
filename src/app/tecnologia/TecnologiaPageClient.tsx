@@ -23,18 +23,18 @@ const sections = [
 
 const educationTopics = ["firstSteps", "pedagogy", "blockchain", "privacy"] as const;
 const galleryImages = [
-  "photo_4979147598069869959_y.jpg",
-  "photo_2025-10-20_22-37-12-6.jpg",
-  "InShot_20240708_104407739.jpg",
-  "IMG_20240909_123137.jpg",
-  "IMG_20240904_185343_272.jpg",
-  "IMG_20240815_104324_329.jpg",
-  "IMG_20240726_030217_094.jpg",
-  "IMG_20240726_030207_965.jpg",
-  "IMG_20240620_105506_449.jpg",
-  "IMG_20240614_204730_802.jpg",
-  "4967784149691772998.jpg",
-].map((filename) => `https://backup.platohedro.org/wp-content/uploads/2026/09/${filename}`);
+  "/media/2026/09/photo_4979147598069869959_y.jpg",
+  "/media/2026/09/photo_2025-10-20_22-37-12-6.jpg",
+  "/media/2026/09/InShot_20240708_104407739.jpg",
+  "/media/2026/09/IMG_20240909_123137.jpg",
+  "/media/2026/09/IMG_20240904_185343_272.jpg",
+  "/media/2026/09/IMG_20240815_104324_329.jpg",
+  "/media/2026/09/IMG_20240726_030217_094.jpg",
+  "/media/2026/09/IMG_20240726_030207_965.jpg",
+  "/media/2026/09/IMG_20240620_105506_449.jpg",
+  "/media/2026/09/IMG_20240614_204730_802.jpg",
+  "/media/2026/09/4967784149691772998.jpg",
+];
 
 export function TecnologiaPageClient() {
   const { t } = useTranslation();

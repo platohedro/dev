@@ -8,14 +8,14 @@ import { ResidentsMapClient } from "@/app/components/ResidentsMapClient";
 import { RESIDENCY_APPLICATION_URL } from "@/lib/residencies";
 
 const galleryImages = [
-  "IMG_20240814_193747.jpg",
-  "IMG_20240813_203616.jpg",
-  "IMG_20240813_203529.jpg",
-  "IMG_20240731_183514.jpg",
-  "IMG_20240731_183408.jpg",
-  "4-1.jpg",
-  "2.jpg",
-].map((filename) => `https://backup.platohedro.org/wp-content/uploads/2026/09/${filename}`);
+  "/media/2026/09/IMG_20240814_193747.jpg",
+  "/media/2026/09/IMG_20240813_203616.jpg",
+  "/media/2026/09/IMG_20240813_203529.jpg",
+  "/media/2026/09/IMG_20240731_183514.jpg",
+  "/media/2026/09/IMG_20240731_183408.jpg",
+  "/media/2026/09/4-1.jpg",
+  "/media/2026/09/2.jpg",
+];
 
 type Resident = {
   id: string;
