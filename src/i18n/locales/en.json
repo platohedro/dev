@@ -36,6 +36,12 @@
     "glossary": "Glossary",
     "resources": "Explore tools and resources",
     "github": "See our projects on GitHub",
+    "gallery": {
+      "title": "Web3Wasi gallery",
+      "description": "Images from Web3Wasi gatherings and projects.",
+      "image": "Web3Wasi visual record, image {{number}}",
+      "open": "Open image {{number}} from the Web3Wasi gallery"
+    },
     "source": "Content adapted from the Web3Wasi homepage, a Platohedro initiative.",
     "cta": "Explore Technology"
   },
@@ -543,6 +549,12 @@
       "research": { "title": "Research and creation", "text": "Projects that explore questions, languages and methodologies." },
       "community": { "title": "Community residency", "text": "Collaborative processes rooted in the territory." },
       "lab": { "title": "Open laboratory", "text": "Prototypes, learnings and public conversations." }
+    },
+    "gallery": {
+      "title": "Residencies gallery",
+      "description": "Images from Platohedro residency gatherings and projects.",
+      "image": "Platohedro residencies visual record, image {{number}}",
+      "open": "Open image {{number}} from the residencies gallery"
     },
     "propose": {
       "title": "Want to propose a residency?",

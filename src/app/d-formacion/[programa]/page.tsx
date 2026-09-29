@@ -41,7 +41,37 @@ const programs = {
   },
 } as const;
 
+const matineeGallery = ["/media/2026/09/photo_4992511006559284941_y.jpg", "/media/2026/09/photo_4963045293230763216_y.jpg", "/media/2026/09/photo_4963045293230763215_y.jpg", "/media/2026/09/photo_4952179249310182880_y-1.jpg", "/media/2026/09/photo_4952179249310182868_y1.jpg", "/media/2026/09/photo_4952179249310182865_y.jpg", "/media/2026/09/photo_4951892173696118328_y.jpg", "/media/2026/09/photo_4951892173696118327_y.jpg", "/media/2026/09/photo_4951892173696118324_y.jpg", "/media/2026/09/photo_2025-10-20_21-25-52-7.jpg", "/media/2026/09/photo_2025-10-20_21-22-30-6.jpg", "/media/2026/09/photo_2025-10-01_10-19-16.jpg", "/media/2026/09/photo_2025-08-16_15-00-54.jpg", "/media/2026/09/photo_2025-08-16_15-00-51-2.jpg", "/media/2026/09/photo_2025-08-16_15-00-01.jpg", "/media/2026/09/photo_2025-08-02_15-18-45.jpg", "/media/2026/09/photo_2025-08-02_15-18-44.jpg", "/media/2026/09/photo_2025-07-21_11-56-52-2-1.jpg", "/media/2026/09/photo_2025-07-21_11-56-41.jpg", "/media/2026/09/photo_2025-07-21_11-56-40-2.jpg", "/media/2026/09/photo_2025-07-21_11-56-40-1.jpg", "/media/2026/09/photo_2025-07-21_11-56-39.jpg", "/media/2026/09/IMG_20240909_190329_451.jpg", "/media/2026/09/IMG_20240829_180711.jpg"];
+
 type ProgramSlug = keyof typeof programs;
+
+const programGalleries: Partial<Record<ProgramSlug, string[]>> = {
+  matinee: matineeGallery,
+  amapolas: [
+    "/media/2026/09/6.jpg",
+    "/media/2026/09/4967737824174517875.jpg",
+    "/media/2026/09/5026567636200304483.jpg",
+    "/media/2026/09/5149911048172711890.jpg",
+    "/media/2026/09/5149911048172711907.jpg",
+    "/media/2026/09/5149911048172711910.jpg",
+    "/media/2026/09/Amapolas_2.jpg",
+    "/media/2026/09/Amapolas_6.jpg",
+    "/media/2026/09/Amapolas_7.jpg",
+    "/media/2026/09/IMG_20240712_160458.jpg",
+  ],
+  ideatorio: [
+    "/media/2026/09/6-1.jpg",
+    "/media/2026/09/4997230286559358672.jpg",
+    "/media/2026/09/5096209139335540964_I.jpg",
+    "/media/2026/09/Ideatorio_evi_5.jpg",
+    "/media/2026/09/Ideatorio_evi_6.jpg",
+    "/media/2026/09/Ideatorio_evi_10.jpg",
+    "/media/2026/09/IMG_20240726_025407_406.jpg",
+    "/media/2026/09/IMG_20240726_034059_850.jpg",
+    "/media/2026/09/IMG_20240827_183540.jpg",
+    "/media/2026/09/InShot_20240616_223513893.jpg",
+  ],
+};
 
 function getProgram(slug: string) {
   return programs[slug as ProgramSlug];
@@ -68,6 +98,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ progra
   const { programa } = await params;
   const program = getProgram(programa);
   if (!program) notFound();
+  const gallery = programGalleries[programa as ProgramSlug];
 
   return (
     <main className="min-h-screen bg-white text-[#0051A2]">
@@ -89,6 +120,19 @@ export default async function ProgramPage({ params }: { params: Promise<{ progra
           <Link href="/d-formacion" className="mt-10 inline-flex items-center gap-2 border border-[#0051A2] px-5 py-3 text-sm font-bold transition-colors hover:bg-[#0051A2] hover:text-white">← Volver a D-Formación</Link>
         </div>
       </section>
+      {gallery && (
+        <section aria-labelledby={`${programa}-gallery-title`} className="mx-auto max-w-7xl px-6 pb-16 md:px-10 md:pb-24">
+          <h2 id={`${programa}-gallery-title`} className="text-3xl font-bold md:text-4xl" style={{ fontFamily: "'DM Serif Display', serif" }}>Galería de {program.title}</h2>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[#0051A2]/75">Imágenes de los talleres, encuentros y procesos de {program.title}.</p>
+          <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 md:gap-5">
+            {gallery.map((url, index) => (
+              <a key={url} href={url} target="_blank" rel="noreferrer" className="group block overflow-hidden bg-[#99CC33]/20 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#0051A2]" aria-label={`Abrir imagen ${index + 1} de la galería de ${program.title}`}>
+                <img src={url} alt={`Registro visual de ${program.title}, imagen ${index + 1}`} loading="lazy" decoding="async" className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }

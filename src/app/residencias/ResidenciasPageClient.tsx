@@ -7,6 +7,16 @@ import { ResidentsDirectory } from "@/app/components/ResidentsDirectory";
 import { ResidentsMapClient } from "@/app/components/ResidentsMapClient";
 import { RESIDENCY_APPLICATION_URL } from "@/lib/residencies";
 
+const galleryImages = [
+  "/media/2026/09/IMG_20240814_193747.jpg",
+  "/media/2026/09/IMG_20240813_203616.jpg",
+  "/media/2026/09/IMG_20240813_203529.jpg",
+  "/media/2026/09/IMG_20240731_183514.jpg",
+  "/media/2026/09/IMG_20240731_183408.jpg",
+  "/media/2026/09/4-1.jpg",
+  "/media/2026/09/2.jpg",
+];
+
 type Resident = {
   id: string;
   name: string;
@@ -70,6 +80,18 @@ export function ResidenciasPageClient({ residents, loadError }: { residents: Res
             <Article href="/residencias/residencia-de-investigacion" title="Residencia de investigación" text={t("residenciasPage.modalities.community.text")} />
             <Article href="/residencias/residencia-tecnologica" title="Residencia tecnológica" text={t("residenciasPage.modalities.lab.text")} />
           </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="residencies-gallery-title" className="mx-auto max-w-7xl px-6 py-16 md:px-10">
+        <h2 id="residencies-gallery-title" className="text-3xl font-bold md:text-4xl">{t("residenciasPage.gallery.title")}</h2>
+        <p className="mt-4 max-w-2xl text-muted-foreground">{t("residenciasPage.gallery.description")}</p>
+        <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
+          {galleryImages.map((url, index) => (
+            <a key={url} href={url} target="_blank" rel="noreferrer" className="group block overflow-hidden bg-[#99CC33]/20 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#0051A2]" aria-label={t("residenciasPage.gallery.open", { number: index + 1 })}>
+              <img src={url} alt={t("residenciasPage.gallery.image", { number: index + 1 })} loading="lazy" decoding="async" className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+            </a>
+          ))}
         </div>
       </section>
 

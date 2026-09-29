@@ -22,6 +22,19 @@ const sections = [
 ];
 
 const educationTopics = ["firstSteps", "pedagogy", "blockchain", "privacy"] as const;
+const galleryImages = [
+  "/media/2026/09/photo_4979147598069869959_y.jpg",
+  "/media/2026/09/photo_2025-10-20_22-37-12-6.jpg",
+  "/media/2026/09/InShot_20240708_104407739.jpg",
+  "/media/2026/09/IMG_20240909_123137.jpg",
+  "/media/2026/09/IMG_20240904_185343_272.jpg",
+  "/media/2026/09/IMG_20240815_104324_329.jpg",
+  "/media/2026/09/IMG_20240726_030217_094.jpg",
+  "/media/2026/09/IMG_20240726_030207_965.jpg",
+  "/media/2026/09/IMG_20240620_105506_449.jpg",
+  "/media/2026/09/IMG_20240614_204730_802.jpg",
+  "/media/2026/09/4967784149691772998.jpg",
+];
 
 export function TecnologiaPageClient() {
   const { t } = useTranslation();
@@ -64,6 +77,17 @@ export function TecnologiaPageClient() {
             </div>
           </section>
         ))}
+        <section aria-labelledby="web3wasi-gallery-title" className="pt-16">
+          <h2 id="web3wasi-gallery-title" className="font-sans text-4xl font-bold md:text-5xl">{t("technologyPage.gallery.title")}</h2>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed">{t("technologyPage.gallery.description")}</p>
+          <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
+            {galleryImages.map((url, index) => (
+              <a key={url} href={url} target="_blank" rel="noreferrer" className="group block overflow-hidden bg-[#99CC33]/20 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#0051A2]" aria-label={t("technologyPage.gallery.open", { number: index + 1 })}>
+                <img src={url} alt={t("technologyPage.gallery.image", { number: index + 1 })} loading="lazy" decoding="async" className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+              </a>
+            ))}
+          </div>
+        </section>
       </div>
 
       <footer className="bg-[#99CC33] px-6 py-12 dark:bg-card md:px-10">
