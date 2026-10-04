@@ -866,8 +866,10 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           <div className="relative">
             <div className="aspect-square overflow-hidden border border-white/30 bg-[#003d7a]">
               <img
-                src="/media/2022/04/IMG_1870.jpg"
-                alt="Jóvenes usando computadores y software creativo en el laboratorio digital de Platohedro"
+                src="/media/2026/09/IMG_20240726_030207_965.jpg"
+                alt="Participantes de un taller de Web3wasi aprendiendo en comunidad con computadores y una proyección en Platohedro"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>
