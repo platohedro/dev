@@ -78,7 +78,7 @@ const programs = [
     tagKey: "programs.items.0.tag",
     descKey: "programs.items.0.description",
     slug: "matinee",
-    image: "/media/2022/04/c_buenvivir.jpg",
+    image: "/media/2026/09/photo_2025-07-21_11-56-52-2-1.jpg",
     color: "#d4f500",
   },
   {
@@ -96,7 +96,7 @@ const programs = [
     tagKey: "programs.items.2.tag",
     descKey: "programs.items.2.description",
     slug: "ideatorio",
-    image: "/media/2023/10/ideatorio.jpg",
+    image: "/media/2026/09/IMG_20240827_183540.jpg",
     color: "#a78bfa",
   },
   {
@@ -105,7 +105,7 @@ const programs = [
     tagKey: "programs.items.3.tag",
     descKey: "programs.items.3.description",
     slug: "amapolas",
-    image: "/media/2023/10/amapolas.jpg",
+    image: "/media/2026/09/Amapolas_6.jpg",
     color: "#fb923c",
   },
   {
@@ -763,8 +763,8 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-[#0051A2]/30 mb-8">
             <div className="relative overflow-hidden aspect-[4/3] bg-[#003d7a]">
               <img
-                src="/media/2023/10/becomingfungal.jpg"
-                alt="Artista en residencia trabajando en el estudio de Platohedro"
+                src="/media/2026/09/IMG_20240813_203529.jpg"
+                alt="Participantes de las residencias de Platohedro compartiendo piezas visuales alrededor de una mesa"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-[#0051A2]/20" />
