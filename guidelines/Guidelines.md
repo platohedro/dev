@@ -1,4 +1,10 @@
-## Flujo de ramas y despliegue
+## Continuidad del trabajo de los agentes
+
+- Las solicitudes de acción autorizan el trabajo local necesario y reversible dentro de su alcance. Ejecutarlo sin detenerse en una propuesta ni pedir nuevamente una autorización ya concedida.
+- Cuando una herramienta, permiso o dependencia bloquee un paso, continuar con los pasos independientes y las alternativas permitidas. Informar la acción bloqueada, el error concreto y lo que falta; no confundir fallos del entorno con rechazo de la solicitud.
+- Pedir aclaración solo si falta información indispensable o autorización para una acción destructiva o fuera del alcance solicitado. Conservar las restricciones de seguridad y el flujo staging → main.
+
+## Reglas de ramas y despliegue
 
 Este proyecto usa dos ramas principales:
 

@@ -159,6 +159,9 @@ Las rutas privadas, de autenticación, API y resultados transaccionales deben te
 
 ## Estilo de trabajo
 
+- Tratar las solicitudes de acción del usuario como autorización para realizar el trabajo local necesario y reversible dentro de su alcance; no detenerse en una propuesta ni pedir la misma autorización nuevamente.
+- Si una herramienta, permiso o dependencia bloquea un paso, continuar con los pasos independientes y las alternativas permitidas. Informar la acción bloqueada, el error concreto y qué falta para completarla; no presentar un fallo del entorno como rechazo de la solicitud del usuario.
+- Pedir aclaración solo cuando falte información indispensable o autorización para una acción destructiva o fuera del alcance solicitado. Mantener las restricciones de seguridad y el flujo staging → main.
 - Revisar primero el código existente antes de modificarlo.
 - Preservar cambios del usuario y no sobrescribir trabajo ajeno.
 - Hacer cambios pequeños y verificables.
