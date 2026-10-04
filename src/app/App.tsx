@@ -244,15 +244,18 @@ const techInitiatives = [
 const residencyTypeAssets = [
   {
     color: "#0051A2",
-    image: "/media/2025/07/on.jpg",
+    image: "/media/2026/09/IMG_20240813_203616.jpg",
+    imageAlt: "Manos organizando piezas visuales durante un proceso de creación artística en Platohedro",
   },
   {
     color: "#FF46A2",
-    image: "/media/2025/07/IMG_4154-1024x768-1.jpg",
+    image: "/media/2026/09/IMG_20240731_183514.jpg",
+    imageAlt: "Participantes de las residencias compartiendo ideas y materiales alrededor de una mesa en Platohedro",
   },
   {
     color: "#99CC33",
-    image: "/media/2025/07/Lokakarya_Squaresynth_01.jpg",
+    image: "/media/2026/09/IMG_20240814_193747.jpg",
+    imageAlt: "Participantes reunidos frente a una proyección y un computador durante una sesión de residencia en Platohedro",
   },
 ];
 
@@ -801,7 +804,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
             {residencyTypes.map((res, index) => (
               <article key={res.title} className="group cursor-pointer border border-[#0051A2]/20 hover:border-[#0051A2]/50 transition-all bg-white/80 flex flex-col">
                 <div className="overflow-hidden aspect-[16/9] bg-[#003d7a] relative">
-                  <img src={res.image} alt={res.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <img src={res.image} alt={res.imageAlt} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   <div className="absolute inset-0 bg-[#0051A2]/30" />
                   <div className="absolute top-3 left-3 px-2 py-0.5 text-xs font-bold bg-[#FF46A2] text-white" style={{ fontFamily: "'DM Mono', monospace" }}>
                     {res.tag}
@@ -863,8 +866,10 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
           <div className="relative">
             <div className="aspect-square overflow-hidden border border-white/30 bg-[#003d7a]">
               <img
-                src="/media/2022/04/IMG_1870.jpg"
-                alt="Jóvenes usando computadores y software creativo en el laboratorio digital de Platohedro"
+                src="/media/2026/09/IMG_20240726_030207_965.jpg"
+                alt="Participantes de un taller de Web3wasi aprendiendo en comunidad con computadores y una proyección en Platohedro"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>

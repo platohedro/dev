@@ -76,9 +76,9 @@ export function ResidenciasPageClient({ residents, loadError }: { residents: Res
         <div className="mx-auto max-w-7xl">
           <p className="text-xs font-bold tracking-widest text-[#0051A2] uppercase">{t("residenciasPage.modalities.eyebrow")}</p>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            <Article href="/residencias/residencia-artistica" title="Residencia artística" text={t("residenciasPage.modalities.research.text")} />
-            <Article href="/residencias/residencia-de-investigacion" title="Residencia de investigación" text={t("residenciasPage.modalities.community.text")} />
-            <Article href="/residencias/residencia-tecnologica" title="Residencia tecnológica" text={t("residenciasPage.modalities.lab.text")} />
+            <Article href="/residencias/residencia-artistica" title="Residencia artística" text={t("residenciasPage.modalities.research.text")} image="/media/2026/09/4-1.jpg" imageAlt="Dos músicos compartiendo una presentación con guitarras durante las residencias de Platohedro" />
+            <Article href="/residencias/residencia-de-investigacion" title="Residencia de investigación" text={t("residenciasPage.modalities.community.text")} image="/media/2026/09/IMG_20240813_203529.jpg" imageAlt="Participantes de las residencias intercambiando ideas y explorando materiales visuales alrededor de una mesa" />
+            <Article href="/residencias/residencia-tecnologica" title="Residencia tecnológica" text={t("residenciasPage.modalities.lab.text")} image="/media/2026/09/IMG_20240731_183408.jpg" imageAlt="Sesión colectiva de residencia con computador y proyección en Platohedro" />
           </div>
         </div>
       </section>
@@ -116,12 +116,17 @@ function Card({ icon, title, text }: { icon: React.ReactNode; title: string; tex
   );
 }
 
-function Article({ href, title, text }: { href: string; title: string; text: string }) {
+function Article({ href, title, text, image, imageAlt }: { href: string; title: string; text: string; image: string; imageAlt: string }) {
   return (
-    <a href={href} className="group bg-white p-6 transition-transform hover:-translate-y-1">
-      <h3 className="text-xl font-bold text-[#0051A2]">{title}</h3>
-      <p className="mt-3 text-sm text-[#003d7a]/75">{text}</p>
-      <span className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#0051A2] group-hover:text-[#FF46A2]">Conocer residencia <ArrowUpRight size={15} /></span>
+    <a href={href} className="group flex flex-col overflow-hidden bg-white transition-transform hover:-translate-y-1 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#0051A2]">
+      <div className="aspect-[4/3] overflow-hidden bg-[#003d7a]">
+        <img src={image} alt={imageAlt} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+      </div>
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="text-xl font-bold text-[#0051A2]">{title}</h3>
+        <p className="mt-3 flex-1 text-sm text-[#003d7a]/75">{text}</p>
+        <span className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#0051A2] group-hover:text-[#FF46A2]">Conocer residencia <ArrowUpRight size={15} /></span>
+      </div>
     </a>
   );
 }

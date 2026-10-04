@@ -178,19 +178,19 @@
     },
     "types": [
       {
-        "title": "Research Residency",
+        "title": "Artistic Residency",
         "tag": "3 weeks",
-        "description": "For researchers, theorists, and curators working at the intersection of art, territory, and knowledge."
+        "description": "Artistic creation and experimentation in dialogue with Platohedro’s communities."
       },
       {
-        "title": "Sound Residency",
+        "title": "Research Residency",
         "tag": "4 weeks",
-        "description": "Production, composition, and sound experimentation in the recording studio. For musicians, podcasters, and audio artists."
+        "description": "Research into artistic practices, territory, and critical thinking through shared knowledge."
       },
       {
-        "title": "Community Residency",
+        "title": "Technology Residency",
         "tag": "8 weeks",
-        "description": "Co-creation process with neighborhood communities. Situated art, collective memory, and transformation from the territory."
+        "description": "Exploring art, technology, and open knowledge through collective learning and experimentation."
       }
     ],
     "learnMore": "Learn more"

@@ -6,11 +6,11 @@ import { useTranslation } from "react-i18next";
 import { SiteHeader } from "@/app/components/SiteHeader";
 
 const programDetails = [
-  { slug: "matinee", image: "/media/2022/03/matinee.jpg" },
-  { slug: "jaquer-escool", image: "/media/2022/03/la-jaquer.jpg" },
-  { slug: "ideatorio", image: "/media/2023/10/ideatorio.jpg" },
-  { slug: "amapolas", image: "/media/2023/10/amapolas.jpg" },
-  { slug: "comunidad", image: "/media/2023/11/1697073676568-scaled.jpg" },
+  { slug: "matinee", image: "/media/2026/09/photo_4992511006559284941_y.jpg", alt: "Encuentro de niñas, niños y acompañantes de Matinée en Platohedro" },
+  { slug: "jaquer-escool", image: "/media/2025/07/Lokakarya_Squaresynth_01.jpg", alt: "Participantes explorando componentes electrónicos en un taller colectivo en Platohedro" },
+  { slug: "ideatorio", image: "/media/2026/09/Ideatorio_evi_6.jpg", alt: "Participantes de Ideatorio compartiendo una actividad con proyección en Platohedro" },
+  { slug: "amapolas", image: "/media/2026/09/IMG_20240712_160458.jpg", alt: "Participantes de Amapolas creando juntas alrededor de una mesa con materiales artísticos" },
+  { slug: "comunidad", image: "/media/2022/04/c_buenvivir.jpg", alt: "Niñas y niños compartiendo una actividad creativa al aire libre con acompañantes" },
 ];
 
 type Program = { id: number; title: string; tag: string; description: string };
@@ -43,7 +43,7 @@ export function DFormacionPageClient() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {programs.map((program, index) => (
             <article key={program.id} className="overflow-hidden border border-[#0051A2]/20 bg-white transition-shadow hover:shadow-lg">
-              <img src={programDetails[index].image} alt={`Participantes de ${program.title} en Platohedro`} className="aspect-[4/3] w-full object-cover" />
+              <img src={programDetails[index].image} alt={programDetails[index].alt} loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
               <div className="p-6">
                 <p className="mb-3 inline-flex bg-[#99CC33] px-2 py-1 text-xs font-bold text-[#0051A2]" style={{ fontFamily: "'DM Mono', monospace" }}>{program.tag}</p>
                 <h3 className="text-2xl font-bold" style={{ fontFamily: "'DM Serif Display', serif" }}>{program.title}</h3>

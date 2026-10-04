@@ -6,16 +6,16 @@ import { SiteHeader } from "@/app/components/SiteHeader";
 
 const source = "https://web3wasi.platohedro.org";
 const sections = [
-  { key: "content", Icon: Clapperboard, links: [
+  { key: "content", Icon: Clapperboard, image: "/media/2026/09/4967784149691772998.jpg", imageAlt: "Conversación colectiva con micrófonos y audífonos en el estudio de Web3Wasi", links: [
     { key: "cypherRadio", href: "https://podcast.platohedro.org/radiocypher" },
     { key: "spaces", href: `${source}/spaces` },
     { key: "blog", href: `${source}/blog` },
   ] },
-  { key: "education", Icon: GraduationCap, links: [
+  { key: "education", Icon: GraduationCap, image: "/media/2026/09/IMG_20240726_030217_094.jpg", imageAlt: "Taller de Web3Wasi con participantes, computadores y una presentación proyectada", links: [
     { key: "firstSteps", href: `${source}/products` },
     { key: "glossary", href: `${source}/glosario` },
   ] },
-  { key: "infrastructure", Icon: Building2, links: [
+  { key: "infrastructure", Icon: Building2, image: "/media/2026/09/IMG_20240815_104324_329.jpg", imageAlt: "Uso compartido de computadores y equipos de grabación en el estudio de Web3Wasi", links: [
     { key: "resources", href: `${source}/services` },
     { key: "github", href: "https://github.com/platohedro" },
   ] },
@@ -42,7 +42,8 @@ export function TecnologiaPageClient() {
     <main className="min-h-screen bg-background text-[#0051A2] dark:text-foreground" style={{ fontFamily: "'Instrument Sans', sans-serif" }}>
       <SiteHeader />
       <section className="bg-[#99CC33] px-6 py-20 dark:bg-card md:px-10 md:py-28">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+          <div>
           <p className="mb-5 text-sm font-bold uppercase tracking-[0.2em] dark:text-primary" style={{ fontFamily: "'DM Mono', monospace" }}>{t("nav.technology")} · Web3Wasi</p>
           <h1 className="max-w-4xl font-sans text-5xl font-bold md:text-7xl">{t("technologyPage.title")}</h1>
           <dl className="mt-8 grid max-w-4xl gap-4 md:grid-cols-2">
@@ -57,16 +58,23 @@ export function TecnologiaPageClient() {
           <nav aria-label={t("technologyPage.sections")} className="mt-10 flex flex-wrap gap-3">
             {sections.map(({ key }) => <a key={key} href={`#${key}`} className="border border-current px-5 py-3 font-bold transition-colors hover:bg-[#0051A2] hover:text-white dark:hover:bg-primary dark:hover:text-primary-foreground">{t(`technologyPage.${key}.title`)}</a>)}
           </nav>
+          </div>
+          <div className="overflow-hidden border border-[#0051A2]/20 bg-[#003d7a] dark:border-border">
+            <img src="/media/2026/09/IMG_20240909_123137.jpg" alt="Participantes de Web3Wasi compartiendo sus creaciones en un encuentro en Platohedro" fetchPriority="high" decoding="async" className="aspect-[4/3] w-full object-cover" />
+          </div>
         </div>
       </section>
 
       <div className="mx-auto max-w-7xl px-6 py-16 md:px-10">
-        {sections.map(({ key, Icon, links }, index) => (
+        {sections.map(({ key, Icon, links, image, imageAlt }, index) => (
           <section id={key} key={key} className="scroll-mt-24 border-b border-[#0051A2]/20 py-12 first:pt-0 dark:border-border md:grid md:grid-cols-[1fr_2fr] md:gap-12">
             <div className="mb-6">
               <Icon size={36} strokeWidth={1.5} aria-hidden="true" />
               <p className="mt-6 text-sm text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>0{index + 1}</p>
               <h2 className="mt-2 font-sans text-4xl font-bold md:text-5xl">{t(`technologyPage.${key}.title`)}</h2>
+              <div className="mt-6 overflow-hidden border border-[#0051A2]/20 bg-[#003d7a] dark:border-border">
+                <img src={image} alt={imageAlt} loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+              </div>
             </div>
             <div>
               <p className="max-w-2xl text-lg leading-relaxed">{t(`technologyPage.${key}.description`)}</p>
