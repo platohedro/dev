@@ -15,16 +15,12 @@ import {
   Users,
   CheckCircle,
   ExternalLink,
-  Wrench,
-  Hammer,
-  AlertCircle,
   Globe,
   GraduationCap,
   Clapperboard,
   Building2,
 } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
-import { RenovationPopup } from "@/app/components/ui/renovation-popup";
 import { AboutPage } from "@/app/components/AboutPage";
 import { SiteHeader } from "@/app/components/SiteHeader";
 import { EVENT_TIME_ZONE, type PublicEvent } from "@/lib/events";
@@ -296,7 +292,6 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
   const [donateStep, setDonateStep] = useState(1);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [donationError, setDonationError] = useState("");
-  const [showRenovationPopup, setShowRenovationPopup] = useState(true);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [publishedEvents, setPublishedEvents] = useState<PublicEvent[]>([]);
   const [publishedProducts, setPublishedProducts] = useState<Array<{ id: string; slug: string; name: string; image_url: string | null; price_cop: number }>>([]);
@@ -1326,10 +1321,6 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
         </div>
       </footer>
 
-      <RenovationPopup
-        isOpen={showRenovationPopup}
-        onClose={() => setShowRenovationPopup(false)}
-      />
       {showBackToTop && <button
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
