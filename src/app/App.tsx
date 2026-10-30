@@ -1262,11 +1262,11 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                     <p className="mt-1 text-xs text-muted-foreground">{t("donate.otherWays.patreon.description")}</p>
                     <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#0051A2] group-hover:text-[#FF46A2]">{t("donate.otherWays.patreon.cta")} <ExternalLink size={12} /></span>
                   </a>
-                  <div className="border border-dashed border-[#0051A2]/30 p-4">
+                  <a href="https://vaki.co/vaki/WWVyuZLaWnx2A2lZHrbd" target="_blank" rel="noreferrer" className="group border border-[#0051A2]/20 p-4 transition-colors hover:border-[#0051A2] hover:bg-[#0051A2]/5">
                     <p className="font-bold text-[#0051A2]">{t("donate.otherWays.vaki.title")}</p>
                     <p className="mt-1 text-xs text-muted-foreground">{t("donate.otherWays.vaki.description")}</p>
-                    <span className="mt-3 inline-flex text-xs font-bold text-[#0051A2]/60">{t("donate.otherWays.vaki.cta")}</span>
-                  </div>
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#0051A2] group-hover:text-[#FF46A2]">{t("donate.otherWays.vaki.cta")} <ExternalLink size={12} /></span>
+                  </a>
                 </div>
               </div>
             </div>
