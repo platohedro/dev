@@ -1231,6 +1231,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                 </div>
               </div>
 
+              {/* Caja "Cómo donar" temporalmente oculta a solicitud del equipo.
               <div className="border border-primary/30 p-6 bg-primary/5">
                 <h3 className="font-bold mb-4 text-primary" style={{ fontFamily: "'DM Serif Display', serif" }}>
                   {donateHowToTitle}
@@ -1246,6 +1247,7 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                   ))}
                 </ol>
               </div>
+              */}
 
               <div className="border border-border p-5 text-sm">
                 <h4 className="font-semibold mb-3 text-xs text-muted-foreground tracking-widest uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
@@ -1256,17 +1258,28 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
                   <p><span className="text-foreground font-medium">{t("donate.otherWays.inKind.title")}</span> {t("donate.otherWays.inKind.description")}</p>
                   <p><span className="text-foreground font-medium">{t("donate.otherWays.volunteer.title")}</span> {t("donate.otherWays.volunteer.description")}</p>
                 </div>
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  <a href="https://patreon.com/Platohedro?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink" target="_blank" rel="noreferrer" className="group border border-[#0051A2]/20 p-4 transition-colors hover:border-[#0051A2] hover:bg-[#0051A2]/5">
-                    <p className="font-bold text-[#0051A2]">{t("donate.otherWays.patreon.title")}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{t("donate.otherWays.patreon.description")}</p>
-                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#0051A2] group-hover:text-[#FF46A2]">{t("donate.otherWays.patreon.cta")} <ExternalLink size={12} /></span>
+                <div className="mt-6 border border-[#0051A2]/20 bg-[#0051A2]/[0.03] p-4 sm:p-6">
+                  <a
+                    href="https://patreon.com/Platohedro?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mx-auto flex w-full max-w-[350px] items-center justify-center rounded-md bg-[#ff424d] px-6 py-3 text-center font-bold text-white transition-colors hover:bg-[#e63b45]"
+                  >
+                    Apóyanos en Patreon
                   </a>
-                  <a href="https://vaki.co/vaki/WWVyuZLaWnx2A2lZHrbd" target="_blank" rel="noreferrer" className="group border border-[#0051A2]/20 p-4 transition-colors hover:border-[#0051A2] hover:bg-[#0051A2]/5">
-                    <p className="font-bold text-[#0051A2]">{t("donate.otherWays.vaki.title")}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{t("donate.otherWays.vaki.description")}</p>
-                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#0051A2] group-hover:text-[#FF46A2]">{t("donate.otherWays.vaki.cta")} <ExternalLink size={12} /></span>
-                  </a>
+                </div>
+                <div className="mt-6 border border-[#0051A2]/20 bg-[#0051A2]/[0.03] p-4 sm:p-6">
+                  <div className="mx-auto w-full max-w-[350px] overflow-hidden border border-[#0051A2]/10 bg-white shadow-sm">
+                    <iframe
+                      id="vakiIframe"
+                      title="El Matinee de Platohedro"
+                      width="350"
+                      height="415"
+                      src="https://vaki.co/iframe/WWVyuZLaWnx2A2lZHrbd"
+                      loading="lazy"
+                      className="block h-[415px] w-full max-w-full border-0"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
