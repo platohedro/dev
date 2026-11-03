@@ -53,6 +53,7 @@
   "nav": {
     "education": "Educación",
     "residencies": "Residencias",
+    "art": "Arte",
     "technology": "Tecnología",
     "events": "Agenda",
     "shop": "Tienda / Galería",
@@ -483,13 +484,13 @@
   },
   "residenciasPage": {
     "hero": {
-      "eyebrow": "Arte, pensamiento y territorio",
-      "title": "Residencias Platohedro",
-      "subtitle": "Un espacio para investigar, crear, compartir saberes y desarrollar proyectos artísticos contemporáneos en conversación con Medellín y sus comunidades."
+      "eyebrow": "Residencias artísticas, investigación, creación",
+      "title": "Arte y pensamiento",
+      "subtitle": "Es un programa que articula creación, investigación, pensamiento crítico y experimentación desde Medellín, conectando artistas, investigadores, comunidades, saberes y territorios."
     },
     "practice": {
       "title": "Una práctica situada",
-      "description": "Las residencias fortalecen la práctica artística mediante el intercambio, la experimentación y la reflexión crítica. Acompañamos procesos que conectan arte, tecnología, educación y cultura libre."
+      "description": "Nos interesa lo que ocurre en los lugares que habitamos, las historias que los atraviesan, las relaciones que construimos con lo humano y lo más que humano y los futuros que podemos imaginar colectivamente."
     },
     "cards": {
       "territory": { "title": "Territorio", "text": "Medellín como laboratorio vivo" },
@@ -504,10 +505,20 @@
       "loadError": "No fue posible cargar los residentes. Verifica que las migraciones de Supabase estén aplicadas."
     },
     "modalities": {
-      "eyebrow": "Modalidades",
-      "research": { "title": "Investigación y creación", "text": "Proyectos que exploran preguntas, lenguajes y metodologías." },
-      "community": { "title": "Residencia comunitaria", "text": "Procesos colaborativos arraigados en el territorio." },
-      "lab": { "title": "Laboratorio abierto", "text": "Prototipos, aprendizajes y conversaciones públicas." }
+      "eyebrow": "",
+      "open": { "title": "Residencias abiertas", "text": "Espacios autogestionados para artistas, investigadores, creadores y nómadas digitales que buscan desarrollar procesos de investigación, creación o intercambio en Medellín." },
+      "support": { "title": "Residencias con apoyo de terceros", "text": "Acompañamos a quienes cuentan con financiación externa o desean postular a becas, fondos de movilidad y programas de cooperación cultural." },
+      "calls": { "title": "Residencias por convocatoria", "text": "Procesos vinculados a proyectos y convocatorias de Platohedro, nuestras líneas de investigación, creación y trabajo territorial." }
+    },
+    "sections": {
+      "projects": { "title": "Proyectos", "text": "Procesos de creación e investigación que conectan arte, pensamiento crítico, territorios y comunidades.", "imageAlt": "Proceso colectivo de creación e investigación de Platohedro" },
+      "residencies": { "title": "Residencias", "text": "Espacios de intercambio para artistas, investigadores y otros creadores que buscan habitar Medellín desde una perspectiva situada.", "imageAlt": "Artistas compartiendo durante una residencia de Platohedro" }
+    },
+    "house": {
+      "title": "Casa Platohedro",
+      "description": "La residencia sucede en Casa Platohedro, un espacio comunitario y cultural ubicado en el Barrio Buenos Aires de Medellín, cerca del centro de la ciudad y con fácil acceso a transporte público. Más que alojamiento, proponemos una experiencia de intercambio, articulación y creación.",
+      "imageAlt": "Casa Platohedro, espacio comunitario y cultural en Medellín",
+      "activities": ["Habitar un espacio de descanso y trabajo.", "Recibir acompañamiento y orientación territorial y/o curatorial.", "Conectar con artistas, colectivas y organizaciones de Medellín.", "Consultar la Platoteca, nuestro centro de documentación alternativo.", "Acceder a nuestro directorio de artistas y agentes culturales.", "Conocer el contexto barrial y acercarte al territorio.", "Utilizar las zonas comunes de la Casa Platohedro.", "Acceder a herramientas y equipos disponibles.", "Compartir tu proceso a través de nuestras redes.", "Desarrollar, a solicitud del artista, encuentros creativos, artísticos o pedagógicos con la comunidad."]
     },
     "gallery": {
       "title": "Galería de residencias",

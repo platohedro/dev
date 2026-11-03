@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import { ArrowUpRight, Lightbulb, MapPin, Users } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/app/components/SiteHeader";
 import { ResidentsDirectory } from "@/app/components/ResidentsDirectory";
 import { ResidentsMapClient } from "@/app/components/ResidentsMapClient";
@@ -47,10 +47,15 @@ export function ResidenciasPageClient({ residents, loadError }: { residents: Res
           <h2 className="text-3xl font-bold">{t("residenciasPage.practice.title")}</h2>
           <p className="mt-5 leading-relaxed text-muted-foreground">{t("residenciasPage.practice.description")}</p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <Card icon={<MapPin />} title={t("residenciasPage.cards.territory.title")} text={t("residenciasPage.cards.territory.text")} />
-          <Card icon={<Users />} title={t("residenciasPage.cards.community.title")} text={t("residenciasPage.cards.community.text")} />
-          <Card icon={<Lightbulb />} title={t("residenciasPage.cards.experimentation.title")} text={t("residenciasPage.cards.experimentation.text")} />
+      </section>
+
+      <section id="residencias" className="bg-[#99CC33] px-6 py-16 md:px-10">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs font-bold tracking-widest text-[#0051A2] uppercase">{t("residenciasPage.modalities.eyebrow")}</p>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            <Article href="/proyectos" title={t("residenciasPage.sections.projects.title")} text={t("residenciasPage.sections.projects.text")} image="/media/2026/09/IMG_20240814_193747.jpg" imageAlt={t("residenciasPage.sections.projects.imageAlt")} />
+            <Article href="#residencias" title={t("residenciasPage.sections.residencies.title")} text={t("residenciasPage.sections.residencies.text")} image="/media/2026/09/4-1.jpg" imageAlt={t("residenciasPage.sections.residencies.imageAlt")} />
+          </div>
         </div>
       </section>
 
@@ -72,14 +77,14 @@ export function ResidenciasPageClient({ residents, loadError }: { residents: Res
         </div>
       </section>
 
-      <section className="bg-[#99CC33] px-6 py-16 md:px-10">
-        <div className="mx-auto max-w-7xl">
-          <p className="text-xs font-bold tracking-widest text-[#0051A2] uppercase">{t("residenciasPage.modalities.eyebrow")}</p>
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
-            <Article href="/residencias/residencia-artistica" title="Residencia artística" text={t("residenciasPage.modalities.research.text")} image="/media/2026/09/4-1.jpg" imageAlt="Dos músicos compartiendo una presentación con guitarras durante las residencias de Platohedro" />
-            <Article href="/residencias/residencia-de-investigacion" title="Residencia de investigación" text={t("residenciasPage.modalities.community.text")} image="/media/2026/09/IMG_20240813_203529.jpg" imageAlt="Participantes de las residencias intercambiando ideas y explorando materiales visuales alrededor de una mesa" />
-            <Article href="/residencias/residencia-tecnologica" title="Residencia tecnológica" text={t("residenciasPage.modalities.lab.text")} image="/media/2026/09/IMG_20240731_183408.jpg" imageAlt="Sesión colectiva de residencia con computador y proyección en Platohedro" />
-          </div>
+      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-2 md:px-10 md:py-24">
+        <img src="/media/2022/03/casabierta.gif" alt={t("residenciasPage.house.imageAlt")} className="h-full min-h-80 w-full object-cover" />
+        <div>
+          <h2 className="text-3xl font-bold">{t("residenciasPage.house.title")}</h2>
+          <p className="mt-5 leading-relaxed text-muted-foreground">{t("residenciasPage.house.description")}</p>
+          <ul className="mt-6 grid gap-3 text-sm leading-relaxed text-muted-foreground">
+            {(t("residenciasPage.house.activities", { returnObjects: true }) as string[]).map((activity) => <li key={activity} className="border-l-2 border-[#99CC33] pl-4">{activity}</li>)}
+          </ul>
         </div>
       </section>
 
@@ -125,7 +130,7 @@ function Article({ href, title, text, image, imageAlt }: { href: string; title: 
       <div className="flex flex-1 flex-col p-6">
         <h3 className="text-xl font-bold text-[#0051A2]">{title}</h3>
         <p className="mt-3 flex-1 text-sm text-[#003d7a]/75">{text}</p>
-        <span className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#0051A2] group-hover:text-[#FF46A2]">Conocer residencia <ArrowUpRight size={15} /></span>
+        <span className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#0051A2] group-hover:text-[#FF46A2]">Conocer modalidad <ArrowUpRight size={15} /></span>
       </div>
     </a>
   );

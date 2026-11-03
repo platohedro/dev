@@ -53,6 +53,7 @@
   "nav": {
     "education": "Education",
     "residencies": "Residencies",
+    "art": "Art",
     "technology": "Technology",
     "events": "Events",
     "shop": "Shop / Gallery",
@@ -525,13 +526,13 @@
   },
   "residenciasPage": {
     "hero": {
-      "eyebrow": "Art, thought and territory",
-      "title": "Platohedro Residencies",
-      "subtitle": "A space to research, create, share knowledge and develop contemporary artistic projects in conversation with Medellín and its communities."
+      "eyebrow": "Artistic residencies, research, creation",
+      "title": "Art and thought",
+      "subtitle": "A program connecting creation, research, critical thought and experimentation from Medellín, bringing together artists, researchers, communities, knowledge and territories."
     },
     "practice": {
       "title": "A situated practice",
-      "description": "Residencies strengthen artistic practice through exchange, experimentation and critical reflection. We support processes that connect art, technology, education and free culture."
+      "description": "We are interested in what happens in the places we inhabit, the stories that run through them, the relationships we build with the human and more-than-human, and the futures we can imagine collectively."
     },
     "cards": {
       "territory": { "title": "Territory", "text": "Medellín as a living laboratory" },
@@ -546,10 +547,20 @@
       "loadError": "Residents could not be loaded. Check that the Supabase migrations have been applied."
     },
     "modalities": {
-      "eyebrow": "Modalities",
-      "research": { "title": "Research and creation", "text": "Projects that explore questions, languages and methodologies." },
-      "community": { "title": "Community residency", "text": "Collaborative processes rooted in the territory." },
-      "lab": { "title": "Open laboratory", "text": "Prototypes, learnings and public conversations." }
+      "eyebrow": "",
+      "open": { "title": "Open residencies", "text": "Self-managed spaces for artists, researchers, creators and digital nomads developing research, creation or exchange processes in Medellín." },
+      "support": { "title": "Residencies with third-party support", "text": "Support for people with external funding or seeking grants, mobility funds and cultural cooperation programs." },
+      "calls": { "title": "Residencies through open calls", "text": "Processes connected to Platohedro projects and calls, and to our research, creation and territorial work." }
+    },
+    "sections": {
+      "projects": { "title": "Projects", "text": "Creation and research processes connecting art, critical thought, territories and communities.", "imageAlt": "Platohedro collective creation and research process" },
+      "residencies": { "title": "Residencies", "text": "Spaces of exchange for artists, researchers and other creators who want to inhabit Medellín from a situated perspective.", "imageAlt": "Artists sharing during a Platohedro residency" }
+    },
+    "house": {
+      "title": "Casa Platohedro",
+      "description": "The residency takes place at Casa Platohedro, a community and cultural space in Buenos Aires, Medellín, close to the city center and with easy access to public transportation. More than accommodation, we propose an experience of exchange, collaboration and creation.",
+      "imageAlt": "Casa Platohedro, a community and cultural space in Medellín",
+      "activities": ["Stay in a space for rest and work.", "Receive territorial and/or curatorial guidance.", "Connect with artists, collectives and organizations in Medellín.", "Consult the Platoteca, our alternative documentation center.", "Access our directory of artists and cultural agents.", "Learn about the neighborhood context and approach the territory.", "Use Casa Platohedro’s common areas.", "Access available tools and equipment.", "Share your process through our networks.", "Develop creative, artistic or educational gatherings with the community at the artist’s request."]
     },
     "gallery": {
       "title": "Residencies gallery",
