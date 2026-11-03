@@ -6,30 +6,36 @@ import { SiteHeader } from "@/app/components/SiteHeader";
 const programs = {
   matinee: {
     title: "Matinée",
-    audience: "Niñas y niños entre los 5 y 13 años",
-    description: "Matinée es un proyecto pedagógico dirigido a niñas y niños entre los 5 y 13 años, orientado al desarrollo de habilidades psicosociales, comunicativas y herramientas para la prevención de violencias a través del arte y la tecnología.",
-    detail: "Cada sábado se desarrollan talleres en la sede de Platohedro y en el barrio El Faro, generando espacios seguros, creativos y participativos que favorecen el aprendizaje, la expresión y la convivencia.",
+    audience: "Niñas y niños de 5 a 13 años",
+    tagline: "Un proceso donde crecer, crear y aprender van de la mano.",
+    description: "Desde 2007, Matinée acompaña a niñas y niños en un camino de exploración, juego y creación colectiva a través del arte y la tecnología. A lo largo de los años, hemos visto crecer generaciones que hoy construyen sus propios caminos, mientras nuevas niñas y niños se suman a esta experiencia.",
+    methodology: "Nuestra metodología combina experimentación artística, aprendizaje colaborativo y cuidado para cultivar la curiosidad, la expresión, la confianza y otras formas de relacionarnos. Una experiencia pedagógica construida desde la práctica, que sigue evolucionando y puede compartirse y adaptarse a distintos contextos educativos y comunitarios.",
+    detail: "Cada sábado, Matinée se vive en dos espacios: la sede de Platohedro y la sede de El Faro. Allí, niñas y niños se encuentran para jugar, experimentar y crear colectivamente a través del arte y la tecnología. Cada encuentro propone nuevas formas de explorar, compartir ideas y aprender con otras personas, mediante experiencias que combinan la curiosidad, la colaboración y el cuidado.",
     image: "/media/2022/03/matinee.jpg",
   },
   ideatorio: {
     title: "Ideatorio",
-    audience: "Adolescentes entre los 14 y 18 años",
-    description: "Ideatorio es un proyecto dirigido a adolescentes entre los 14 y 18 años, que busca fortalecer habilidades socioemocionales, artísticas, tecnológicas y comunicativas como herramientas para la resolución pacífica de conflictos y la prevención de diferentes formas de violencia.",
-    detail: "Los talleres se desarrollan cada viernes en la sede de Platohedro, propiciando espacios de encuentro, creación y reflexión en los que las y los adolescentes pueden explorar sus intereses, expresar sus ideas y fortalecer sus capacidades para relacionarse de manera más consciente y colaborativa.",
+    audience: "Adolescentes de 14 a 18 años",
+    tagline: "Un espacio para descubrir lo que les mueve y explorar lo que quieren hacer.",
+    description: "Ideatorio es un espacio abierto y seguro para adolescentes, donde pueden explorar sus intereses, descubrir habilidades y experimentar con distintas formas de crear, aprender y expresarse. A través del arte, la tecnología y el encuentro con otras personas, cada adolescente tiene la oportunidad de reconocer sus capacidades, probar nuevas ideas y encontrar caminos para convertir sus intereses en proyectos de vida.",
+    detail: "Los viernes por la tarde, la sede de Platohedro abre sus puertas a las adolescentes para explorar, crear y aprender juntas.",
     image: "/media/2023/10/ideatorio.jpg",
   },
   "jaquer-escool": {
     title: "Jaquer EsCool",
-    audience: "Jóvenes y público abierto",
-    description: "Jaquer EsCool es un proceso de formación dirigido a jóvenes y público abierto, que propone espacios de experimentación y aprendizaje alrededor de diferentes temas contemporáneos y de vanguardia.",
-    detail: "Entre martes y jueves se desarrollan talleres abiertos que articulan tecnología, medio ambiente, artes, política, memoria y territorio, promoviendo el pensamiento crítico, la creatividad, la participación y el intercambio de saberes.",
+    audience: "Formación, experimentación y autogestión",
+    tagline: "Jaquer de jaque mate. EsCool porque sí se puede.",
+    description: "La Jaquer EsCool es un proceso de formación dirigido a jóvenes y público abierto, que propone espacios de experimentación y aprendizaje alrededor de temas contemporáneos y de vanguardia.",
+    methodology: "Jaquer es poner en jaque lo establecido, abrir la caja negra de la tecnología, explorar cómo funcionan las cosas y reconocer que también podemos revisar nuestras propias ideas, hábitos y formas de relacionarnos. EsCool reivindica nuestra capacidad de aprender, hacer, corregir(se) y autogestionar nuestros procesos. A través del arte, la tecnología y la experimentación colectiva, invitamos a cuestionar lo que damos por hecho, compartir conocimientos y desarrollar ideas que nos permitan crear, decidir y transformar nuestras realidades.",
+    detail: "Los martes y jueves por la tarde, la sede de Platohedro abre sus puertas a talleres y experiencias de experimentación y aprendizaje. Consulta nuestra programación para conocer las actividades de cada semana.",
     image: "/media/2022/03/la-jaquer.jpg",
   },
   amapolas: {
     title: "Amapolas",
     audience: "Mujeres y madres cabeza de hogar",
-    description: "Amapolas es un proyecto dirigido a mujeres y madres cabeza de hogar, orientado al fortalecimiento de habilidades para el desarrollo personal, familiar y económico.",
-    detail: "A través de espacios formativos y de acompañamiento, las participantes desarrollan habilidades técnicas, psicosociales y de crecimiento personal que contribuyen a ampliar sus oportunidades, fortalecer su autonomía y potenciar sus capacidades para la construcción de proyectos de vida y bienestar.",
+    tagline: "Un espacio para crecer, crear y tejer redes entre mujeres.",
+    description: "Amapolas es un proceso colectivo de mujeres, muchas de ellas madres cabeza de hogar, que se encuentran para compartir saberes, explorar sus capacidades y desarrollar iniciativas personales y económicas. A través de la creación, el aprendizaje y el acompañamiento, fortalecen sus proyectos de vida y construyen redes de apoyo y colaboración.",
+    detail: "Los viernes cada quince días en la sede Platohedro.",
     image: "/media/2023/10/amapolas.jpg",
   },
   comunidad: {
@@ -108,6 +114,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ progra
           <div>
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em]" style={{ fontFamily: "'DM Mono', monospace" }}>D-Formación · {program.audience}</p>
             <h1 className="text-5xl font-bold leading-none md:text-7xl" style={{ fontFamily: "'DM Serif Display', serif" }}>{program.title}</h1>
+            {"tagline" in program && <p className="mt-6 max-w-xl text-2xl leading-relaxed" style={{ fontFamily: "'DM Serif Display', serif" }}>{program.tagline}</p>}
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#0051A2]/80">{program.description}</p>
           </div>
           <img src={program.image} alt={`Participantes del proceso ${program.title} en Platohedro`} className="aspect-[4/3] w-full object-cover" />
@@ -116,6 +123,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ progra
       <section className="mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-24">
         <div className="max-w-3xl">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF46A2]" style={{ fontFamily: "'DM Mono', monospace" }}>¿Cómo sucede?</p>
+          {"methodology" in program && <p className="mt-4 text-lg leading-relaxed text-[#0051A2]/80">{program.methodology}</p>}
           <p className="mt-4 text-2xl leading-relaxed md:text-3xl" style={{ fontFamily: "'DM Serif Display', serif" }}>{program.detail}</p>
           <Link href="/d-formacion" className="mt-10 inline-flex items-center gap-2 border border-[#0051A2] px-5 py-3 text-sm font-bold transition-colors hover:bg-[#0051A2] hover:text-white">← Volver a D-Formación</Link>
         </div>
