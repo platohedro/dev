@@ -30,7 +30,7 @@ export function SiteHeader() {
 
   const links = [
     [t("nav.education"), "/d-formacion"],
-    [t("nav.residencies"), "/residencias"],
+    [t("nav.art"), "/residencias"],
     [t("nav.technology"), "/tecnologia"],
     [t("nav.shop"), "/#shop"],
     [t("nav.events"), "/eventos"],
