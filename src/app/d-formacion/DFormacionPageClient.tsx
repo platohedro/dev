@@ -28,13 +28,13 @@ export function DFormacionPageClient() {
           <h1 className="max-w-3xl text-5xl font-bold leading-none md:text-7xl" style={{ fontFamily: "'DM Serif Display', serif" }}>{t("dFormacion.title")}</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#0051A2]/75">{t("dFormacion.description")}</p>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[#0051A2]/75">{t("dFormacion.approach")}</p>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[#0051A2]/75">{t("dFormacion.processes")}</p>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-24">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF46A2]" style={{ fontFamily: "'DM Mono', monospace" }}>{t("dFormacion.preliminary")}</p>
             <h2 className="mt-3 text-3xl font-bold md:text-4xl" style={{ fontFamily: "'DM Serif Display', serif" }}>{t("dFormacion.programsTitle")}</h2>
           </div>
           <a href="/#programs" className="inline-flex items-center gap-2 text-sm font-bold text-[#0051A2] hover:text-[#FF46A2]">{t("dFormacion.homeCta")} <ArrowUpRight size={16} /></a>

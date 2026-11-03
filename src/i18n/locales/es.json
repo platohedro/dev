@@ -150,10 +150,11 @@
   "dFormacion": {
     "label": "Educación · arte · tecnología",
     "title": "D-Formación",
-    "description": "El programa de Educación (D-Formación) busca contribuir a la transformación de las realidades de las comunidades con las que trabajamos, promoviendo que niñas, niños, adolescentes, jóvenes y mujeres participen en la construcción de sociedades más justas, colaborativas y conscientes.",
-    "approach": "A través del arte, la tecnología y diferentes herramientas pedagógicas, desarrollamos capacidades que favorecen la expresión, la participación, el fortalecimiento de habilidades psicosociales y la prevención y transformación de violencias y conflictos desde enfoques no violentos.",
-    "preliminary": "Nuestros procesos",
-    "programsTitle": "Nuestros procesos",
+    "description": "D-Formación es el programa de Platohedro desde el que creamos y acompañamos experiencias de aprendizaje con niñas, niños, adolescentes, jóvenes y mujeres de nuestras comunidades.",
+    "approach": "A través de talleres, laboratorios creativos y encuentros colectivos, exploramos el arte, la tecnología y otros saberes como herramientas para expresarnos, desarrollar habilidades, compartir conocimientos y aprender a convivir. Nuestros procesos integran el acompañamiento psicosocial, el cuidado y la construcción colectiva para transformar conflictos, prevenir violencias y crear otras formas de relacionarnos con nosotras mismas, con las demás personas y con el territorio.",
+    "processes": "Lo hacemos mediante diferentes procesos pedagógicos, abiertos, participativos y experimentales, en los que aprender también significa crear, explorar, hacerse preguntas y descubrir nuevas posibilidades junto a otras personas.",
+    "preliminary": "Proyectos",
+    "programsTitle": "Proyectos",
     "homeCta": "Volver a la página principal"
   },
   "residencies": {
