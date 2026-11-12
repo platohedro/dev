@@ -505,6 +505,7 @@
       "loadError": "No fue posible cargar los residentes. Verifica que las migraciones de Supabase estén aplicadas."
     },
     "modalities": {
+      "title": "Modalidades de residencia",
       "eyebrow": "",
       "open": { "title": "Residencias abiertas", "text": "Espacios autogestionados para artistas, investigadores, creadores y nómadas digitales que buscan desarrollar procesos de investigación, creación o intercambio en Medellín." },
       "support": { "title": "Residencias con apoyo de terceros", "text": "Acompañamos a quienes cuentan con financiación externa o desean postular a becas, fondos de movilidad y programas de cooperación cultural." },

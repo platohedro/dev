@@ -42,3 +42,21 @@ for (const lang of ["es", "en"]) {
   }
 }
 console.log("SEO OK: indexación, metadata, sitemap y datos estructurados validados.");
+
+const residenciesPage = await read("src/app/residencias/ResidenciasPageClient.tsx");
+const residencyDetail = await read("src/app/residencias/[tipo]/page.tsx");
+assert.match(residenciesPage, /href="#modalidades"/);
+assert.match(residenciesPage, /id="modalidades"/);
+assert.doesNotMatch(residenciesPage, /href="#residencias"/);
+for (const slug of ["residencia-artistica", "residencia-de-investigacion", "residencia-tecnologica"]) {
+  assert.ok(residenciesPage.includes(`href="/residencias/${slug}"`), `Falta enlace a ${slug}`);
+  assert.ok(residencyDetail.includes(`"${slug}":`), `No existe la modalidad ${slug}`);
+}
+for (const lang of ["es", "en"]) {
+  const { modalities } = JSON.parse(await read(`src/i18n/locales/${lang}.json`)).residenciasPage;
+  assert.ok(modalities.title);
+  for (const key of ["open", "support", "calls"]) {
+    assert.ok(modalities[key].title && modalities[key].text);
+  }
+}
+console.log("Residencias OK: navegación a las tres modalidades existentes.");
