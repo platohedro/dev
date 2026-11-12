@@ -547,6 +547,7 @@
       "loadError": "Residents could not be loaded. Check that the Supabase migrations have been applied."
     },
     "modalities": {
+      "title": "Residency options",
       "eyebrow": "",
       "open": { "title": "Open residencies", "text": "Self-managed spaces for artists, researchers, creators and digital nomads developing research, creation or exchange processes in Medellín." },
       "support": { "title": "Residencies with third-party support", "text": "Support for people with external funding or seeking grants, mobility funds and cultural cooperation programs." },

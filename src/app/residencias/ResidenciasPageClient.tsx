@@ -54,7 +54,18 @@ export function ResidenciasPageClient({ residents, loadError }: { residents: Res
           <p className="text-xs font-bold tracking-widest text-[#0051A2] uppercase">{t("residenciasPage.modalities.eyebrow")}</p>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             <Article href="/proyectos" title={t("residenciasPage.sections.projects.title")} text={t("residenciasPage.sections.projects.text")} image="/media/2026/09/IMG_20240814_193747.jpg" imageAlt={t("residenciasPage.sections.projects.imageAlt")} />
-            <Article href="#residencias" title={t("residenciasPage.sections.residencies.title")} text={t("residenciasPage.sections.residencies.text")} image="/media/2026/09/4-1.jpg" imageAlt={t("residenciasPage.sections.residencies.imageAlt")} />
+            <Article href="#modalidades" title={t("residenciasPage.sections.residencies.title")} text={t("residenciasPage.sections.residencies.text")} image="/media/2026/09/4-1.jpg" imageAlt={t("residenciasPage.sections.residencies.imageAlt")} />
+          </div>
+        </div>
+      </section>
+
+      <section id="modalidades" aria-labelledby="modalidades-title" className="scroll-mt-24 bg-[#99CC33] px-6 py-16 md:px-10">
+        <div className="mx-auto max-w-7xl">
+          <h2 id="modalidades-title" className="text-3xl font-bold text-[#0051A2]">{t("residenciasPage.modalities.title")}</h2>
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            <Article href="/residencias/residencia-artistica" title={t("residenciasPage.modalities.open.title")} text={t("residenciasPage.modalities.open.text")} image="/media/2025/07/on.jpg" imageAlt={t("residenciasPage.modalities.open.title")} />
+            <Article href="/residencias/residencia-de-investigacion" title={t("residenciasPage.modalities.support.title")} text={t("residenciasPage.modalities.support.text")} image="/media/2025/07/IMG_4154-1024x768-1.jpg" imageAlt={t("residenciasPage.modalities.support.title")} />
+            <Article href="/residencias/residencia-tecnologica" title={t("residenciasPage.modalities.calls.title")} text={t("residenciasPage.modalities.calls.text")} image="/media/2025/07/Lokakarya_Squaresynth_01.jpg" imageAlt={t("residenciasPage.modalities.calls.title")} />
           </div>
         </div>
       </section>
