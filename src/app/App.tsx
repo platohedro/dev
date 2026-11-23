@@ -150,15 +150,32 @@ const events = [
 ];
 
 const sponsors = [
+  { name: "Fundación Arteria", full: "Fundación Arteria", image: "/logos/aliados/arteria.png" },
+  { name: "Ministerio de Cultura", full: "Ministerio de Cultura de Colombia", image: "/logos/aliados/mincultura.png" },
+  { name: "Museo de Antioquia", full: "Museo de Antioquia", image: "/logos/aliados/museo-antioquia.svg" },
+  { name: "Parque Explora", full: "Parque Explora", image: "/logos/aliados/parque-explora.webp" },
+  { name: "Terre des Hommes Schweiz", full: "Terre des Hommes Schweiz, Basilea", image: "/media/2022/02/TDH-1.png" },
+  { name: "makesense Americas", full: "makesense Americas", image: "/logos/aliados/makesense.png" },
+  { name: "Fundación Confiar", full: "Fundación Confiar", image: "/logos/aliados/confiar-color.png" },
+  { name: "HacTe", full: "HacTe", image: "/logos/aliados/hacte.svg" },
+  { name: "Corporación Porfirio Barba Jacob", full: "Corporación Ateneo Porfirio Barba Jacob", image: "/logos/aliados/ateneo-porfirio.png" },
+  { name: "Wikimedia Colombia", full: "Wikimedia Colombia", image: "/logos/aliados/wikimedia.svg" },
+  { name: "Municipio de Medellín", full: "Municipio de Medellín", image: "/logos/aliados/medellin.svg" },
   { name: "Arts Collaboratory", full: "Arts Collaboratory", image: "/media/2022/04/ac_.png" },
-  { name: "TDH", full: "TDH", image: "/media/2022/02/TDH-1.png" },
+  { name: "Alianza Francesa", full: "Alianza Francesa de Medellín", image: "/logos/aliados/alianza-francesa.jpg" },
+  { name: "Fundación Nacional Batuta", full: "Fundación Nacional Batuta", image: "/logos/aliados/batuta.svg" },
+  { name: "La Jaus", full: "La Jaus" },
+  { name: "Lisérgico Creactivo", full: "Lisérgico Creactivo" },
+  { name: "SENA", full: "Servicio Nacional de Aprendizaje (SENA)", image: "/logos/aliados/sena.svg" },
+  { name: "Etnografia teatro", full: "Etnografia teatro" },
+  { name: "Asimtria", full: "Asimtria, plataforma de arte y tecnología de Perú" },
+  { name: "Instituto Francés", full: "Instituto Francés", image: "/logos/aliados/instituto-frances.png" },
+  { name: "SURTROPÍAS", full: "Red Surtropías", image: "/logos/aliados/surtropias.jpg" },
   { name: "Exploratorio", full: "Exploratorio", image: "/media/2022/04/LOGO_EXPLORATORIO-1.png" },
-  { name: "Ministerio de Cultura", full: "Ministerio de Cultura de Colombia" },
-  { name: "Alcaldía de Medellín", full: "Alcaldía de Medellín" },
-  { name: "Idartes", full: "Instituto Distrital de las Artes" },
-  { name: "Colciencias", full: "Ministerio de Ciencia y Tecnología" },
+  { name: "Idartes", full: "Instituto Distrital de las Artes", image: "/logos/aliados/idartes.png" },
+  { name: "Colciencias", full: "Colciencias", image: "/logos/aliados/colciencias.svg" },
   { name: "Redes", full: "Red Nacional de Cultura" },
-  { name: "Open Society", full: "Open Society Foundations" },
+  { name: "Open Society", full: "Open Society Foundations", image: "/logos/aliados/open-society.png" },
 ];
 
 function AnimatedStat({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -1035,10 +1052,10 @@ export default function App({ initialPage = "home" }: { initialPage?: "home" | "
             {sponsors.map((sponsor) => (
               <div
                 key={sponsor.name}
-                className="bg-[#99CC33] flex items-center justify-center px-6 py-8 hover:bg-white/50 transition-colors cursor-pointer group"
+                className="bg-[#99CC33] flex items-center justify-center px-6 py-8 hover:bg-white/50 transition-colors group"
                 title={sponsor.full}
               >
-                {sponsor.image ? <img src={sponsor.image} alt={sponsor.full} className={sponsor.name === "TDH" || sponsor.name === "Exploratorio" ? "h-24 max-w-[95%] scale-[1.7] object-contain" : "h-24 max-w-[95%] object-contain"} /> : <span className="text-[#0051A2] group-hover:text-[#0051A2] text-xs text-center font-semibold tracking-wide transition-colors" style={{ fontFamily: "'DM Mono', monospace" }}>
+                {sponsor.image ? <img src={sponsor.image} alt={sponsor.full} className={`h-24 max-w-full object-contain ${sponsor.name === "Museo de Antioquia" ? "brightness-0" : ""}`} style={sponsor.name === "Fundación Confiar" ? { maskImage: "url(/logos/aliados/confiar-mask.png)", maskMode: "luminance", maskSize: "100% 100%", maskRepeat: "no-repeat" } : undefined} /> : <span className="text-[#0051A2] group-hover:text-[#0051A2] text-xs text-center font-semibold tracking-wide transition-colors" style={{ fontFamily: "'DM Mono', monospace" }}>
                   {sponsor.name}
                 </span>}
               </div>
